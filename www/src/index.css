@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family:'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+.background{
+  background-color: black;
+}
+.logo-blue {
+  color: #95C6FF;
+  font-size: 36px;
+  margin-left: 40px;
+  padding-top: 20px;
+}
+
+.logo-white {
+  color: white;
+  font-size: 36px;
+}
+
+.modal { 
+  position: absolute;
+  width: 404px;
+  height: 426px;
+  background: white;
+  border-radius: 10px;
+  left:50%;
+  top:50%;
+  transform: translate(-50%, -50%)
+
+}
+
