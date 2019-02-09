@@ -7,6 +7,7 @@ import Listfiles from './Listfiles'
 class Upload extends Component {
 
     state = {
+        id: null,
         files: []
     }
 
@@ -15,13 +16,17 @@ class Upload extends Component {
         this.setState({ files: files })
     }
 
+    onUploadCreated = (id) => {
+        this.setState({id})
+    }
+
     render() {
         return (
             <Background>
                 <Modal>
                     {this.state.files.length !== 0 ?
-                        <Listfiles />
-                        : <Dropfile onFilesSelected={this.onFilesSelected} />}
+                        <Listfiles onUploadCreated={this.onUploadCreated} files ={this.state.files} />
+                        : <Dropfile onFilesSelected={this.onFilesSelected}  />}
                 </Modal>
             </Background>
         )

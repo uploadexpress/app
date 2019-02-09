@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="11px" viewBox="0 0 12 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>stop-button</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="Uploading-view" transform="translate(-876.000000, -425.000000)" stroke="#E15D5D">
+            <g id="Box" transform="translate(517.000000, 298.000000)">
+                <g id="Item" transform="translate(32.000000, 118.000000)">
+                    <g id="stop-button" transform="translate(327.000000, 9.000000)">
+                        <path d="M11.5,0.5 L0.5,10.5" id="Line-3"></path>
+                        <path d="M11.5,0.5 L0.5,10.5" id="Line-3" transform="translate(6.000000, 5.500000) scale(-1, 1) translate(-6.000000, -5.500000) "></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
