@@ -19,7 +19,6 @@ class Download extends Component{
             <Background>
                 <Modal>
                   <div>Hello</div>  
-
                 </Modal>
             </Background>
         )

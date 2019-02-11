@@ -70,6 +70,11 @@ hr {
     margin-top:6px;
 }
 
+.list-download-bar-progress {
+    height: 100%;
+    background-color: #87D483;
+}
+
 .list-file-name{
     color: #363A3E;
     font-size: 14px;

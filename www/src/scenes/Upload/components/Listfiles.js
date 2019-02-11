@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import File from './File';
-import axios from 'axios'
-
+import api from '../../../services/Api'
+import uploadFile from '../../../services/FileUploader'
+import { promiseSerial } from '../../../helpers/promiseSerial';
+import { updateProgress } from '../actions';
+import { connect } from 'react-redux';
 
 class Listfiles extends Component {
     state = {
@@ -14,25 +17,48 @@ class Listfiles extends Component {
         return str.substring(0, length) + dots;
     };
 
+    onUploadProgress = (fileId, progressEvent) => {
+        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        this.props.updateProgress(fileId, percentCompleted);
+    }
+
     beginUpload = (data) => {
+        // Returns the ID to the main component
         this.props.onUploadCreated(data.id);
 
-        this.setState({
-            uploadId: data.id,
-            filesToUpload: data.files,
-        });
+        const uploadPromises = this.props.files.map((file) => {
+            return () => {
+                return uploadFile(data.id, file, (event) => {
+                    this.onUploadProgress(file.id, event)
+                })
+            }
+        })
+
+        promiseSerial(uploadPromises).then(console.log.bind(console))
     }
 
     createFiles = () => {
-        axios.post('http://192.168.1.23:4000/v1/uploader/', {
-            files: this.props.files.map(file => {
-                return {
-                    'name': file.name
-                }
-            })
+        let files = this.props.files.map(file => {
+            return {
+                'id': file.id,
+                'name': file.fileInput.name,
+                'size': file.fileInput.size
+            }
         })
-        .then(res => {
+
+        api.createUpload(files).then(res => {
             this.beginUpload(res.data);
+        })
+    }
+
+    renderFiles() {
+        return this.props.files.map(file => {
+            return (
+                <File
+                    name={this.stringTruncate(file.fileInput.name, 20)}
+                    progress={file.progress}
+                />
+            )
         })
     }
 
@@ -42,12 +68,7 @@ class Listfiles extends Component {
                 <div className="list-title">Your files</div>
                 <hr />
                 <div className='list-container'>
-                    {this.props.files.map(file => {
-                        return (
-                            <File name={this.stringTruncate(file.name, 20)} />
-                        )
-                    })
-                    }
+                    {this.renderFiles()}
                 </div>
 
                 <div className="list-footer">
@@ -59,4 +80,10 @@ class Listfiles extends Component {
     }
 }
 
-export default Listfiles
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateProgress: (fileId, progress) => dispatch(updateProgress(fileId, progress))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Listfiles)

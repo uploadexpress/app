@@ -28,10 +28,7 @@ const Dropfile = (props) => {
                 }}
             </Dropzone>
         </div>
-
     )
-
-
 }
 
 export default Dropfile
