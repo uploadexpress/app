@@ -25,7 +25,7 @@ code {
   font-size: 36px;
 }
 
-.modal { 
+.upload-modal { 
   position: absolute;
   width: 404px;
   height: 426px;
@@ -34,6 +34,106 @@ code {
   left:50%;
   top:50%;
   transform: translate(-50%, -50%)
+}
+
+.listfiles {
+  width:100%;
+  height: 100%;
+}
+
+
+hr {
+  width:90%;
+  border: 1px solid #f5f5f5;
+  margin-top: 0rem;
+  margin-bottom: 0rem;  
+}
+
+.list-title {
+  color: #363A3E;
+  font-size: 28px;
+  margin-top: 14px;
+  margin-bottom:14px;
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+.list-body{
+  margin-left: 20px;
+  margin-right:20px;
+  margin-bottom: 20px;
+}
+
+.list-info{
+  margin-left: 12px;
+  width:100%;
+  flex-basis: 800px;
+}
+
+.list-file-name{
+  color: #363A3E;
+  font-size: 14px;
+}
+
+.list-container{
+  padding-top: 1rem;
+  height:64%;
+  overflow-y:auto;
+  
+}
+
+.list-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align:center;
+}
+
+.navbar-ue{
+  background-color: #5BA3D4;
+  color: white;
+}
+
+
+.blue-btn{
+  margin-top:22px;
+  margin-bottom: 22px;
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 8px;
+  color: #6288A9;
+  border: 1px solid #6288A9;
+  background-color: white;
+}
+
+.blue-btn:hover:enabled{
+  background-color: #6288A9;
+  color: white
+}
+
+.blue-btn:disabled{
+  color: #979797;
+  border: 1px solid #979797;
 
 }
+
+
+
+.green-btn{
+  margin-top:22px;
+  margin-bottom: 22px;
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 8px;
+  color: #87D483;
+  border: 1px solid #87D483;
+  background-color: white;
+}
+
+.green-btn:hover{
+  background-color: #87D483;
+  color: white
+}
+
+
 

@@ -1,0 +1,10 @@
+.expire-text{
+  /* position: absolute;
+  left:20px;
+  top: 50%; transform: translateY(-50%); */
+  font-size:12px;
+  color: #50565C;
+  font-weight: bold;
+  margin-top:22px;
+  margin-bottom: 22px;
+}

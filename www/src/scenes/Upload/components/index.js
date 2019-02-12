@@ -5,10 +5,16 @@ import Dropfile from './Dropfile'
 import Listfiles from './Listfiles'
 import { addFiles } from '../actions'
 import { connect } from 'react-redux'
-import { Status } from '../constants';
+import { FileStatus, UploaderStatus } from '../constants';
 import ObjectID from 'bson-objectid'
+import '../style/index.css';
+import LinkPreview from './LinkPreview'
 
 class Upload extends Component {
+
+    state = {
+        id: null
+    } 
 
 
     onFilesSelected = (files) => {
@@ -17,7 +23,7 @@ class Upload extends Component {
                 fileInput: file,
                 id: ObjectID().toHexString(),
                 progress: 0,
-                status: Status.WAITING
+                status: FileStatus.EMPTY
             }
         })
 
@@ -32,9 +38,17 @@ class Upload extends Component {
         return (
             <Background>
                 <Modal>
-                    {this.props.files.length !== 0 ?
-                        <Listfiles onUploadCreated={this.onUploadCreated} files={this.props.files} />
-                        : <Dropfile onFilesSelected={this.onFilesSelected} />}
+                    {this.props.status === UploaderStatus.NO_FILES &&
+                        <Dropfile onFilesSelected={this.onFilesSelected} />
+                    }
+                    {(this.props.status === UploaderStatus.FILE_LIST || 
+                    this.props.status === UploaderStatus.UPLOADING) &&
+                        <Listfiles onFilesSelected={this.onFilesSelected} onUploadCreated={this.onUploadCreated} files={this.props.files} />
+                    }
+                    {this.props.status === UploaderStatus.DONE &&
+                       <LinkPreview id={this.state.id}/>
+                        
+                    }
                 </Modal>
             </Background>
         )
@@ -49,7 +63,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        files: state.uploader.files
+        files: state.uploader.files,
+        status: state.uploader.status,
     }
 }
 

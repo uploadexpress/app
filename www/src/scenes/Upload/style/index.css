@@ -15,34 +15,7 @@
 
 .upload-img{
     margin-top:50px;
-}
-
-.listfiles {
-    width:100%;
-    height: 100%;
-}
-
-.list-title {
-    color: #363A3E;
-    font-size: 28px;
-    margin-top: 22px;
-    margin-bottom:22px;
-    margin-left: 20px;
-    font-weight: bold;
-}
-
-hr {
-    width:90%;
-    border: 1px solid #f5f5f5;  
-}
-
-.flex-row {
-    display: flex;
-    flex-direction: row;
-}
-.flex-column {
-    display: flex;
-    flex-direction: column;
+    outline: none;
 }
 
 .justify-content-between{
@@ -51,20 +24,8 @@ hr {
     align-items: flex-end;
 }
 
-.list-body{
-    margin-left: 20px;
-    margin-right:20px;
-    margin-bottom: 20px;
-}
-
-.list-info{
-    margin-left: 12px;
-    width:100%;
-    flex-basis: 800px;
-}
-
 .list-download-bar{
-    height: 1px;
+    height: 2px;
     width: 100%;
     background-color: #979797;
     margin-top:6px;
@@ -72,7 +33,7 @@ hr {
 
 .list-download-bar-progress {
     height: 100%;
-    background-color: #87D483;
+    background-color: #2983C5;
 }
 
 .list-file-name{
@@ -85,31 +46,60 @@ hr {
     font-size: 12px;
 }
 
-.list-container{
-    height:60%;
-    overflow-y:scroll;
-
+.list-img-cancel:hover{
+    cursor: pointer;
 }
 
-.list-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align:center;
+.add-file{
+    text-align: center;
+    margin-top:10px;
+    color: #6288A9; 
 }
 
-.blue-btn{
-    margin-top:22px;
-    margin-bottom: 22px;
-    padding: 8px 20px;
-    font-size: 14px;
+.add-file:hover{
+    cursor: pointer;
+}
+
+.add-file-img {
+    font-size: 20px;
+    margin-right:6px;
+}
+.add-file-text {
+    font-size:14px;
+    font-weight: bold;
+}
+
+.share-title{
+    font-size: 20px;
+    font-weight: bolder;
+    margin-top: 20px;
+    color: #4A4A4A; 
+}
+
+.share-subtitle{
+    font-size: 16px;
+    color: #4A4A4A;
+    margin-bottom: 16px;
+}
+
+.share-link{
+    width:80%;
+    font-size:14px;
+    padding: 8px 8px;
+    color: #4A4A4A;
     border-radius: 8px;
-    color: #6288A9;
-    border: 1px solid #6288A9;
-    background-color: white;
+    border: 1px solid #B9BBBD;
 }
 
-.blue-btn:hover{
-    background-color: #6288A9;
-    color: white
+.share-img{
+    margin-left: 16px;
+}
+
+.link-preview-copied{
+  position: absolute;
+  right:50px;
+  top: 50%; transform: translateY(-50%);
+  font-size:12px;
+  color: #87D483;
+  font-weight: bold
 }

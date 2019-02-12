@@ -3,23 +3,29 @@ import File from './File';
 import api from '../../../services/Api'
 import uploadFile from '../../../services/FileUploader'
 import { promiseSerial } from '../../../helpers/promiseSerial';
-import { updateProgress } from '../actions';
+import { updateProgress, startUploading, endUploading } from '../actions';
 import { connect } from 'react-redux';
+import Dropzone from 'react-dropzone'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { UploaderStatus } from '../constants';
+import stringTruncate from '../../../helpers/stringTruncate'
+
 
 class Listfiles extends Component {
     state = {
         uploadId: null,
-        filesToUpload: []
+        filesToUpload: [],
+        isButtonDisabled: false,
     }
 
-    stringTruncate = (str, length) => {
-        var dots = str.length > length ? '...' : '';
-        return str.substring(0, length) + dots;
-    };
-
+    
     onUploadProgress = (fileId, progressEvent) => {
         const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
         this.props.updateProgress(fileId, percentCompleted);
+    }
+
+    onDrop = (acceptedFiles) => {
+        this.props.onFilesSelected(acceptedFiles);
     }
 
     beginUpload = (data) => {
@@ -34,29 +40,39 @@ class Listfiles extends Component {
             }
         })
 
-        promiseSerial(uploadPromises).then(console.log.bind(console))
+        promiseSerial(uploadPromises).then(() => {
+            this.props.endUploading();
+        })
     }
 
     createFiles = () => {
+        this.props.startUploading();
         let files = this.props.files.map(file => {
             return {
                 'id': file.id,
                 'name': file.fileInput.name,
                 'size': file.fileInput.size
             }
+
         })
 
         api.createUpload(files).then(res => {
             this.beginUpload(res.data);
         })
+
+        this.setState({
+            isButtonDisabled: true
+        });
     }
 
     renderFiles() {
         return this.props.files.map(file => {
             return (
                 <File
-                    name={this.stringTruncate(file.fileInput.name, 20)}
+                    name={stringTruncate(file.fileInput.name, 25)}
                     progress={file.progress}
+                    status={file.status}
+                    id={file.id}
                 />
             )
         })
@@ -68,12 +84,31 @@ class Listfiles extends Component {
                 <div className="list-title">Your files</div>
                 <hr />
                 <div className='list-container'>
-                    {this.renderFiles()}
-                </div>
+                    <Dropzone
+                        onDrop={this.onDrop}
+                        disableClick={true}
+                        disabled={this.props.status===UploaderStatus.UPLOADING}
 
+                    >
+                        {({ getRootProps, getInputProps, open }) => (
+                            <div style={{ outline: 'none', minHeight: '100%' }}{...getRootProps()}>
+                                <input {...getInputProps()} />
+
+                                {this.renderFiles()}
+                                
+                                {this.props.status === UploaderStatus.FILE_LIST &&
+                                    <div className="add-file" onClick={() => open()}>
+                                        <FontAwesomeIcon className="add-file-img" icon="folder-plus" />
+                                        <div className="d-inline add-file-text">Add file</div>
+                                    </div>
+                                }
+                            </div>
+
+                        )}
+                    </Dropzone>
+                </div>
                 <div className="list-footer">
-                    <hr />
-                    <button onClick={this.createFiles} className="blue-btn">Upload</button>
+                    <button onClick={this.createFiles} disabled={this.state.isButtonDisabled} className="blue-btn">Upload</button>
                 </div>
             </div>
         )
@@ -82,8 +117,17 @@ class Listfiles extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateProgress: (fileId, progress) => dispatch(updateProgress(fileId, progress))
+        updateProgress: (fileId, progress) => dispatch(updateProgress(fileId, progress)),
+        startUploading: () => dispatch(startUploading()), 
+        endUploading: () => dispatch(endUploading())
     }
 }
 
-export default connect(null, mapDispatchToProps)(Listfiles)
+const mapStateToProps = (state) => {
+    return {
+        status: state.uploader.status
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Listfiles)

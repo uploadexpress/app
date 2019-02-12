@@ -1,3 +1,6 @@
+import { UploaderStatus } from '../constants'
+
 export default {
-  files: []
+  files: [], 
+  status: UploaderStatus.NO_FILES
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import '../style/index.css';
 import Downloadbtn from '../../../img/download-btn.svg';
 import Downloadbtnactive from '../../../img/download-btn-active.svg';
 import Dropzone from 'react-dropzone'
