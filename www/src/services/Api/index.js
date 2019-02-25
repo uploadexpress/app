@@ -28,5 +28,5 @@ class API {
   }
 }
 
-const api = new API({url: process.env.REACT_APP_API_URL})
+const api = new API({url: process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : window.location.origin + '/v1'})
 export default api

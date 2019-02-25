@@ -6,11 +6,10 @@ import (
 
 func (a *API) SetupConfig() error {
 	filename := ".env"
-	err := godotenv.Overload(filename)
-	if err != nil {
-		return err
-	}
 
+	godotenv.Overload(filename)
+
+	a.Config.SetEnvPrefix("ue")
 	a.Config.AutomaticEnv()
 
 	return nil

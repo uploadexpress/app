@@ -12,5 +12,7 @@
 *.out
 
 .idea
+up.json
 
 .env
+build

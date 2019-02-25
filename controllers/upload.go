@@ -1,11 +1,14 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/gin-gonic/gin"
 	"github.com/uploadexpress/app/config"
+	"github.com/uploadexpress/app/constants"
 	"github.com/uploadexpress/app/helpers"
 	"github.com/uploadexpress/app/models"
 	"github.com/uploadexpress/app/store"
@@ -27,6 +30,13 @@ func (uploadController *UploadController) CreateUpload(c *gin.Context) {
 		return
 	}
 
+	maxSize := 2 * constants.GB
+	if upload.Size() > maxSize {
+		err := fmt.Errorf("the file are too heavy, maximum upload size: %d", maxSize)
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("files_too_big", err.Error(), err))
+		return
+	}
+
 	if err := store.CreateUpload(c, upload); err != nil {
 		_ = c.Error(err)
 		c.Abort()
@@ -38,6 +48,11 @@ func (uploadController *UploadController) CreateUpload(c *gin.Context) {
 
 func (uploadController *UploadController) CreatePreSignedRequest(c *gin.Context) {
 	sess, err := session.NewSession(&aws.Config{
+		Credentials:  credentials.NewStaticCredentials(
+			config.FromContext(c).GetString("aws_access_key_id"),
+			config.FromContext(c).GetString("aws_secret_access_key"),
+			"", // a token will be created when the session it's used.
+		),
 		Region: aws.String(config.FromContext(c).GetString("aws_region"))},
 	)
 	if err != nil {

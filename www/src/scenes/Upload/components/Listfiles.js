@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { UploaderStatus } from '../constants';
 import stringTruncate from '../../../helpers/stringTruncate'
 
-
 class Listfiles extends Component {
     state = {
         uploadId: null,
@@ -69,6 +68,7 @@ class Listfiles extends Component {
         return this.props.files.map(file => {
             return (
                 <File
+                    key={file.id}
                     name={stringTruncate(file.fileInput.name, 25)}
                     progress={file.progress}
                     status={file.status}
@@ -126,7 +126,6 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         status: state.uploader.status
-
     }
 }
 

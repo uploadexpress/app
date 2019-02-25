@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"github.com/uploadexpress/app/server"
+	"os"
 )
 
 func main() {
@@ -25,7 +26,12 @@ func main() {
 	// Router setup
 	api.SetupRouter()
 
-	err = api.Router.Run(api.Config.GetString("host_address"))
+	port := ":" + os.Getenv("PORT")
+	if port == ":" {
+		port = ":4000"
+	}
+
+	err = api.Router.Run(port)
 	if err != nil {
 		panic(err)
 	}

@@ -1,11 +1,12 @@
 package server
 
 import (
+	"net/http"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/uploadexpress/app/controllers"
 	"github.com/uploadexpress/app/middlewares"
-	"net/http"
-	"time"
 )
 
 func Index(c *gin.Context) {
@@ -27,6 +28,7 @@ func (a *API) SetupRouter() {
 		Credentials:     true,
 		ValidateHeaders: false,
 	}))
+	router.Use(middlewares.StaticMiddleware("/", middlewares.StaticLocalFile("front", false)))
 
 	v1 := router.Group("/v1")
 	{
@@ -42,8 +44,13 @@ func (a *API) SetupRouter() {
 		downloader := v1.Group("/downloader")
 		{
 			downloaderController := controllers.NewDownloaderController()
-			downloader.GET("/:download_id/file/:file_id/download", downloaderController.GetDownloadLink)
-			//downloader.GET("/:id", downloaderController.GetDownload)
+			downloader.GET("/:download_id", downloaderController.GetDownload)
+			downloader.GET("/:download_id/file/:file_id/download_url", downloaderController.GetDownloadLink)
 		}
 	}
+
+	router.LoadHTMLFiles("front/index.html")
+	router.NoRoute(func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", gin.H{})
+	})
 }

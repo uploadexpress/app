@@ -1,7 +1,6 @@
 package mongodb
 
 import (
-	"github.com/globalsign/mgo/bson"
 	"github.com/uploadexpress/app/helpers"
 	"github.com/uploadexpress/app/models"
 	"net/http"
@@ -12,14 +11,7 @@ func (db *mongo) CreateUpload(upload *models.Upload) (error) {
 	defer session.Close()
 	uploads := db.C(models.UploadsCollection).With(session)
 
-	// Assigns an ID to each file
-	for _, file := range upload.Files {
-		if file.Id == "" {
-			file.Id = bson.NewObjectId().Hex()
-		}
-	}
-
-	upload.Id = bson.NewObjectId().Hex()
+	upload.BeforeCreate()
 	err := uploads.Insert(upload)
 	if err != nil {
 		return helpers.NewErrorWithTrace(http.StatusInternalServerError, "upload_creation_failed", "Failed to insert the upload in the database", err)
