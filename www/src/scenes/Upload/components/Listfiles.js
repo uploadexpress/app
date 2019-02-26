@@ -5,7 +5,8 @@ import uploadFile from '../../../services/FileUploader'
 import { promiseSerial } from '../../../helpers/promiseSerial';
 import { updateProgress, startUploading, endUploading } from '../actions';
 import { connect } from 'react-redux';
-import Dropzone from 'react-dropzone'
+import Dropzone from 'react-dropzone';
+import { withTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { UploaderStatus } from '../constants';
 import stringTruncate from '../../../helpers/stringTruncate'
@@ -79,9 +80,11 @@ class Listfiles extends Component {
     }
 
     render() {
+        const { t } = this.props;
+
         return (
             <div className="listfiles">
-                <div className="list-title">Your files</div>
+                <div className="list-title">{t('upload.listFile.title')}</div>
                 <hr />
                 <div className='list-container'>
                     <Dropzone
@@ -99,7 +102,7 @@ class Listfiles extends Component {
                                 {this.props.status === UploaderStatus.FILE_LIST &&
                                     <div className="add-file" onClick={() => open()}>
                                         <FontAwesomeIcon className="add-file-img" icon="folder-plus" />
-                                        <div className="d-inline add-file-text">Add file</div>
+                                        <div className="d-inline add-file-text">{t('upload.listFile.addFile')}</div>
                                     </div>
                                 }
                             </div>
@@ -108,7 +111,7 @@ class Listfiles extends Component {
                     </Dropzone>
                 </div>
                 <div className="list-footer">
-                    <button onClick={this.createFiles} disabled={this.state.isButtonDisabled} className="blue-btn">Upload</button>
+                    <button onClick={this.createFiles} disabled={this.state.isButtonDisabled} className="blue-btn">{t('upload.listFile.upload')}</button>
                 </div>
             </div>
         )
@@ -129,4 +132,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Listfiles)
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Listfiles))

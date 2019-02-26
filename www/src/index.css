@@ -10,30 +10,43 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
 .background{
   background-color: black;
+  min-height: 626px;
+  padding:16px;
+  
 }
+
 .logo-blue {
   color: #95C6FF;
-  font-size: 36px;
-  margin-left: 40px;
-  padding-top: 20px;
+  font-size: 26px;
+  text-align: center;
+  padding-top: 16px;
 }
 
 .logo-white {
   color: white;
-  font-size: 36px;
+  font-size: 26px;
+}
+
+.menu{
+ color:white;
+ width:100%;
+ display:flex;
+ justify-content: flex-end;
+}
+
+.flag-select img{
+  vertical-align: unset;
 }
 
 .upload-modal { 
-  position: absolute;
-  width: 404px;
-  height: 426px;
+  margin-top: 40px;
+  width: 364px;
+  height: 387px;
   background: white;
   border-radius: 10px;
-  left:50%;
-  top:50%;
-  transform: translate(-50%, -50%)
 }
 
 .listfiles {
@@ -51,7 +64,7 @@ hr {
 
 .list-title {
   color: #363A3E;
-  font-size: 28px;
+  font-size: 22px;
   margin-top: 14px;
   margin-bottom:14px;
   margin-left: 20px;
@@ -83,15 +96,24 @@ hr {
 }
 
 .list-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
   text-align:center;
+  position: relative;
 }
 
 .navbar-ue{
   background-color: #5BA3D4;
   color: white;
+}
+
+.dropdown-link{
+  color: #50565C;
+  text-decoration: none;
+  margin-left:14px;
+}
+
+.dropdown-link:hover{
+  color: #363A3F;
+  
 }
 
 
