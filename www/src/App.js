@@ -1,4 +1,4 @@
-import React, { Component, Suspense  } from 'react';
+import React, { Component, Suspense } from 'react';
 import Upload from './scenes/Upload/components/index';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Download from './scenes/Download/components/index';
@@ -19,14 +19,14 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Provider store={store}>
-        <Suspense fallback={<Spinner />}>
-        <div className="App">
-            <Route exact path='/' component={Upload} />
-            <Route path='/download/:id' component={Download} />
-            <Route exact path='/panel' component={UploadList} />
-            <Route path='/panel/settings' component={Settings}/> 
-          </div>
-        </Suspense>
+          <Suspense fallback={<Spinner />}>
+            <div className="App">
+              <Route exact path='/' component={Upload} />
+              <Route path='/download/:id' component={Download} />
+              <Route exact path='/panel' component={UploadList} />
+              <Route path='/panel/settings' component={Settings} />
+            </div>
+          </Suspense>
         </Provider>
       </BrowserRouter>
     );

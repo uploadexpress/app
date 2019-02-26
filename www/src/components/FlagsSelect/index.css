@@ -5,9 +5,7 @@
     padding-bottom: 5px;
     color: white;
     font-weight: bold;
-    text-align: left;
-
- }
+    text-align: left; }
     .flag-select img {
       width: 1.3em;
       height: 1.3em;
@@ -33,8 +31,8 @@
         font-size: 1em;
         position: relative; }
     .flag-select .flag-options {
-        color: #4a4a4a;
-        font-weight: normal;
+      color: #4a4a4a;
+      font-weight: normal;
       position: absolute;
       z-index: 999999;
       border: 1px solid #bdbbbb;
@@ -69,7 +67,6 @@
         .flag-select .filterBox input:focus {
           outline: none; }
     .flag-select .arrow-down {
-    
       color: white;
       padding: 6px; }
     .flag-select .hidden {

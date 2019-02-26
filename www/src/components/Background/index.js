@@ -14,31 +14,24 @@ const backgroundStyle = {
 }
 
 const Background = (props) => {
-        const { i18n } = useTranslation();
+    const { i18n } = useTranslation();
 
     const onSelectFlag = (countryCode) => {
         i18n.changeLanguage(countryCode);
     }
 
-    
-   const currLang = i18n.language.split('-')[0].toUpperCase()
+    const currLang = i18n.language.split('-')[0].toUpperCase()
 
-   console.log(currLang)
-
-    
     return (
         <div style={backgroundStyle} className="background">
-            <div className="d-flex flex-column align-items-center" style={{padding: "10px 16px 0 16px"}}>
-            <div className="menu"><ReactFlagsSelect
-                        countries={["EN", "RU"]} selectedSize={14} optionsSize={12}  defaultCountry={currLang}  placeholder="Select Language"  onSelect={onSelectFlag}  /></div>
-        
-                 <div className="logo-blue">upload<b className="logo-white">express</b></div>
-                  {props.children}
+            <div className="d-flex flex-column align-items-center" style={{ padding: "10px 16px 0 16px" }}>
+                <div className="menu">
+                    <ReactFlagsSelect
+                        countries={i18n.languages} selectedSize={14} optionsSize={12} defaultCountry={currLang} placeholder="Select Language" onSelect={onSelectFlag} /></div>
+                <div className="logo-blue">upload<b className="logo-white">express</b></div>
+                {props.children}
             </div>
-            
-
-            </div>
-
+        </div>
     )
 }
 
