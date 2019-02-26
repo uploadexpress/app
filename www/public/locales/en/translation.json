@@ -1,0 +1,50 @@
+{
+    "upload":{
+        "dropfile": "Drop your files here",
+        "linkPreview": {
+            "title": "Share your link",
+            "done": "You're done!",
+            "copyLink": "Copy your download link: ",
+            "copy": "Copy",
+            "copied": "Copied!"
+        },
+        "listFile": {
+            "title": "Your files",
+            "addFile": "Add file",
+            "upload": "Upload"
+        }
+    },
+
+    "panel":{
+        "uploadList":{
+            "title": "Your uploads",
+            "uploadFile": "Upload a new file",
+            "name": "Name",
+            "link": "Link",
+            "files": "Files",
+            "downloads": "Downloads"
+        },
+        "settings":{
+            "administration": "Administration",
+            "save": "Save changes",
+            "pageStyling": "Download page styling",
+            "title": "Title & description",
+            "titleDescription": "The information that will appear on the download page.",
+            "companyName": "The name of your company",
+            "companyDescription": "The description of your company",
+            "identity": "Identity",
+            "backgroundImage": "Background image",
+            "backgroundDescription": "The background image shown to your clients when downloading a file. This image should represent your company.",
+            "upload": "Upload Image",
+            "socialAccounts": "Social Accounts",
+            "links": "Links to your social accounts",
+            "urlFacebook": "URL of your Facebook Page",
+            "urlTweeter": "URL of your Twitter profile",
+            "urlInstagram": "URL of your Instagram profile"
+        }
+    },
+
+    "navbar":{
+        "uploads": "Your uploads"
+    }
+}

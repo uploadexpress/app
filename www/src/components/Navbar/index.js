@@ -1,6 +1,9 @@
-import React from 'react'
+import React from 'react';
+import {Link} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
+    const { t } = useTranslation();
     return (
         <nav className="navbar navbar-expand-lg navbar-dark navbar-ue ">
             <a className="navbar-brand" href="#">Company name</a>
@@ -10,16 +13,14 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Your uploads</a>
+                        <Link to='/panel' className="nav-link" >{t('navbar.uploads')}</Link>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Maxence Henneron
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                        <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <Link className="dropdown-link" to='/panel/settings'>Settings</Link>
                         </div>
                     </li>
                 </ul>
