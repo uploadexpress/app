@@ -14,7 +14,7 @@ class Upload extends Component {
 
     state = {
         id: null
-    } 
+    }
 
 
     onFilesSelected = (files) => {
@@ -41,13 +41,13 @@ class Upload extends Component {
                     {this.props.status === UploaderStatus.NO_FILES &&
                         <Dropfile onFilesSelected={this.onFilesSelected} />
                     }
-                    {(this.props.status === UploaderStatus.FILE_LIST || 
-                    this.props.status === UploaderStatus.UPLOADING) &&
+                    {(this.props.status === UploaderStatus.FILE_LIST ||
+                        this.props.status === UploaderStatus.UPLOADING) &&
                         <Listfiles onFilesSelected={this.onFilesSelected} onUploadCreated={this.onUploadCreated} files={this.props.files} />
                     }
                     {this.props.status === UploaderStatus.DONE &&
-                       <LinkPreview id={this.state.id}/>
-                        
+                        <LinkPreview id={this.state.id} />
+
                     }
                 </Modal>
             </Background>

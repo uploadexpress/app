@@ -1,0 +1,16 @@
+.setup-body{
+    height: 234px;
+}
+
+.setup-label{
+    margin-bottom: 0.2rem;
+    font-size:14px;
+    color:#363A3E;
+}
+
+.setup-password-error{
+    margin-top:6px;
+    font-size:14px;
+    color: #cc0000;
+}
+

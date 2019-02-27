@@ -7,10 +7,12 @@ import { Provider } from 'react-redux'
 import Settings from './scenes/Portal/Settings/components/index'
 import UploadList from './scenes/Portal/UploadList/components/index'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFolderPlus } from '@fortawesome/free-solid-svg-icons'
+import { faFolderPlus, faKey, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import Spinner from 'react-spinkit'
+import SignIn from './scenes/Portal/SignIn/components/index';
+import Setup from './scenes/Portal/Setup/components/index'
 
-library.add(faFolderPlus)
+library.add(faFolderPlus, faKey, faEnvelope)
 
 const store = configureStore();
 
@@ -25,6 +27,8 @@ class App extends Component {
               <Route path='/download/:id' component={Download} />
               <Route exact path='/panel' component={UploadList} />
               <Route path='/panel/settings' component={Settings} />
+              <Route path='/panel/signin' component={SignIn}/>
+              <Route path='/panel/setup' component={Setup}/>
             </div>
           </Suspense>
         </Provider>

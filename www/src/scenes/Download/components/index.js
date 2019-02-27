@@ -3,7 +3,7 @@ import Background from '../../../components/Background/index';
 import Modal from '../../../components/Modal/index';
 import File from './File';
 import '../style/index.css';
-import api from '../../../services/Api';
+import DownloadService from '../../../services/Api/DownloadService';
 import stringTruncate from '../../../helpers/stringTruncate'
 
 
@@ -13,9 +13,14 @@ class Download extends Component{
         files: []
     }
 
+    constructor() {
+        super();
+        this.downloadService = new DownloadService();
+    }
+
     componentDidMount(){
         let id = this.props.match.params.id;
-        api.getDownload(id).then((result) => {
+        this.downloadService.getDownload(id).then((result) => {
             this.setState({
                 files: result.data.files,
                 downloadId: result.data.id
@@ -24,7 +29,7 @@ class Download extends Component{
     }
 
     onFileDownload =(fileId) => {
-        api.getFileDownloadUrl(this.state.downloadId, fileId).then((result) => {
+        this.downloadService.getFileDownloadUrl(this.state.downloadId, fileId).then((result) => {
             window.location = result.data.url
         })
     }
@@ -44,7 +49,6 @@ class Download extends Component{
     }
 
     render(){
-        console.log(this.props)
         return(
             <Background>
                 <Modal>

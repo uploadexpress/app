@@ -19,7 +19,7 @@ code {
 }
 
 .logo-blue {
-  color: #95C6FF;
+  color: #cfe8ff;
   font-size: 26px;
   text-align: center;
   padding-top: 16px;
@@ -43,8 +43,6 @@ code {
 
 .upload-modal { 
   margin-top: 40px;
-  width: 364px;
-  height: 387px;
   background: white;
   border-radius: 10px;
 }
@@ -105,15 +103,14 @@ hr {
   color: white;
 }
 
-.dropdown-link{
-  color: #50565C;
-  text-decoration: none;
-  margin-left:14px;
+
+.dropdown-item:active{
+  background-color: #5BA3D4;
+  
 }
 
-.dropdown-link:hover{
-  color: #363A3F;
-  
+.cursor{
+  cursor: pointer;
 }
 
 

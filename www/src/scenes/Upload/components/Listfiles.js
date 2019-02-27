@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import File from './File';
-import api from '../../../services/Api'
+import UploadService from '../../../services/Api/UploadService'
 import uploadFile from '../../../services/FileUploader'
 import { promiseSerial } from '../../../helpers/promiseSerial';
 import { updateProgress, startUploading, endUploading } from '../actions';
@@ -18,6 +18,10 @@ class Listfiles extends Component {
         isButtonDisabled: false,
     }
 
+    constructor(){
+        super();
+        this.uploadService = new UploadService();
+    }
     
     onUploadProgress = (fileId, progressEvent) => {
         const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
@@ -56,7 +60,7 @@ class Listfiles extends Component {
 
         })
 
-        api.createUpload(files).then(res => {
+        this.uploadService.createUpload(files).then(res => {
             this.beginUpload(res.data);
         })
 

@@ -1,10 +1,12 @@
-import api from "../Api";
+import UploadService from "../../services/Api/UploadService";
 import axios from "axios";
 
 const startUploading = (uploadId, file, onUploadProgress) => {
+  const uploadService = new UploadService();
+
   return new Promise((resolve, reject) => {
     // Step 1 -> Fetch file url
-    api.getFileUploadUrl(uploadId, file.id).then((res) => {
+    uploadService.getFileUploadUrl(uploadId, file.id).then((res) => {
       // Step 2 -> upload it
       const url = res.data.url
 
