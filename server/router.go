@@ -52,19 +52,24 @@ func (a *API) SetupRouter() {
 		uploader := v1.Group("/uploader")
 		{
 			uploaderController := controllers.NewUploadController()
-			uploader.POST("/", uploaderController.CreateUpload)
+			uploader.POST("/", uploaderController.Create)
 			uploader.GET("/:upload_id/file/:file_id/upload_url", uploaderController.CreatePreSignedRequest)
 			uploader.Use(authMiddleware)
-			uploader.GET("/", uploaderController.ListUploads)
+			uploader.GET("/", uploaderController.Index)
 		}
 
 		downloader := v1.Group("/downloader")
 		{
 			downloaderController := controllers.NewDownloaderController()
-			downloader.GET("/:download_id", downloaderController.GetDownload)
+			downloader.GET("/:download_id", downloaderController.Show)
 			downloader.GET("/:download_id/file/:file_id/download_url", downloaderController.GetDownloadLink)
 		}
 
+		settings := v1.Group("/settings")
+		{
+			settingsController := controllers.NewSettingsController()
+			settings.GET("/", settingsController.Index)
+		}
 	}
 
 	router.LoadHTMLFiles("front/index.html")

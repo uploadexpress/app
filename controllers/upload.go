@@ -25,7 +25,7 @@ func NewUploadController() UploadController {
 	return UploadController{}
 }
 
-func (uploadController *UploadController) CreateUpload(c *gin.Context) {
+func (uploadController *UploadController) Create(c *gin.Context) {
 	upload := &models.Upload{}
 
 	if err := c.BindJSON(upload); err != nil {
@@ -49,7 +49,7 @@ func (uploadController *UploadController) CreateUpload(c *gin.Context) {
 	c.JSON(http.StatusOK, upload)
 }
 
-func (uploadController *UploadController) ListUploads(c *gin.Context) {
+func (uploadController *UploadController) Index(c *gin.Context) {
 	page := paging.NewFromParams(c.Request.URL.Query().Get("current_page"), c.Request.URL.Query().Get("size"))
 
 	uploads, err := store.FetchAllUploads(c, page)

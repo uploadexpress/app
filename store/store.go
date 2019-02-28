@@ -17,4 +17,8 @@ type Store interface {
 	FindUserById(string) (*models.User, error)
 	FindUser(params.M) (*models.User, error)
 	UserCount() (int, error)
+
+	CreateSettings([]models.Settings) error
+	SettingsCount() (int, error)
+	FetchAllSettings() ([]models.Settings, error)
 }

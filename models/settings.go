@@ -1,9 +1,9 @@
 package models
 
 type Settings struct {
-	Id    string `json:"id" bson:"_id"`
+	Id    string `json:"-" bson:"_id"`
 	Name  string `json:"name" bson:"name"`
-	Value string `json:"value" bson:"name"`
+	Value string `json:"value" bson:"value"`
 }
 
 const SettingsCollection = "settings"

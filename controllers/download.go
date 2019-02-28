@@ -21,7 +21,7 @@ func NewDownloaderController() DownloaderController {
 	return DownloaderController{}
 }
 
-func (downloaderController DownloaderController) GetDownload(c *gin.Context) {
+func (downloaderController DownloaderController) Show(c *gin.Context) {
 	downloadId := c.Param("download_id")
 
 	upload, err := store.FetchUpload(c, downloadId)

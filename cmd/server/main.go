@@ -1,10 +1,11 @@
 package main
 
 import (
+	"os"
+
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"github.com/uploadexpress/app/server"
-	"os"
 )
 
 func main() {
@@ -25,6 +26,11 @@ func main() {
 
 	// Router setup
 	api.SetupRouter()
+
+	api.SetupSeeds()
+	if err != nil {
+		panic(err)
+	}
 
 	port := ":" + os.Getenv("PORT")
 	if port == ":" {
