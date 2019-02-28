@@ -3,11 +3,14 @@ package store
 import (
 	"github.com/uploadexpress/app/helpers/params"
 	"github.com/uploadexpress/app/models"
+	"github.com/uploadexpress/app/store/paging"
 )
 
 type Store interface {
 	CreateUpload(*models.Upload) error
 	FetchUpload(string) (*models.Upload, error)
+	FetchAllUploads(page paging.Page) ([]*models.Upload, error)
+	UploadCount() (int, error)
 
 	CreateUser(*models.User) error
 	DeleteUser(*models.User, string) error

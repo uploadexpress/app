@@ -3,6 +3,8 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/uploadexpress/app/config"
+
 	"github.com/gin-gonic/gin"
 	"github.com/uploadexpress/app/helpers"
 	"github.com/uploadexpress/app/models"
@@ -15,7 +17,7 @@ func NewSetupController() SetupController {
 	return SetupController{}
 }
 
-func (sc *SetupController) IsAppSetup(c *gin.Context) {
+func (sc *SetupController) Status(c *gin.Context) {
 	userCount, err := store.UserCount(c)
 	if err != nil {
 		c.Error(err)
@@ -23,7 +25,7 @@ func (sc *SetupController) IsAppSetup(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"setup": userCount > 0})
+	c.JSON(http.StatusOK, gin.H{"active": userCount > 0})
 }
 
 func (sc *SetupController) SetupApp(c *gin.Context) {
@@ -53,5 +55,12 @@ func (sc *SetupController) SetupApp(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, user.Sanitize())
+	secret := config.GetString(c, "jwt_secret")
+	accessToken, err := helpers.GenerateAccessToken(secret, user.Id)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("token_generation_failed", "Could not generate the access token", err))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"token": accessToken, "user": user.Sanitize()})
 }

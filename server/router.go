@@ -30,15 +30,32 @@ func (a *API) SetupRouter() {
 	}))
 	router.Use(middlewares.StaticMiddleware("/", middlewares.StaticLocalFile("front", false)))
 
+	authMiddleware := middlewares.AuthMiddleware()
+
 	v1 := router.Group("/v1")
 	{
 		v1.GET("/", Index)
+
+		authentication := v1.Group("/auth")
+		{
+			authController := controllers.NewAuthController()
+			authentication.POST("/", authController.Authenticate)
+		}
+
+		setup := v1.Group("/setup")
+		{
+			setupController := controllers.NewSetupController()
+			setup.GET("/status", setupController.Status)
+			setup.POST("/", setupController.SetupApp)
+		}
 
 		uploader := v1.Group("/uploader")
 		{
 			uploaderController := controllers.NewUploadController()
 			uploader.POST("/", uploaderController.CreateUpload)
 			uploader.GET("/:upload_id/file/:file_id/upload_url", uploaderController.CreatePreSignedRequest)
+			uploader.Use(authMiddleware)
+			uploader.GET("/", uploaderController.ListUploads)
 		}
 
 		downloader := v1.Group("/downloader")
@@ -47,6 +64,7 @@ func (a *API) SetupRouter() {
 			downloader.GET("/:download_id", downloaderController.GetDownload)
 			downloader.GET("/:download_id/file/:file_id/download_url", downloaderController.GetDownloadLink)
 		}
+
 	}
 
 	router.LoadHTMLFiles("front/index.html")
