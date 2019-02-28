@@ -103,3 +103,14 @@
   top: 50%;
   transform: translate(0, -50%);
 }
+
+.upload-name{
+  margin-left: 20px;
+  margin-right:20px;
+}
+
+.upload-name-label{
+    font-size:14px;
+    color:#83878B;
+    margin-bottom: 8px;
+}

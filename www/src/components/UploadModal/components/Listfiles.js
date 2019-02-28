@@ -16,13 +16,14 @@ class Listfiles extends Component {
         uploadId: null,
         filesToUpload: [],
         isButtonDisabled: false,
+        uploadName: "Unnamed"
     }
 
-    constructor(){
+    constructor() {
         super();
         this.uploadService = new UploadService();
     }
-    
+
     onUploadProgress = (fileId, progressEvent) => {
         const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
         this.props.updateProgress(fileId, percentCompleted);
@@ -60,13 +61,20 @@ class Listfiles extends Component {
 
         })
 
-        this.uploadService.createUpload(files).then(res => {
+        this.uploadService.createUpload(files, this.state.uploadName).then(res => {
             this.beginUpload(res.data);
         })
 
         this.setState({
             isButtonDisabled: true
         });
+    }
+
+    uploadName = (e) => {
+        this.setState({
+            uploadName: e.target.value
+        })
+
     }
 
     renderFiles() {
@@ -88,13 +96,20 @@ class Listfiles extends Component {
 
         return (
             <div className="listfiles">
-                <div className="list-title">{t('upload.listFile.title')}</div>
-                <hr />
+                <div>
+                    <div className="list-title">{t('upload.listFile.title')}</div>
+                    {this.props.shouldDisplayName &&
+                        <div className="upload-name">
+                            <div class="input-group input-group-sm mb-3">   
+                            <input type="text" class="form-control" placeholder="Upload name" onChange = {this.uploadName}  />
+                        </div> </div>}
+                    <hr />
+                </div>
                 <div className='list-container'>
                     <Dropzone
                         onDrop={this.onDrop}
                         disableClick={true}
-                        disabled={this.props.status===UploaderStatus.UPLOADING}
+                        disabled={this.props.status === UploaderStatus.UPLOADING}
 
                     >
                         {({ getRootProps, getInputProps, open }) => (
@@ -102,7 +117,7 @@ class Listfiles extends Component {
                                 <input {...getInputProps()} />
 
                                 {this.renderFiles()}
-                                
+
                                 {this.props.status === UploaderStatus.FILE_LIST &&
                                     <div className="add-file" onClick={() => open()}>
                                         <FontAwesomeIcon className="add-file-img" icon="folder-plus" />
@@ -125,7 +140,7 @@ class Listfiles extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateProgress: (fileId, progress) => dispatch(updateProgress(fileId, progress)),
-        startUploading: () => dispatch(startUploading()), 
+        startUploading: () => dispatch(startUploading()),
         endUploading: () => dispatch(endUploading())
     }
 }

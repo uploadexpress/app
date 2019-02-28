@@ -1,5 +1,5 @@
 import React, { Component, Suspense } from 'react';
-import Upload from './scenes/Upload/components/index';
+import Upload from './scenes/Upload/components';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Download from './scenes/Download/components/index';
 import configureStore from './store'
@@ -10,7 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faFolderPlus, faKey, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import Spinner from 'react-spinkit'
 import SignIn from './scenes/Portal/SignIn/components/index';
-import Setup from './scenes/Portal/Setup/components/index'
+import Setup from './scenes/Portal/Setup/components/index';
 
 library.add(faFolderPlus, faKey, faEnvelope)
 

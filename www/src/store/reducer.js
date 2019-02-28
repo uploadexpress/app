@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import uploadReducer from '../scenes/Upload/reducer'
+import uploadReducer from '../components/UploadModal/reducer'
 
 const rootReducer = combineReducers({
   uploader: uploadReducer

@@ -1,10 +1,11 @@
 import Service from './service';
 
 class UploadService extends Service {
-  createUpload = (files) => {
+  createUpload = (files, name) => {
     let resourceUrl = "/uploader/"
     return this.http.post(resourceUrl, {
-      files: files
+      files: files,
+      name: name
     })
   }
 
@@ -13,9 +14,11 @@ class UploadService extends Service {
     return this.http.get(resourceUrl)
   }
 
-  getUploadList = () => {
+  getUploadList = (page) => {
     let resourceUrl = "/uploader/"
-    return this.http.get(resourceUrl)
+    return this.http.get(resourceUrl, {
+      params: {current_page: page}
+    })
   }
 }
 

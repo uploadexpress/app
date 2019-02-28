@@ -6,6 +6,7 @@ export const UPDATE_PROGRESS = 'UPDATE_PROGRESS';
 export const START_UPLOADING = 'START_UPLOADING';
 export const END_UPLOADING = 'END_UPLOADING';
 export const DELETE_FILE = 'DELETE_FILE';
+export const RESET_UPLOAD = 'RESET_UPLOAD'
 
 /** 
  * Actions
@@ -15,3 +16,4 @@ export const updateProgress = (fileId, progress) => { return { type: UPDATE_PROG
 export const startUploading = () => { return { type: START_UPLOADING } }
 export const endUploading = () => { return { type: END_UPLOADING } }
 export const deleteFile = (file) => { return { type: DELETE_FILE, file: file } }
+export const resetUpload = () => { return { type: RESET_UPLOAD } }

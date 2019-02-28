@@ -1,5 +1,5 @@
 import initialState from './initialState';
-import { ADD_FILES, UPDATE_PROGRESS, START_UPLOADING, END_UPLOADING, DELETE_FILE } from '../actions';
+import { ADD_FILES, UPDATE_PROGRESS, START_UPLOADING, END_UPLOADING, DELETE_FILE, RESET_UPLOAD } from '../actions';
 import { FileStatus, UploaderStatus } from '../constants';
 
 export default function upload(state = initialState, action) {
@@ -47,7 +47,14 @@ export default function upload(state = initialState, action) {
           }
           return file
         })
-      }  
+      } 
+      
+      case RESET_UPLOAD: 
+      return{
+        ...state,
+        status: UploaderStatus.NO_FILES,
+        files: []
+      }
     default:
       return state;
   }
