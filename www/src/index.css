@@ -25,7 +25,7 @@ code {
   width: 364px;
   max-width: 364px;
   max-height:100px; 
-  object-fit: contain;
+  object-fit: contain; 
 }
 
 .background-window{

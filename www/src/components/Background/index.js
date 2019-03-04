@@ -24,7 +24,6 @@ const Background = (props) => {
     }
 
     const currLang = i18n.language.split('-')[0].toUpperCase()
-    console.log(props)
     return (
         <div style={backgroundStyle} className="background">
             <div className="background-window" style={{alignItems: props.settings.upload_position}}>
