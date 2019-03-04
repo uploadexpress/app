@@ -12,6 +12,7 @@ import Setup from './scenes/Portal/Setup/components/index';
 import SettingsService from './services/Api/SettingsService';
 import { connect } from 'react-redux';
 import { setSettings } from './scenes/Portal/Settings/actions';
+import Preview from './scenes/Portal/Settings/components/Preview'
 import { faFacebookF, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons' 
 
 library.add(faFolderPlus, faKey, faEnvelope, faFacebookF, faTwitter, faInstagram)
@@ -33,9 +34,10 @@ class App extends Component {
             <Route exact path='/' component={Upload} />
             <Route path='/download/:id' component={Download} />
             <Route exact path='/panel' component={UploadList} />
-            <Route path='/panel/settings' component={Settings} />
+            <Route exact path='/panel/settings' component={Settings} />
             <Route path='/panel/signin' component={SignIn} />
             <Route path='/panel/setup' component={Setup} />
+            <Route path='/panel/settings/preview' component={Preview} />
           </div>
         </Suspense>
       </BrowserRouter>
