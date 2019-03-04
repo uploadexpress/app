@@ -19,6 +19,12 @@
     border-top: 1px solid #979797;
 }
 
+.settings-saved {
+    color: #87D483;
+    font-weight: bold;
+    font-size: 16px;
+}
+
 .settings-section{
     color:#50565C;
     font-size: 18px;
@@ -30,6 +36,7 @@
     color:#3F454A;
     font-size: 16px;
     margin-top:12px;
+    margin-bottom: 0px;
 }
 
 .settings-subtitle{
@@ -46,6 +53,10 @@
 .settings-input-description{
     font-size:10px;
     color:#83878B;
+}
+
+.twitter-picker{
+    background: #F8F8F8!important;
 }
 
 .btn-pannel-grey{

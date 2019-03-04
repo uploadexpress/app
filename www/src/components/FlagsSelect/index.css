@@ -3,7 +3,6 @@
     display: inline-block;
     vertical-align: inherit;
     padding-bottom: 5px;
-    color: white;
     font-weight: bold;
     text-align: left; }
     .flag-select img {
@@ -67,7 +66,6 @@
         .flag-select .filterBox input:focus {
           outline: none; }
     .flag-select .arrow-down {
-      color: white;
       padding: 6px; }
     .flag-select .hidden {
       display: none; }
