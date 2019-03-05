@@ -3,20 +3,14 @@ package controllers
 import (
 	"fmt"
 	"net/http"
-	"time"
 
-	"github.com/uploadexpress/app/store/paging"
-
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/gin-gonic/gin"
-	"github.com/uploadexpress/app/config"
 	"github.com/uploadexpress/app/constants"
 	"github.com/uploadexpress/app/helpers"
 	"github.com/uploadexpress/app/models"
+	"github.com/uploadexpress/app/services/s3"
 	"github.com/uploadexpress/app/store"
+	"github.com/uploadexpress/app/store/paging"
 )
 
 type UploadController struct{}
@@ -70,19 +64,6 @@ func (uploadController *UploadController) Index(c *gin.Context) {
 }
 
 func (uploadController *UploadController) CreatePreSignedRequest(c *gin.Context) {
-	sess, err := session.NewSession(&aws.Config{
-		Credentials: credentials.NewStaticCredentials(
-			config.FromContext(c).GetString("aws_access_key_id"),
-			config.FromContext(c).GetString("aws_secret_access_key"),
-			"", // a token will be created when the session it's used.
-		),
-		Region: aws.String(config.FromContext(c).GetString("aws_region"))},
-	)
-	if err != nil {
-		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_aws_credentials", "The server has invalid AWS credentials", err))
-		return
-	}
-
 	uploadId := c.Param("upload_id")
 	upload, err := store.FetchUpload(c, uploadId)
 	if err != nil {
@@ -102,12 +83,7 @@ func (uploadController *UploadController) CreatePreSignedRequest(c *gin.Context)
 		return
 	}
 
-	svc := s3.New(sess)
-	req, _ := svc.PutObjectRequest(&s3.PutObjectInput{
-		Bucket: aws.String(config.FromContext(c).GetString("aws_bucket")),
-		Key:    aws.String(uploadId + "/" + file.Id + "/" + file.Name),
-	})
-	str, err := req.Presign(time.Hour)
+	str, err := s3.CreatePutObjectPreSignedUrl(c, uploadId, *file)
 	if err != nil {
 		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("request_sign_failed", "Failed to sign request", nil))
 	}

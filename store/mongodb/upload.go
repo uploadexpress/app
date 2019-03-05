@@ -64,3 +64,16 @@ func (db *mongo) UploadCount() (int, error) {
 
 	return count, nil
 }
+
+func (db *mongo) UpdateDownloadCount(uploadId string) error {
+	session := db.Session.Copy()
+	defer session.Close()
+	uploads := db.C(models.UploadsCollection).With(session)
+
+	err := uploads.Update(bson.M{"_id": uploadId}, bson.M{"$inc": bson.M{"download_count": 1}})
+	if err != nil {
+		return helpers.NewError(http.StatusInternalServerError, "upload_download_count_increment_failed", "Failed to increment the download count", err)
+	}
+
+	return nil
+}

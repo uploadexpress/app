@@ -63,12 +63,18 @@ func (a *API) SetupRouter() {
 			downloaderController := controllers.NewDownloaderController()
 			downloader.GET("/:download_id", downloaderController.Show)
 			downloader.GET("/:download_id/file/:file_id/download_url", downloaderController.GetDownloadLink)
+			downloader.GET("/:download_id/zip", downloaderController.DownloadZip)
 		}
 
 		settings := v1.Group("/settings")
 		{
 			settingsController := controllers.NewSettingsController()
 			settings.GET("/", settingsController.Index)
+			uploader.Use(authMiddleware)
+			settings.PUT("/", settingsController.Edit)
+			settings.POST("/logo/", settingsController.CreateLogo)
+			settings.POST("/background/", settingsController.CreateBackground)
+			settings.DELETE("/background/:id/", settingsController.DeleteBackground)
 		}
 	}
 

@@ -17,7 +17,7 @@ func (db *mongo) CreateUser(user *models.User) error {
 	user.Id = bson.NewObjectId().Hex()
 	err := user.BeforeCreate()
 	if err != nil {
-		return err
+		return helpers.NewError(http.StatusBadRequest, "input_not_valid", err.Error(), err)
 	}
 
 	if count, _ := users.Find(bson.M{"email": user.Email}).Count(); count > 0 {

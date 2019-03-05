@@ -22,3 +22,7 @@ func FetchAllUploads(c context.Context, page paging.Page) ([]*models.Upload, err
 func UploadCount(c context.Context) (int, error) {
 	return FromContext(c).UploadCount()
 }
+
+func UpdateDownloadCount(c context.Context, uploadId string) error {
+	return FromContext(c).UpdateDownloadCount(uploadId)
+}

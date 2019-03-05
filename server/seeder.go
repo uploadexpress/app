@@ -14,7 +14,7 @@ func (a *API) SetupSeeds() error {
 	}
 
 	if settingsCount == 0 {
-		settingsDefaults := []models.Settings{
+		settingsDefaults := []models.Setting{
 			{
 				Name:  "name",
 				Value: "upload.express",
@@ -22,6 +22,34 @@ func (a *API) SetupSeeds() error {
 			{
 				Name:  "description",
 				Value: "A file uploading service",
+			},
+			{
+				Name:  "color",
+				Value: "#ffffff",
+			},
+			{
+				Name:  "menu_position",
+				Value: "flex-end",
+			},
+			{
+				Name:  "upload_position",
+				Value: "center",
+			},
+			{
+				Name:  "backgrounds",
+				Value: []models.Image{},
+			},
+			{
+				Name:  "transition_duration",
+				Value: 15,
+			},
+			{
+				Name:  "logo",
+				Value: nil,
+			},
+			{
+				Name:  "public_uploader",
+				Value: false,
 			},
 			{
 				Name:  "twitter",

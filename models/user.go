@@ -1,11 +1,9 @@
 package models
 
 import (
-	"net/http"
 	"strings"
 
 	"github.com/asaskevich/govalidator"
-	"github.com/uploadexpress/app/helpers"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -29,13 +27,13 @@ func (user *User) BeforeCreate() error {
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
-		return helpers.NewError(http.StatusInternalServerError, "encryption_failed", "Failed to generate the crypted password", err)
+		return err
 	}
 	user.Password = string(hashedPassword)
 
 	_, err = govalidator.ValidateStruct(user)
 	if err != nil {
-		return helpers.NewError(http.StatusBadRequest, "input_not_valid", err.Error(), err)
+		return err
 	}
 
 	return nil

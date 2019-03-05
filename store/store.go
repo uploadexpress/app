@@ -11,6 +11,7 @@ type Store interface {
 	FetchUpload(string) (*models.Upload, error)
 	FetchAllUploads(page paging.Page) ([]*models.Upload, error)
 	UploadCount() (int, error)
+	UpdateDownloadCount(string) error
 
 	CreateUser(*models.User) error
 	DeleteUser(*models.User, string) error
@@ -18,7 +19,12 @@ type Store interface {
 	FindUser(params.M) (*models.User, error)
 	UserCount() (int, error)
 
-	CreateSettings([]models.Settings) error
+	CreateSettings([]models.Setting) error
 	SettingsCount() (int, error)
-	FetchAllSettings() ([]models.Settings, error)
+	FetchAllSettings() ([]models.Setting, error)
+	FetchSetting(string) (*models.Setting, error)
+	EditSettings([]models.Setting) ([]models.Setting, error)
+	EditSetting(models.Setting) ([]models.Setting, error)
+	PutBackground(models.Image) error
+	RemoveBackground(string) error
 }
