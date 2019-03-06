@@ -23,7 +23,7 @@ class Download extends Component {
 
      onZipDownload = () => {
          return(
-            this.props.history.push(`/downloader/${this.state.downloadId}/zip`)
+            this.props.history.push(`/v1/downloader/${this.state.downloadId}/zip`)
          )
      }
 
