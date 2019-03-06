@@ -1,38 +1,83 @@
 import React from 'react';
 import ReactFlagsSelect from '../FlagsSelect';
-import { useTranslation } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { connect } from 'react-redux';
 
-
-const backgroundStyle = {
-    backgroundImage: `url('https://source.unsplash.com/random/1600x900')`,
-    height: '100vh',
-    width: '100%',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    position: 'relative'
+const backgroundStyle = (image) => {
+    return {
+        backgroundImage: `url(${image})`,
+        height: '100vh',
+        width: '100%',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundColor: 'black',
+        position: 'relative',
+        transition: '2s'
+    }
 }
 
-const Background = (props) => {
-    const { i18n } = useTranslation();
-
-    const onSelectFlag = (countryCode) => {
-        i18n.changeLanguage(countryCode);
+class Background extends React.Component {
+    state = {
+        backgroundUrl: null,
+        currentIndex: 0
+    }
+    
+    componentDidMount = () => {
+        if (this.props.settings.backgrounds.length > 0) {
+            this.props.settings.backgrounds.forEach((element) => {new Image().src = element.url})
+            this.setState({
+                backgroundUrl: this.props.settings.backgrounds[0].url,
+                currentIndex: 0
+            })
+        }
+        setInterval(this.changeBackgroundImage, 5000)
     }
 
-    const currLang = i18n.language.split('-')[0].toUpperCase()
+    changeBackgroundImage = () => {
+        if (this.props.settings.backgrounds.length > 0) {
+            const index = this.state.currentIndex >= this.props.settings.backgrounds.length-1 ? 0 : this.state.currentIndex+1
+            this.setState({
+                backgroundUrl: this.props.settings.backgrounds[index].url,
+                currentIndex: index
+            })
+        }
+    }
 
-    return (
-        <div style={backgroundStyle} className="background">
-            <div className="d-flex flex-column align-items-center" style={{ padding: "10px 16px 0 16px" }}>
-                <div className="menu">
-                    <ReactFlagsSelect
-                        countries={i18n.languages} selectedSize={14} optionsSize={12} defaultCountry={currLang} placeholder="Select Language" onSelect={onSelectFlag} /></div>
-                <div className="logo-blue">upload<b className="logo-white">express</b></div>
-                {props.children}
+    render() {
+        const { i18n } = this.props;
+        const onSelectFlag = (countryCode) => {
+            i18n.changeLanguage(countryCode);
+        }
+        const currLang = i18n.language.split('-')[0].toUpperCase()
+
+        return (
+            <div style={backgroundStyle(this.state.backgroundUrl)} className="background">
+                <div className="background-window" style={{ alignItems: this.props.settings.upload_position }}>
+                    <div className="menu" style={{ color: this.props.settings.color, justifyContent: this.props.settings.menu_position }} >
+                        <a className="menu-link" href={this.props.settings.facebook} rel="noopener noreferrer" target="_blank"><FontAwesomeIcon className="social-account" icon={['fab', 'facebook-f']} /> </a>
+                        <a className="menu-link" href={this.props.settings.twitter} rel="noopener noreferrer" target="_blank"><FontAwesomeIcon className="social-account" icon={['fab', 'twitter']} /></a>
+                        <a className="menu-link" href={this.props.settings.instagram} rel="noopener noreferrer" target="_blank"><FontAwesomeIcon className="social-account" href={this.props.settings.instagram} icon={['fab', 'instagram']} /></a>
+                        <ReactFlagsSelect
+                            countries={i18n.languages} selectedSize={14} optionsSize={12} defaultCountry={currLang} placeholder="Select Language" onSelect={onSelectFlag} />
+                    </div>
+                    {this.props.settings.logo &&
+                        <div className="logo">
+                            <img src={this.props.settings.logo.url} alt="" />
+                        </div>
+                    }
+                    {this.props.children}
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
-export default Background
+const mapStateToProps = (state) => {
+    return {
+        settings: state.settings
+    }
+}
+
+export default withTranslation()(connect(mapStateToProps)(Background))

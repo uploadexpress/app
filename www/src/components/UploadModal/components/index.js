@@ -73,8 +73,7 @@ Listfiles.defaultProps = {
 }
 
 Modal.propTypes = {
-	shouldDisplayName: PropTypes.boolean, 
-
+	shouldDisplayName: PropTypes.bool, 
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Upload);

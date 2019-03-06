@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import Background from '../../../components/Background/index';
-import Modal from '../../../components/Modal/index';
-import File from './File';
-import '../style/index.css';
+import DownloadModal from '../../../components/DownloadModal/components';
 import DownloadService from '../../../services/Api/DownloadService';
-import stringTruncate from '../../../helpers/stringTruncate'
 
 
-class Download extends Component{
-    state = {
-        downloadId: null,
-        files: []
+class Download extends Component {
+
+    state={
+        files: [],
+        downloadId: null
     }
 
     constructor() {
@@ -18,7 +15,19 @@ class Download extends Component{
         this.downloadService = new DownloadService();
     }
 
-    componentDidMount(){
+    onFileDownload = (fileId) => {
+        this.downloadService.getFileDownloadUrl(this.state.downloadId, fileId).then((result) => {
+       window.location = result.data.url
+      })
+     }
+
+     onZipDownload = () => {
+         return(
+            this.props.history.push(`/v1/downloader/${this.state.downloadId}/zip`)
+         )
+     }
+
+    componentDidMount() {
         let id = this.props.match.params.id;
         this.downloadService.getDownload(id).then((result) => {
             this.setState({
@@ -28,46 +37,11 @@ class Download extends Component{
         })
     }
 
-    onFileDownload =(fileId) => {
-        this.downloadService.getFileDownloadUrl(this.state.downloadId, fileId).then((result) => {
-            window.location = result.data.url
-        })
-    }
+    render() {
 
-    renderFiles() {
-        return this.state.files.map(file => {
-            return (
-                <File
 
-                    name={stringTruncate(file.name, 25)}
-                    id={ file.id }
-                    size={file.size}
-                    onFileDownload={this.onFileDownload}
-                />
-            )
-        })
-    }
-
-    render(){
         return(
-            <Background>
-                <Modal>
-                <div className="listfiles">
-                <div className="list-title">Download</div>
-                <hr />
-                <div className='list-container'>
-                    {this.renderFiles()}
-
-                </div>
-
-                <div className="list-footer">
-                   {/* <button className="green-btn">Download</button> */}
-                    <div className= "expire-text">expires in 7 days</div>
-                </div>
-            </div>
-
-                </Modal>
-            </Background>
+            <DownloadModal files={this.state.files} onZipDownload={this.onZipDownload} onFileDownload={this.onFileDownload}/>
         )
     }
 }

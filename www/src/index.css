@@ -16,25 +16,50 @@ code {
   min-height: 626px;
   padding:16px;
   
+  
 }
 
-.logo-blue {
-  color: #cfe8ff;
-  font-size: 26px;
+.logo img {
   text-align: center;
   padding-top: 16px;
+  width: 364px;
+  max-width: 364px;
+  max-height:100px; 
+  object-fit: contain; 
 }
 
-.logo-white {
-  color: white;
-  font-size: 26px;
+.background-window{
+  display:flex;
+  flex-direction: column;
+  padding: 10px 16px 0 16px;
 }
 
-.menu{
- color:white;
- width:100%;
+.menu {
+ width: 100%;
  display:flex;
  justify-content: flex-end;
+}
+
+.menu-link{
+  color: inherit;
+}
+
+.menu-link:hover {
+  color: inherit;
+  opacity: 0.7;
+  
+}
+
+.spinner {
+  height:100vh;
+}
+
+
+
+.social-account{
+  margin-top: 3px;
+  font-size: 18px;
+  margin-left: 14px;
 }
 
 .flag-select img{
@@ -158,5 +183,4 @@ hr {
   color: white;
   outline: none;
 }
-
 

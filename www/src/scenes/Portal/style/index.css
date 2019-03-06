@@ -19,6 +19,12 @@
     border-top: 1px solid #979797;
 }
 
+.settings-saved {
+    color: #87D483;
+    font-weight: bold;
+    font-size: 16px;
+}
+
 .settings-section{
     color:#50565C;
     font-size: 18px;
@@ -30,6 +36,7 @@
     color:#3F454A;
     font-size: 16px;
     margin-top:12px;
+    margin-bottom: 0px;
 }
 
 .settings-subtitle{
@@ -48,9 +55,18 @@
     color:#83878B;
 }
 
+.settings-container {
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.sketch-picker{
+    margin: 0 auto;
+}
+
 .btn-pannel-grey{
     background: white;
-    color: #83878B;
+    color: #83878B!important;
     border-color: #83878B;
     border-radius: 6px;
     font-size: 14px;
@@ -58,7 +74,7 @@
 
 .btn-pannel-grey:hover{
     background: #83878B;
-    color:white;
+    color:white!important;
 }
 
 
@@ -76,4 +92,20 @@
     font-size:14px;
 }
 
+
+.input-logo{
+    display: none;
+}
+
+.settings-img-preview{
+    object-fit:contain;
+}
+
+.settings-delete-btn{
+    color: #cc0000
+}
+
+.settings-delete-btn:hover{
+    color: #830000
+}
 
