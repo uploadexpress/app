@@ -12,23 +12,27 @@ import Setup from './scenes/Portal/Setup/components/index';
 import SettingsService from './services/Api/SettingsService';
 import { connect } from 'react-redux';
 import { setSettings } from './scenes/Portal/Settings/actions';
-import Preview from './scenes/Portal/Settings/components/Preview'
-import { faFacebookF, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons' 
+import { faFacebookF, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons'
 
 library.add(faFolderPlus, faKey, faEnvelope, faFacebookF, faTwitter, faInstagram)
 
 class App extends Component {
-
+  state = {
+    loading: true
+  }
 
   componentDidMount() {
     this.settingsService = new SettingsService();
     this.settingsService.getSettings().then((settings) => {
-      this.props.setSettings(settings.data)
+      this.props.setSettings(settings.data);
+      this.setState({ loading: false });
     })
   }
+
   render() {
-    return (
-      <BrowserRouter>
+    return this.state.loading ?
+      (<div className=" spinner d-flex justify-content-center align-items-center"><Spinner/></div>) :
+      (<BrowserRouter>
         <Suspense fallback={<Spinner />}>
           <div className="App">
             <Route exact path='/' component={Upload} />
@@ -37,11 +41,9 @@ class App extends Component {
             <Route exact path='/panel/settings' component={Settings} />
             <Route path='/panel/signin' component={SignIn} />
             <Route path='/panel/setup' component={Setup} />
-            <Route path='/panel/settings/preview' component={Preview} />
           </div>
         </Suspense>
-      </BrowserRouter>
-    );
+      </BrowserRouter>)
   }
 }
 

@@ -19,6 +19,16 @@ class SettingsService extends Service {
         let resourceUrl ='/settings/logo/'
         return this.http.post(resourceUrl, logo)
     }
+
+    sendBackground = (background) => {
+        let resourceUrl = '/settings/background/'
+        return this.http.post(resourceUrl, background)
+    }
+
+    deleteBackground = (backgroundId) => {
+        let resourceUrl=`/settings/background/${backgroundId}/`
+        return this.http.delete(resourceUrl)
+    }
 }
 
 export default SettingsService

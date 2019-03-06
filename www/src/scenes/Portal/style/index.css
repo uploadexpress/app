@@ -55,13 +55,18 @@
     color:#83878B;
 }
 
-.twitter-picker{
-    background: #F8F8F8!important;
+.settings-container {
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.sketch-picker{
+    margin: 0 auto;
 }
 
 .btn-pannel-grey{
     background: white;
-    color: #83878B;
+    color: #83878B!important;
     border-color: #83878B;
     border-radius: 6px;
     font-size: 14px;
@@ -69,7 +74,7 @@
 
 .btn-pannel-grey:hover{
     background: #83878B;
-    color:white;
+    color:white!important;
 }
 
 
@@ -87,4 +92,20 @@
     font-size:14px;
 }
 
+
+.input-logo{
+    display: none;
+}
+
+.settings-img-preview{
+    object-fit:contain;
+}
+
+.settings-delete-btn{
+    color: #cc0000
+}
+
+.settings-delete-btn:hover{
+    color: #830000
+}
 

@@ -1,5 +1,5 @@
 import initState from './initState'
-import { SET_SETTINGS, SET_SETTING } from '../actions';
+import { SET_SETTINGS, SET_SETTING, DELETE_BACKGROUND } from '../actions';
 
 export default function settings(state = initState, action) {
     switch (action.type) {
@@ -9,10 +9,18 @@ export default function settings(state = initState, action) {
                 ...action.settings
             }
         case SET_SETTING:
-        return {
-            ...state,
-            [action.name]: action.value
-        }
+            return {
+                ...state,
+                [action.name]: action.value
+            }
+        case DELETE_BACKGROUND:
+            let backgrounds = state.backgrounds.filter((background) => {
+                return background.id !== action.id
+            })
+            return {
+                ...state,
+                backgrounds
+            }
         default:
             return state;
     }

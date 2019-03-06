@@ -58,8 +58,6 @@ class UploadList extends Component {
         })
     }
 
-
-
     render() {
         const { t } = this.props;
         return (
@@ -104,7 +102,7 @@ class UploadList extends Component {
                                                         )}
                                                 </td>
                                                 <td className="table-body-title">{row.files.length}</td>
-                                                <td className="table-body-title">100</td>
+                                                <td className="table-body-title">{row.download_count}</td>
                                             </tr>
                                         )
                                     })}
