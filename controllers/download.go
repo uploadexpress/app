@@ -4,7 +4,6 @@ import (
 	"archive/zip"
 	"io"
 	"net/http"
-	"net/url"
 
 	"github.com/gin-gonic/gin"
 	"github.com/uploadexpress/app/helpers"
@@ -92,7 +91,7 @@ func (downloaderController DownloaderController) DownloadZip(c *gin.Context) {
 		}
 
 		header := &zip.FileHeader{
-			Name:   url.PathEscape(file.Name),
+			Name:   file.Name,
 			Method: zip.Deflate,
 			Flags:  0x800,
 		}
@@ -107,6 +106,5 @@ func (downloaderController DownloaderController) DownloadZip(c *gin.Context) {
 
 		reader.Close()
 	}
-
 	zipWriter.Close()
 }
