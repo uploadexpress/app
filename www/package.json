@@ -36,7 +36,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "./node_modules/.bin/eslint src/**/*.js",
+    "lint:fix": "./node_modules/.bin/eslint src/**/*.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -48,6 +50,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "eslint": "^5.15.1",
+    "eslint-plugin-react": "^7.12.4",
     "redux-logger": "^3.0.6"
   }
 }
