@@ -129,7 +129,7 @@ class UploadList extends Component {
                     <div>
                         <div className='portal-upload-background' onClick={this.handleClick}></div>
                         <div className='portal-upload'>
-                            <UploadModal shouldDisplayName={true} />
+                            <UploadModal public={false} shouldDisplayName={true} />
                         </div>
                     </div>
                 }

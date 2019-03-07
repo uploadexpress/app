@@ -3,7 +3,7 @@ import Background from '../../Background';
 import Modal from '../../Modal';
 import File from './File';
 import '../style/index.css';
-import stringTruncate from '../../../helpers/stringTruncate'
+import { Link } from 'react-router-dom'
 
 class DownloadModal extends Component {
    
@@ -13,7 +13,7 @@ class DownloadModal extends Component {
         return this.props.files.map(file => {
             return (
                 <File
-                    name={stringTruncate(file.name, 25)}
+                    name={file.name}
                     id={file.id}
                     size={file.size}
                     onFileDownload={this.props.onFileDownload}
@@ -25,6 +25,7 @@ class DownloadModal extends Component {
     render() {
         return (
             <Background>
+                <div className="d-flex">
                 <Modal>
                     <div className="listfiles">
                         <div className="list-title">Download</div>
@@ -34,12 +35,20 @@ class DownloadModal extends Component {
                         </div>
 
                         <div className="list-footer">
-                             <button onClick = {this.props.onZipDownload} className="green-btn">Download</button> 
+                             <button onClick = {this.props.onZipDownload} className="green-btn">Download</button>
+
+                             {this.props.preview &&
+                                <Link to="/preview" className="preview-btn"> Preview </Link>
+                             } 
+
+                             
                         
                         </div>
                     </div>
 
                 </Modal>
+
+                </div>
             </Background>
         )
     }

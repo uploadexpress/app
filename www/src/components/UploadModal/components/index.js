@@ -43,7 +43,7 @@ class Upload extends Component {
                 }
                 {(this.props.status === UploaderStatus.FILE_LIST ||
                     this.props.status === UploaderStatus.UPLOADING) &&
-                    <Listfiles shouldDisplayName={this.props.shouldDisplayName} onFilesSelected={this.onFilesSelected} onUploadCreated={this.onUploadCreated} files={this.props.files} />
+                    <Listfiles public={this.props.public} shouldDisplayName={this.props.shouldDisplayName} onFilesSelected={this.onFilesSelected} onUploadCreated={this.onUploadCreated} files={this.props.files} />
                 }
                 {this.props.status === UploaderStatus.DONE &&
                     <LinkPreview id={this.state.id} />

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="33px" height="37px" viewBox="0 0 33 37" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>zip-file</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="21.3461538" width="21.3461538" height="9.96153846" rx="1.42307692"></rect>
+        <filter x="-2.3%" y="-5.0%" width="109.4%" height="120.1%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.75696216   0 0 0 0 0.75696216   0 0 0 0 0.75696216  0 0 0 1 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Uploading-view" transform="translate(-544.000000, -545.000000)">
+            <g id="Box" transform="translate(512.000000, 315.000000)">
+                <g id="Item" transform="translate(28.000000, 122.000000)">
+                    <g id="zip-file" transform="translate(4.000000, 108.000000)">
+                        <g id="file" transform="translate(1.423077, 0.000000)">
+                            <path d="M2.84615385,0 L26.6154396,0 L31.3076923,6.58789627 L31.3076923,34.1538462 C31.3076923,35.7257335 30.0334258,37 28.4615385,37 L2.84615385,37 C1.27426648,37 6.36589893e-16,35.7257335 4.4408921e-16,34.1538462 L-4.4408921e-16,2.84615385 C-6.36589893e-16,1.27426648 1.27426648,2.88751025e-16 2.84615385,0 Z" id="Rectangle" fill="#D8D8D8"></path>
+                            <path d="M26.8400693,0 C25.4651175,2.37562516 25.2479081,4.33757119 26.188441,5.88583809 C27.128974,7.43410499 28.8353911,7.52016793 31.3076923,6.14402691 L26.8400693,0 Z" id="Path-2" fill="#918C8C"></path>
+                        </g>
+                        <g id="Rectangle" fill-rule="nonzero">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                            <use fill="#E9D90A" xlink:href="#path-1"></use>
+                        </g>
+                        <text id="ZIP" fill="#FFFFFF" font-family="CircularStd-Book, Circular Std" font-size="7.11538462" font-weight="300" letter-spacing="0.270384612">
+                            <tspan x="4.26923077" y="28.3461538">ZIP</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

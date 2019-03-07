@@ -10,8 +10,8 @@ const Modal = (props) => {
 }
 
 Modal.defaultProps = {
-    height: 387,
-    width: 364
+    height: 370,
+    width: 314
 }
 
 Modal.propTypes = {

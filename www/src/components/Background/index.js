@@ -45,6 +45,14 @@ class Background extends React.Component {
         }
     }
 
+    withHttp = (url) =>{
+        if (!/^https?:\/\//i.test(url)) {
+            url = 'http://' + url;
+        }
+        return url
+    } 
+
+
     render() {
         const { i18n } = this.props;
         const onSelectFlag = (countryCode) => {
@@ -56,9 +64,19 @@ class Background extends React.Component {
             <div style={backgroundStyle(this.state.backgroundUrl)} className="background">
                 <div className="background-window" style={{ alignItems: this.props.settings.upload_position }}>
                     <div className="menu" style={{ color: this.props.settings.color, justifyContent: this.props.settings.menu_position }} >
-                        <a className="menu-link" href={this.props.settings.facebook} rel="noopener noreferrer" target="_blank"><FontAwesomeIcon className="social-account" icon={['fab', 'facebook-f']} /> </a>
-                        <a className="menu-link" href={this.props.settings.twitter} rel="noopener noreferrer" target="_blank"><FontAwesomeIcon className="social-account" icon={['fab', 'twitter']} /></a>
-                        <a className="menu-link" href={this.props.settings.instagram} rel="noopener noreferrer" target="_blank"><FontAwesomeIcon className="social-account" href={this.props.settings.instagram} icon={['fab', 'instagram']} /></a>
+                        {this.props.settings.website &&
+                            <a className="menu-link" href={this.withHttp(this.props.settings.website)} rel="noopener noreferrer" target="_blank" >Website</a>
+                        }
+                        {this.props.settings.facebook &&
+                            <a className="menu-link" href={this.withHttp(this.props.settings.facebook)} rel="noopener noreferrer" target="_blank"><FontAwesomeIcon className="social-account" icon={['fab', 'facebook-f']} /> </a>
+                        }
+                        {this.props.settings.twitter &&
+                            <a className="menu-link" href={this.withHttp(this.props.settings.twitter)} rel="noopener noreferrer" target="_blank"><FontAwesomeIcon className="social-account" icon={['fab', 'twitter']} /></a>
+                        }
+                        {this.props.settings.instagram &&
+                            <a className="menu-link" href={this.withHttp(this.props.settings.instagram)} rel="noopener noreferrer" target="_blank"><FontAwesomeIcon className="social-account" href={this.props.settings.instagram} icon={['fab', 'instagram']} /></a>
+                        }
+
                         <ReactFlagsSelect
                             countries={i18n.languages} selectedSize={14} optionsSize={12} defaultCountry={currLang} placeholder="Select Language" onSelect={onSelectFlag} />
                     </div>

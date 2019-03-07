@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="27px" height="26px" viewBox="0 0 27 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="32px" height="37px" viewBox="0 0 32 37" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
-    <title>file</title>
+    <title>pdf-file</title>
     <desc>Created with Sketch.</desc>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Uploading-view" transform="translate(-549.000000, -382.000000)">
-            <g id="Box" transform="translate(517.000000, 298.000000)">
-                <g id="Item" transform="translate(32.000000, 79.000000)">
-                    <g id="file" transform="translate(0.000000, 4.000000)">
-                        <path d="M2,1 L22.9533644,1 L27,5.62933252 L27,25 C27,26.1045695 26.1045695,27 25,27 L2,27 C0.8954305,27 1.3527075e-16,26.1045695 0,25 L0,3 C-1.3527075e-16,1.8954305 0.8954305,1 2,1 Z" id="Rectangle" fill="#D8D8D8"></path>
-                        <path d="M22.9469541,0.973420325 C21.6962303,2.7717679 21.4986459,4.25696049 22.354201,5.42899809 C23.2097561,6.6010357 24.761997,6.66618532 27.0109238,5.62444696 L22.9469541,0.973420325 Z" id="Path-2" fill="#918C8C"></path>
+        <g id="Uploading-view" transform="translate(-544.000000, -394.000000)">
+            <g id="Box" transform="translate(512.000000, 315.000000)">
+                <g id="Item" transform="translate(32.000000, 78.000000)">
+                    <g id="pdf-file" transform="translate(0.000000, 1.000000)">
+                        <g id="file" transform="translate(0.423077, 0.000000)">
+                            <path d="M2.84615385,0 L26.6154396,0 L31.3076923,6.58789627 L31.3076923,34.1538462 C31.3076923,35.7257335 30.0334258,37 28.4615385,37 L2.84615385,37 C1.27426648,37 6.36589893e-16,35.7257335 4.4408921e-16,34.1538462 L-4.4408921e-16,2.84615385 C-6.36589893e-16,1.27426648 1.27426648,2.88751025e-16 2.84615385,0 Z" id="Rectangle" fill="#D8D8D8"></path>
+                            <path d="M26.8400693,0 C25.4651175,2.37562516 25.2479081,4.33757119 26.188441,5.88583809 C27.128974,7.43410499 28.8353911,7.52016793 31.3076923,6.14402691 L26.8400693,0 Z" id="Path-2" fill="#918C8C"></path>
+                        </g>
                     </g>
                 </g>
             </g>

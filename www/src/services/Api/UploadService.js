@@ -1,11 +1,12 @@
 import Service from './service';
 
 class UploadService extends Service {
-  createUpload = (files, name) => {
+  createUpload = (files, name, pub) => {
     let resourceUrl = "/uploader/"
     return this.http.post(resourceUrl, {
       files: files,
-      name: name
+      name: name,
+      public: pub,
     })
   }
 
@@ -20,6 +21,12 @@ class UploadService extends Service {
       params: {current_page: page}
     })
   }
+
+  putComplete = (uploadId) => {
+    let resourceUrl = `/uploader/${uploadId}/complete`
+    return this.http.put(resourceUrl)
+  }
 }
+
 
 export default UploadService
