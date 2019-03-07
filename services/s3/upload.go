@@ -2,7 +2,6 @@ package s3
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -14,32 +13,19 @@ import (
 	"github.com/uploadexpress/app/config"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 
-func CreatePutObjectPreSignedUrl(c context.Context, uploadId string, file models.File) (string, error) {
-	awsAccess := config.FromContext(c).GetString("aws_access_key_id")
-	awsSecret := config.FromContext(c).GetString("aws_secret_access_key")
-	awsRegion := config.FromContext(c).GetString("aws_region")
-	awsBucket := config.FromContext(c).GetString("aws_bucket")
-
-	sess, err := session.NewSession(&aws.Config{
-		Credentials: credentials.NewStaticCredentials(
-			awsAccess,
-			awsSecret,
-			"", // a token will be created when the session it's used.
-		),
-		Region: aws.String(awsRegion)},
-	)
+func CreatePutObjectPreSignedUrl(configuration config.AwsConfiguration, uploadId string, file models.File) (string, error) {
+	sess, err := CreateAwsSession(configuration)
 	if err != nil {
 		return "", err
+
 	}
 
 	svc := s3.New(sess)
 	req, _ := svc.PutObjectRequest(&s3.PutObjectInput{
-		Bucket: aws.String(awsBucket),
+		Bucket: aws.String(configuration.Bucket),
 		Key:    aws.String(uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
 	})
 	str, err := req.Presign(time.Hour)
@@ -50,20 +36,8 @@ func CreatePutObjectPreSignedUrl(c context.Context, uploadId string, file models
 	return str, nil
 }
 
-func PutPublicObject(c context.Context, key string, reader io.ReadCloser) (string, error) {
-	awsAccess := config.FromContext(c).GetString("aws_access_key_id")
-	awsSecret := config.FromContext(c).GetString("aws_secret_access_key")
-	awsRegion := config.FromContext(c).GetString("aws_region")
-	awsBucket := config.FromContext(c).GetString("aws_bucket")
-
-	sess, err := session.NewSession(&aws.Config{
-		Credentials: credentials.NewStaticCredentials(
-			awsAccess,
-			awsSecret,
-			"", // a token will be created when the session it's used.
-		),
-		Region: aws.String(awsRegion)},
-	)
+func PutPublicObject(configuration config.AwsConfiguration, key string, reader io.ReadCloser) (string, error) {
+	sess, err := CreateAwsSession(configuration)
 	if err != nil {
 		return "", err
 	}
@@ -75,7 +49,7 @@ func PutPublicObject(c context.Context, key string, reader io.ReadCloser) (strin
 
 	svc := s3.New(sess)
 	_, err = svc.PutObject(&s3.PutObjectInput{
-		Bucket: aws.String(awsBucket),
+		Bucket: aws.String(configuration.Bucket),
 		Key:    aws.String(key),
 		Body:   bytes.NewReader(data),
 		ACL:    aws.String("public-read"),
@@ -84,30 +58,18 @@ func PutPublicObject(c context.Context, key string, reader io.ReadCloser) (strin
 		return "", err
 	}
 
-	return fmt.Sprintf("https://s3-%s.amazonaws.com/%s/%s", awsRegion, awsBucket, key), nil
+	return fmt.Sprintf("https://s3-%s.amazonaws.com/%s/%s", configuration.Region, configuration.Bucket, key), nil
 }
 
-func RemoveObject(c context.Context, key string) error {
-	awsAccess := config.FromContext(c).GetString("aws_access_key_id")
-	awsSecret := config.FromContext(c).GetString("aws_secret_access_key")
-	awsRegion := config.FromContext(c).GetString("aws_region")
-	awsBucket := config.FromContext(c).GetString("aws_bucket")
-
-	sess, err := session.NewSession(&aws.Config{
-		Credentials: credentials.NewStaticCredentials(
-			awsAccess,
-			awsSecret,
-			"", // a token will be created when the session it's used.
-		),
-		Region: aws.String(awsRegion)},
-	)
+func RemoveObject(configuration config.AwsConfiguration, key string) error {
+	sess, err := CreateAwsSession(configuration)
 	if err != nil {
 		return err
 	}
 
 	svc := s3.New(sess)
 	_, err = svc.DeleteObject(&s3.DeleteObjectInput{
-		Bucket: aws.String(awsBucket),
+		Bucket: aws.String(configuration.Bucket),
 		Key:    aws.String(key),
 	})
 	if err != nil {

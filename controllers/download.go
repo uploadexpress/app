@@ -5,6 +5,8 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/uploadexpress/app/config"
+
 	"github.com/gin-gonic/gin"
 	"github.com/uploadexpress/app/helpers"
 	"github.com/uploadexpress/app/models"
@@ -53,7 +55,7 @@ func (downloaderController DownloaderController) GetDownloadLink(c *gin.Context)
 		return
 	}
 
-	urlStr, err := s3.GetObjectLink(c, upload.Id, *file)
+	urlStr, err := s3.GetObjectLink(config.NewAwsConfigurationFromContext(c), upload.Id, *file)
 	if err != nil {
 		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("request_sign_failed", "Failed to sign request", nil))
 		return
@@ -76,7 +78,7 @@ func (downloaderController DownloaderController) DownloadZip(c *gin.Context) {
 	}
 
 	fileName := "download.zip"
-	if upload.Name != models.DefaultUploadName {
+	if !upload.Public {
 		fileName = upload.Name + ".zip"
 	}
 
@@ -84,7 +86,7 @@ func (downloaderController DownloaderController) DownloadZip(c *gin.Context) {
 	c.Writer.Header().Add("Content-Type", "application/zip")
 
 	for _, file := range upload.Files {
-		reader, err := s3.GetObjectReader(c, upload.Id, *file)
+		reader, err := s3.GetObjectReader(config.NewAwsConfigurationFromContext(c), upload.Id, *file)
 		if err != nil {
 			c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("s3_get_object_failed", err.Error(), err))
 			return

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/uploadexpress/app/config"
+
 	"github.com/mitchellh/mapstructure"
 
 	"gopkg.in/mgo.v2/bson"
@@ -70,7 +72,7 @@ func (sc SettingsController) CreateLogo(c *gin.Context) {
 
 	// Upload logo
 	body := c.Request.Body
-	url, err := s3.PutPublicObject(c, fmt.Sprintf("logo/%s.png", logoId), body)
+	url, err := s3.PutPublicObject(config.NewAwsConfigurationFromContext(c), fmt.Sprintf("logo/%s.png", logoId), body)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("aws_upload_error", err.Error(), err))
 		return
@@ -93,7 +95,7 @@ func (sc SettingsController) CreateLogo(c *gin.Context) {
 			return
 		}
 
-		err = s3.RemoveObject(c, fmt.Sprintf("/logo/%s.png", image.Id))
+		err = s3.RemoveObject(config.NewAwsConfigurationFromContext(c), fmt.Sprintf("/logo/%s.png", image.Id))
 		if err != nil {
 			c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("s3_remove_failed", err.Error(), err))
 			return
@@ -121,7 +123,7 @@ func (sc SettingsController) CreateLogo(c *gin.Context) {
 func (sc SettingsController) CreateBackground(c *gin.Context) {
 	backgroundId := bson.NewObjectId().Hex()
 	body := c.Request.Body
-	url, err := s3.PutPublicObject(c, fmt.Sprintf("background/%s.png", backgroundId), body)
+	url, err := s3.PutPublicObject(config.NewAwsConfigurationFromContext(c), fmt.Sprintf("background/%s.png", backgroundId), body)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("aws_upload_error", err.Error(), err))
 		return
@@ -181,7 +183,7 @@ func (sc SettingsController) DeleteBackground(c *gin.Context) {
 
 	// delete from S3 if the object isn't a remote image
 	if !background.Remote {
-		err = s3.RemoveObject(c, fmt.Sprintf("background/%s.png", id))
+		err = s3.RemoveObject(config.NewAwsConfigurationFromContext(c), fmt.Sprintf("background/%s.png", id))
 		if err != nil {
 			c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("aws_deletion_error", err.Error(), err))
 			return

@@ -3,6 +3,8 @@ package mongodb
 import (
 	"net/http"
 
+	"github.com/uploadexpress/app/helpers/params"
+
 	"github.com/globalsign/mgo/bson"
 	"github.com/uploadexpress/app/store/paging"
 
@@ -50,6 +52,43 @@ func (db *mongo) FetchAllUploads(page paging.Page) ([]*models.Upload, error) {
 	}
 
 	return uploads, err
+}
+
+func (db *mongo) EditUpload(id string, params params.M) error {
+	session := db.Session.Copy()
+	defer session.Close()
+	uploads := db.C(models.UploadsCollection).With(session)
+
+	err := uploads.UpdateId(id, bson.M{"$set": params})
+	if err != nil {
+		return helpers.NewError(http.StatusInternalServerError, "upload_edit_failed", err.Error(), err)
+	}
+
+	return nil
+}
+
+func (db *mongo) AttachPreview(uploadId string, fileId string, url string) error {
+	session := db.Session.Copy()
+	defer session.Close()
+	uploads := db.C(models.UploadsCollection).With(session)
+
+	query := bson.M{
+		"_id":       uploadId,
+		"files._id": fileId,
+	}
+
+	update := bson.M{
+		"$set": bson.M{
+			"files.$.preview_url": url,
+		},
+	}
+
+	err := uploads.Update(query, update)
+	if err != nil {
+		return helpers.NewError(http.StatusInternalServerError, "update_file_failed", err.Error(), err)
+	}
+
+	return nil
 }
 
 func (db *mongo) UploadCount() (int, error) {

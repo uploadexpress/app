@@ -63,6 +63,10 @@ func (a *API) SetupSeeds() error {
 				Name:  "instagram",
 				Value: "https://www.instagram.com/upload.express",
 			},
+			{
+				Name:  "website",
+				Value: "https://upload.express",
+			},
 		}
 
 		err = store.CreateSettings(settingsDefaults)

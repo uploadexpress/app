@@ -3,6 +3,8 @@ package store
 import (
 	"context"
 
+	"github.com/uploadexpress/app/helpers/params"
+
 	"github.com/uploadexpress/app/models"
 	"github.com/uploadexpress/app/store/paging"
 )
@@ -19,10 +21,18 @@ func FetchAllUploads(c context.Context, page paging.Page) ([]*models.Upload, err
 	return FromContext(c).FetchAllUploads(page)
 }
 
+func AttachPreview(c context.Context, uploadId string, fileId string, url string) error {
+	return FromContext(c).AttachPreview(uploadId, fileId, url)
+}
+
 func UploadCount(c context.Context) (int, error) {
 	return FromContext(c).UploadCount()
 }
 
 func UpdateDownloadCount(c context.Context, uploadId string) error {
 	return FromContext(c).UpdateDownloadCount(uploadId)
+}
+
+func EditUpload(c context.Context, id string, params params.M) error {
+	return FromContext(c).EditUpload(id, params)
 }

@@ -4,6 +4,13 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/uploadexpress/app/config"
+
+	"github.com/uploadexpress/app/jobs/thumbgen"
+	"github.com/uploadexpress/app/worker"
+
+	"github.com/uploadexpress/app/helpers/params"
+
 	"github.com/gin-gonic/gin"
 	"github.com/uploadexpress/app/constants"
 	"github.com/uploadexpress/app/helpers"
@@ -41,6 +48,30 @@ func (uploadController *UploadController) Create(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, upload)
+}
+
+func (uploadController *UploadController) CompleteUpload(c *gin.Context) {
+	uploadId := c.Param("upload_id")
+
+	upload, err := store.FetchUpload(c, uploadId)
+	if err != nil {
+		c.Error(err)
+		c.Abort()
+		return
+	}
+
+	for _, file := range upload.Files {
+		worker.TryEnqueue(c, thumbgen.NewThumbnailGenerator(params.M{"uploadId": upload.Id, "file": *file}))
+	}
+
+	err = store.EditUpload(c, uploadId, params.M{"ready": true})
+	if err != nil {
+		c.Error(err)
+		c.Abort()
+		return
+	}
+
+	c.JSON(http.StatusOK, nil)
 }
 
 func (uploadController *UploadController) Index(c *gin.Context) {
@@ -83,7 +114,7 @@ func (uploadController *UploadController) CreatePreSignedRequest(c *gin.Context)
 		return
 	}
 
-	str, err := s3.CreatePutObjectPreSignedUrl(c, uploadId, *file)
+	str, err := s3.CreatePutObjectPreSignedUrl(config.NewAwsConfigurationFromContext(c), uploadId, *file)
 	if err != nil {
 		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("request_sign_failed", "Failed to sign request", nil))
 	}

@@ -29,6 +29,7 @@ func (a *API) SetupRouter() {
 		ValidateHeaders: false,
 	}))
 	router.Use(middlewares.StaticMiddleware("/", middlewares.StaticLocalFile("front", false)))
+	router.Use(middlewares.WorkerMiddleware(a.Worker))
 
 	authMiddleware := middlewares.AuthMiddleware()
 
@@ -53,6 +54,7 @@ func (a *API) SetupRouter() {
 		{
 			uploaderController := controllers.NewUploadController()
 			uploader.POST("/", uploaderController.Create)
+			uploader.PUT("/:upload_id/complete", uploaderController.CompleteUpload)
 			uploader.GET("/:upload_id/file/:file_id/upload_url", uploaderController.CreatePreSignedRequest)
 			uploader.Use(authMiddleware)
 			uploader.GET("/", uploaderController.Index)

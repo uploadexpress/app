@@ -1,7 +1,6 @@
 package mongodb
 
 import (
-	"fmt"
 	"net/http"
 
 	"gopkg.in/mgo.v2/bson"
@@ -117,7 +116,6 @@ func (db *mongo) PutBackground(background models.Image) error {
 
 	err := settingsCollection.Update(bson.M{"name": "backgrounds"}, bson.M{"$push": bson.M{"value": background}})
 	if err != nil {
-		fmt.Println(err)
 		return helpers.NewError(http.StatusInternalServerError, "background_creation_error", "could not create the background", err)
 	}
 
@@ -131,7 +129,6 @@ func (db *mongo) RemoveBackground(id string) error {
 
 	err := settingsCollection.Update(bson.M{"name": "backgrounds"}, bson.M{"$pull": bson.M{"value": bson.M{"id": id}}})
 	if err != nil {
-		fmt.Println(err)
 		return helpers.NewError(http.StatusInternalServerError, "background_deletion_error", "could not remove the background", err)
 	}
 

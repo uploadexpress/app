@@ -10,6 +10,8 @@ type Upload struct {
 	Name          string  `json:"name" bson:"name"`
 	Files         []*File `json:"files" bson:"files"`
 	DownloadCount int     `json:"download_count" bson:"download_count"`
+	Public        bool    `json:"public" bson:"public"`
+	Ready         bool    `json:"-" bson:"ready"`
 }
 
 func (upload *Upload) BeforeCreate() {
@@ -21,6 +23,7 @@ func (upload *Upload) BeforeCreate() {
 	}
 
 	upload.Id = bson.NewObjectId().Hex()
+	upload.Ready = false
 }
 
 func (upload *Upload) Size() constants.ByteSize {
@@ -31,5 +34,4 @@ func (upload *Upload) Size() constants.ByteSize {
 	return constants.ByteSize(size)
 }
 
-const DefaultUploadName = "Unnamed"
 const UploadsCollection = "uploads"

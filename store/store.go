@@ -10,8 +10,10 @@ type Store interface {
 	CreateUpload(*models.Upload) error
 	FetchUpload(string) (*models.Upload, error)
 	FetchAllUploads(page paging.Page) ([]*models.Upload, error)
+	AttachPreview(string, string, string) error
 	UploadCount() (int, error)
 	UpdateDownloadCount(string) error
+	EditUpload(string, params.M) error
 
 	CreateUser(*models.User) error
 	DeleteUser(*models.User, string) error

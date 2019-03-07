@@ -24,10 +24,15 @@ func main() {
 	}
 	defer session.Close()
 
+	err = api.SetupWorker()
+	if err != nil {
+		panic(err)
+	}
+
 	// Router setup
 	api.SetupRouter()
 
-	api.SetupSeeds()
+	err = api.SetupSeeds()
 	if err != nil {
 		panic(err)
 	}
