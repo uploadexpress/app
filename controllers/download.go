@@ -68,7 +68,6 @@ func (downloaderController DownloaderController) GetDownloadLink(c *gin.Context)
 
 func (downloaderController DownloaderController) DownloadZip(c *gin.Context) {
 	downloadId := c.Param("download_id")
-	zipWriter := zip.NewWriter(c.Writer)
 
 	upload, err := store.FetchUpload(c, downloadId)
 	if err != nil {
@@ -82,11 +81,56 @@ func (downloaderController DownloaderController) DownloadZip(c *gin.Context) {
 		fileName = upload.Name + ".zip"
 	}
 
+	writeZip(c, upload.Id, fileName, upload.Files)
+}
+
+func (downloaderController DownloaderController) CreateZipWithSelection(c *gin.Context) {
+	downloadId := c.Param("download_id")
+
+	// Parse params
+	type CreateZipParams struct {
+		Selection []string `json:"selection"`
+	}
+	var params CreateZipParams
+
+	err := c.BindJSON(&params)
+	if err != nil {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_input", "Failed to bind the body data", err))
+		return
+	}
+
+	// Fetch upload
+	upload, err := store.FetchUpload(c, downloadId)
+	if err != nil {
+		c.Error(err)
+		c.Abort()
+		return
+	}
+
+	// Set file name
+	fileName := "download.zip"
+	if !upload.Public {
+		fileName = upload.Name + ".zip"
+	}
+
+	// Fetch needed files
+	files := make([]*models.File, 0)
+	for _, file := range upload.Files {
+		files = append(files, file)
+	}
+
+	// Write zip to request
+	writeZip(c, downloadId, fileName, files)
+}
+
+func writeZip(c *gin.Context, uploadId string, fileName string, files []*models.File) {
+	zipWriter := zip.NewWriter(c.Writer)
+
 	c.Writer.Header().Add("Content-Disposition", "attachment; filename=\""+fileName+"\"")
 	c.Writer.Header().Add("Content-Type", "application/zip")
 
-	for _, file := range upload.Files {
-		reader, err := s3.GetObjectReader(config.NewAwsConfigurationFromContext(c), upload.Id, *file)
+	for _, file := range files {
+		reader, err := s3.GetObjectReader(config.NewAwsConfigurationFromContext(c), uploadId, *file)
 		if err != nil {
 			c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("s3_get_object_failed", err.Error(), err))
 			return
@@ -108,5 +152,6 @@ func (downloaderController DownloaderController) DownloadZip(c *gin.Context) {
 
 		reader.Close()
 	}
+
 	zipWriter.Close()
 }

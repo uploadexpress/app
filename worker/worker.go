@@ -18,7 +18,7 @@ type Worker struct {
 
 func NewWorker(store store.Store, config *viper.Viper) *Worker {
 	return &Worker{
-		jobChan:       make(chan jobs.Job, 500),
+		jobChan:       make(chan jobs.Job, 5000),
 		store:         store,
 		configuration: config,
 	}

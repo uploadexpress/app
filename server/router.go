@@ -66,6 +66,7 @@ func (a *API) SetupRouter() {
 			downloader.GET("/:download_id", downloaderController.Show)
 			downloader.GET("/:download_id/file/:file_id/download_url", downloaderController.GetDownloadLink)
 			downloader.GET("/:download_id/zip", downloaderController.DownloadZip)
+			downloader.POST("/:download_id/selection/zip", downloaderController.CreateZipWithSelection)
 		}
 
 		settings := v1.Group("/settings")

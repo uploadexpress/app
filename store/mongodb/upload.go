@@ -34,7 +34,7 @@ func (db *mongo) FetchUpload(id string) (*models.Upload, error) {
 	upload := &models.Upload{}
 	err := uploads.FindId(id).One(upload)
 	if err != nil {
-		return nil, helpers.NewError(http.StatusNotFound, "upload_not_found", "Upload not found", err)
+		return nil, helpers.NewError(http.StatusNotFound, "upload_not_found", "upload not found", err)
 	}
 
 	return upload, err
@@ -67,7 +67,7 @@ func (db *mongo) EditUpload(id string, params params.M) error {
 	return nil
 }
 
-func (db *mongo) AttachPreview(uploadId string, fileId string, url string) error {
+func (db *mongo) AttachPreview(uploadId string, fileId string, url string, width int, height int) error {
 	session := db.Session.Copy()
 	defer session.Close()
 	uploads := db.C(models.UploadsCollection).With(session)
@@ -79,7 +79,9 @@ func (db *mongo) AttachPreview(uploadId string, fileId string, url string) error
 
 	update := bson.M{
 		"$set": bson.M{
-			"files.$.preview_url": url,
+			"files.$.preview_url":    url,
+			"files.$.preview_width":  width,
+			"files.$.preview_height": height,
 		},
 	}
 

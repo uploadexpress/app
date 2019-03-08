@@ -21,8 +21,8 @@ func FetchAllUploads(c context.Context, page paging.Page) ([]*models.Upload, err
 	return FromContext(c).FetchAllUploads(page)
 }
 
-func AttachPreview(c context.Context, uploadId string, fileId string, url string) error {
-	return FromContext(c).AttachPreview(uploadId, fileId, url)
+func AttachPreview(c context.Context, uploadId string, fileId string, url string, width int, height int) error {
+	return FromContext(c).AttachPreview(uploadId, fileId, url, width, height)
 }
 
 func UploadCount(c context.Context) (int, error) {

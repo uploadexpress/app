@@ -76,10 +76,10 @@ func (tg ThumbnailGenerator) Execute(store store.Store, configuration *viper.Vip
 			logrus.Error("could not decode the image")
 		}
 
-		dstImage128 := imaging.Resize(img, 256, 0, imaging.Lanczos)
+		dstImage256 := imaging.Resize(img, 256, 0, imaging.Lanczos)
 
 		buff := new(bytes.Buffer)
-		err = pngImage.Encode(buff, dstImage128)
+		err = pngImage.Encode(buff, dstImage256)
 		if err != nil {
 			fmt.Println("failed to create buffer", err)
 		}
@@ -87,7 +87,7 @@ func (tg ThumbnailGenerator) Execute(store store.Store, configuration *viper.Vip
 
 		url, err := s3.PutPublicObject(awsConfig, fmt.Sprintf("%s/%s/preview.png", uploadId, file.Id), ioutil.NopCloser(reader))
 
-		err = store.AttachPreview(uploadId, file.Id, url)
+		err = store.AttachPreview(uploadId, file.Id, url, dstImage256.Rect.Max.X, dstImage256.Rect.Max.Y)
 		if err != nil {
 			logrus.Error(err.Error())
 		}
