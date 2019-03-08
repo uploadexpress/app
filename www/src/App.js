@@ -1,8 +1,7 @@
 import React, { Component, Suspense } from 'react';
 import Upload from './scenes/Upload/components';
 import { BrowserRouter, Route } from 'react-router-dom';
-import Download from './scenes/Download/Window/components';
-import Preview from './scenes/Download/Preview/components'
+import Download from './scenes/Download/components';
 import Settings from './scenes/Portal/Settings/components/index'
 import UploadList from './scenes/Portal/UploadList/components/index'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -42,7 +41,6 @@ class App extends Component {
             <Route exact path='/panel/settings' component={Settings} />
             <Route path='/panel/signin' component={SignIn} />
             <Route path='/panel/setup' component={Setup} />
-            <Route exact path='/preview' component={Preview}/>
           </div>
         </Suspense>
       </BrowserRouter>)

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { setSetting, deleteBackground } from '../actions';
 import SettingsService from '../../../../services/Api/SettingsService';
 import { SketchPicker } from 'react-color';
-import DownloadModal from '../../../../components/DownloadModal/components';
+import DownloadView from '../../../../components/DownloadView/components';
 
 
 class Settings extends Component {
@@ -215,7 +215,7 @@ class Settings extends Component {
 
 
             <div className="col-md-8">
-              <DownloadModal files={[
+              <DownloadView files={[
                 {
                   name: "image.png", id: "0000", size: 223
                 }

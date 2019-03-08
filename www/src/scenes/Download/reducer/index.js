@@ -1,5 +1,5 @@
 import initState from './initState';
-import { SET_FILES } from '../actions'
+import { SET_FILES, SELECT_FILE } from '../actions'
 
 export default function download (state = initState, action) {
     switch (action.type) {
@@ -11,6 +11,17 @@ export default function download (state = initState, action) {
             }
         }
 
+        case SELECT_FILE: {
+            return {
+                ...state,
+                files: state.files.map( (file) => {
+                    if (file.id === action.id){
+                        file.selected = action.selected
+                    }
+                    return file
+                })
+            }
+        }
         default:
         return state
     } 

@@ -15,7 +15,7 @@ code {
   background-color: black;
   min-height: 626px;
   
-  padding:16px;
+  padding:26px 32px 16px 32px;
   
   
 }
@@ -29,11 +29,6 @@ code {
   object-fit: contain; 
 }
 
-.background-window{
-  display:flex;
-  flex-direction: column;
-  padding: 10px 16px 0 16px;
-}
 
 .menu {
  width: 100%;

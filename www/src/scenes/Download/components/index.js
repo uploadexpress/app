@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import DownloadModal from '../../../../components/DownloadModal/components';
-import DownloadService from '../../../../services/Api/DownloadService';
+import DownloadView from '../../../components/DownloadView/components';
+import DownloadService from '../../../services/Api/DownloadService';
 import { connect } from 'react-redux';
-import { setFiles } from '../../actions'
+import { setFiles } from '../actions'
 
 
 class Download extends Component {
-
-
     constructor() {
         super();
         this.downloadService = new DownloadService();
@@ -33,11 +31,8 @@ class Download extends Component {
     }
 
     render() {
-
-
         return(
-            <DownloadModal files={this.props.files} onZipDownload={this.onZipDownload} onFileDownload={this.onFileDownload} preview={true}/>
-   
+            <DownloadView files={this.props.files} onZipDownload={this.onZipDownload} history={this.props.history} downloadId={this.props.downloadId} onFileDownload={this.onFileDownload} preview={true}/>
         )
     }
 }
