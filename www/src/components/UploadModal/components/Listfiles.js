@@ -46,6 +46,7 @@ class Listfiles extends Component {
         })
 
         promiseSerial(uploadPromises).then(() => {
+            this.uploadService.putComplete(data.id)
             this.props.endUploading();
         })
     }
@@ -56,12 +57,12 @@ class Listfiles extends Component {
             return {
                 'id': file.id,
                 'name': file.fileInput.name,
-                'size': file.fileInput.size
+                'size': file.fileInput.size,
             }
 
         })
 
-        this.uploadService.createUpload(files, this.state.uploadName).then(res => {
+        this.uploadService.createUpload(files, this.state.uploadName, this.props.public).then(res => {
             this.beginUpload(res.data);
         })
 
@@ -82,7 +83,7 @@ class Listfiles extends Component {
             return (
                 <File
                     key={file.id}
-                    name={stringTruncate(file.fileInput.name, 25)}
+                    name={file.fileInput.name}
                     progress={file.progress}
                     status={file.status}
                     id={file.id}

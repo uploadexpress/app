@@ -1,0 +1,52 @@
+.expire-text{
+  /* position: absolute;
+  left:20px;
+  top: 50%; transform: translateY(-50%); */
+  font-size:12px;
+  color: #50565C;
+  font-weight: bold;
+  margin-top:22px;
+  margin-bottom: 22px;
+}
+
+.preview-container {
+  position: relative;
+  
+}
+
+.preview-img{
+  opacity: 1;
+  display: block;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.preview-img:hover {
+  opacity: 0.3;
+  cursor:pointer;
+}
+
+.selected {
+ opacity: 0.3
+}
+
+.preview-selected-img {
+  position: absolute;
+  top: 1%;  
+  right:2%; 
+}
+
+.preview-btn{
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  font-size:14px;
+  font-weight: bold;
+  transform: translate(0, -50%);
+  color:#5BA3D4;
+}
+
+.preview-btn:hover {
+  text-decoration: none;
+  color: rgb(44, 100, 138);
+}

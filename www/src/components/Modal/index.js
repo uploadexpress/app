@@ -3,25 +3,25 @@ import PropTypes from 'prop-types'
 
 const Modal = (props) => {
     return (
-        <div className = "upload-modal" style={{height: props.height, width: props.width}}>
+        <div className="upload-modal" style={{ height: props.height, width: props.width }}>
             {props.children}
         </div>
     )
 }
 
 Modal.defaultProps = {
-    height: 387,
-    width: 364
+    height: 370,
+    width: 314
 }
 
 Modal.propTypes = {
-	height: PropTypes.oneOfType([
-        PropTypes.number, 
+    height: PropTypes.oneOfType([
+        PropTypes.number,
         PropTypes.string
     ]),
 
     width: PropTypes.oneOfType([
-        PropTypes.number, 
+        PropTypes.number,
         PropTypes.string
     ]),
 

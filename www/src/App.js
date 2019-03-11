@@ -1,7 +1,7 @@
 import React, { Component, Suspense } from 'react';
 import Upload from './scenes/Upload/components';
 import { BrowserRouter, Route } from 'react-router-dom';
-import Download from './scenes/Download/components/index';
+import Download from './scenes/Download/components';
 import Settings from './scenes/Portal/Settings/components/index'
 import UploadList from './scenes/Portal/UploadList/components/index'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -36,7 +36,7 @@ class App extends Component {
         <Suspense fallback={<Spinner />}>
           <div className="App">
             <Route exact path='/' component={Upload} />
-            <Route path='/download/:id' component={Download} />
+            <Route exact path='/download/:id' component={Download} />
             <Route exact path='/panel' component={UploadList} />
             <Route exact path='/panel/settings' component={Settings} />
             <Route path='/panel/signin' component={SignIn} />

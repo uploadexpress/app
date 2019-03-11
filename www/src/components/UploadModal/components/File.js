@@ -4,7 +4,9 @@ import ImgStatusYes from '../../../img/img-status-yes.svg';
 import ImgCancel from '../../../img/img-cancel.svg'
 import { FileStatus } from '../constants';
 import { connect } from 'react-redux';
-import { deleteFile } from '../actions'
+import { deleteFile } from '../actions';
+import stringTruncate from '../../../helpers/stringTruncate';
+import extensionToImageIcon from '../../../helpers/extensionToImageIcon'
 
 const File = (props) => {
     let status = ""
@@ -25,16 +27,14 @@ const File = (props) => {
     const deleteFile = () => {
         props.deleteFile(props.id)
     }
-    
-
 
     return (
         <div className="list-body d-flex flex-row">
-            <img style={{ width: '24%' }} src={FileIcon} alt="" />
-            <div className="list-info d-flex flex-column">
+            <img src={extensionToImageIcon(props.name)} alt=""/>
+            <div className="list-info d-flex flex-column justify-content-center">
                 <div className=" d-flex flex-row justify-content-between ">
                     <div className="flex-column">
-                        <div className="list-file-name">{props.name}</div>
+                        <div className="list-file-name">{stringTruncate(props.name, 23)}</div>
                         <div className="list-status">
                         {
                             status

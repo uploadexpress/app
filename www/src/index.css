@@ -14,7 +14,8 @@ code {
 .background{
   background-color: black;
   min-height: 626px;
-  padding:16px;
+  
+  padding:26px 32px 16px 32px;
   
   
 }
@@ -22,17 +23,12 @@ code {
 .logo img {
   text-align: center;
   padding-top: 16px;
-  width: 364px;
-  max-width: 364px;
+  width: 314px;
+  max-width: 314px;
   max-height:100px; 
   object-fit: contain; 
 }
 
-.background-window{
-  display:flex;
-  flex-direction: column;
-  padding: 10px 16px 0 16px;
-}
 
 .menu {
  width: 100%;
@@ -47,6 +43,7 @@ code {
 .menu-link:hover {
   color: inherit;
   opacity: 0.7;
+  text-decoration: none;
   
 }
 
@@ -67,7 +64,7 @@ code {
 }
 
 .upload-modal { 
-  margin-top: 40px;
+  margin-top: 24px;
   background: white;
   border-radius: 10px;
 }

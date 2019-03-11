@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import { setSetting, deleteBackground } from '../actions';
 import SettingsService from '../../../../services/Api/SettingsService';
 import { SketchPicker } from 'react-color';
-import DownloadModal from '../../../../components/DownloadModal/components'
+import DownloadView from '../../../../components/DownloadView/components';
+
 
 class Settings extends Component {
 
@@ -61,6 +62,8 @@ class Settings extends Component {
     )
   }
 
+ 
+
   render() {
     const { t } = this.props;
     return (
@@ -106,7 +109,7 @@ class Settings extends Component {
                     <div className="settings-title">{t('panel.settings.backgroundImage')}</div>
                     <div className="settings-subtitle">{t('panel.settings.backgroundDescription')}</div>
                   </div>
-                  <div className="col-md-4 mt-auto mb-auto">
+                  <div className="col-md-4 text-right mt-auto mb-auto">
                     <label htmlFor="background"> <a className="btn btn-pannel-grey">Upload Image</a></label>
                     <input type="file" id="background" accept="image/x-png,image/jpeg" multiple="multiple" className="input-logo" onChange={this.onBackgroundChange} />
                   </div>
@@ -133,7 +136,7 @@ class Settings extends Component {
                     <div className="settings-title">Your logo</div>
                     <div className="settings-subtitle">Your logo will be shown on top of download window.</div>
                   </div>
-                  <div className="col-md-4 mt-auto mb-auto">
+                  <div className="col-md-4 text-right mt-auto mb-auto">
                     <label htmlFor="logo"><a className="btn btn-pannel-grey">Upload Image</a></label>
                     <input type="file" id="logo" className="input-logo" accept="image/x-png,image/jpeg" onChange={this.onLogoChange} />
                   </div>
@@ -190,6 +193,10 @@ class Settings extends Component {
                     <div className="settings-title">{t('panel.settings.socialAccounts')}</div>
                     <div className="settings-subtitle">{t('panel.settings.links')}</div>
                     <div className="settings-input-container">
+                      <input type="text" className="form-control settings-input" placeholder="https://gaspalapp.com" value={this.props.settings.website} onChange={(e) => { this.onInputChange("website", e.target.value) }}></input>
+                      <div className="settings-input-description">URL of your personal Website</div>
+                    </div>
+                    <div className="settings-input-container">
                       <input type="text" className="form-control settings-input" placeholder="https://www.facebook.com/gaspalFR" value={this.props.settings.facebook} onChange={(e) => { this.onInputChange("facebook", e.target.value) }}></input>
                       <div className="settings-input-description">{t('panel.settings.urlFacebook')}</div>
                     </div>
@@ -208,12 +215,13 @@ class Settings extends Component {
 
 
             <div className="col-md-8">
-              <DownloadModal files={[
+              <DownloadView files={[
                 {
                   name: "image.png", id: "0000", size: 223
                 }
               ]}
                 onFileDownload={() => { }}
+                preview = {false}
               />
             </div>
           </div>

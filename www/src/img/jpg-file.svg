@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="33px" height="37px" viewBox="0 0 33 37" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>jpg-file</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="21.09" width="21.09" height="9.84200002" rx="1.406"></rect>
+        <filter x="-4.7%" y="-10.2%" width="119.0%" height="140.6%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.75696216   0 0 0 0 0.75696216   0 0 0 0 0.75696216  0 0 0 1 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Uploading-view" transform="translate(-540.000000, -469.000000)">
+            <g id="Box" transform="translate(512.000000, 315.000000)">
+                <g id="Item" transform="translate(23.000000, 122.000000)">
+                    <g id="jpg-file" transform="translate(5.000000, 32.000000)">
+                        <g id="file" transform="translate(1.406000, 0.000000)">
+                            <path d="M2.81200001,0 L26.2960544,0 L30.9320001,6.50884153 L30.9320001,33.7440001 C30.9320001,35.2970248 29.6730248,36.5560001 28.1200001,36.5560001 L2.81200001,36.5560001 C1.25897529,36.5560001 -2.53898535e-16,35.2970248 -4.4408921e-16,33.7440001 L0,2.81200001 C-1.90190675e-16,1.25897529 1.25897529,-1.58803197e-16 2.81200001,-4.4408921e-16 Z" id="Rectangle" fill="#D8D8D8"></path>
+                            <path d="M26.5179885,0 C25.1595361,2.34711766 24.9449332,4.28552035 25.8741798,5.81520805 C26.8034264,7.34489575 28.4893665,7.42992593 30.9320001,6.0702986 L26.5179885,0 Z" id="Path-2" fill="#918C8C"></path>
+                        </g>
+                        <g id="Rectangle" fill-rule="nonzero">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                            <use fill="#59BDEC" xlink:href="#path-1"></use>
+                        </g>
+                        <text id="JPG" fill="#FFFFFF" font-family="CircularStd-Book, Circular Std" font-size="7.03000002" font-weight="300" letter-spacing="0.267140001">
+                            <tspan x="2.81200001" y="28.09">JPG</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

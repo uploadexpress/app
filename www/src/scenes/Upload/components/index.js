@@ -5,7 +5,7 @@ import UploadModal from '../../../components/UploadModal/components';
 const Upload = () => {
     return(
         <Background>
-            <UploadModal/> 
+            <UploadModal public={true}/> 
         </Background>
     )
 }

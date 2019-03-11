@@ -1,49 +1,53 @@
 import React, { Component } from 'react';
-import DownloadModal from '../../../components/DownloadModal/components';
+import DownloadView from '../../../components/DownloadView/components';
 import DownloadService from '../../../services/Api/DownloadService';
+import { connect } from 'react-redux';
+import { setFiles } from '../actions'
 
 
 class Download extends Component {
-
-    state={
-        files: [],
-        downloadId: null
-    }
-
     constructor() {
         super();
         this.downloadService = new DownloadService();
     }
 
     onFileDownload = (fileId) => {
-        this.downloadService.getFileDownloadUrl(this.state.downloadId, fileId).then((result) => {
-       window.location = result.data.url
+        this.downloadService.getFileDownloadUrl(this.props.downloadId, fileId).then((result) => {
+        window.location = result.data.url
       })
      }
 
      onZipDownload = () => {
          return(
-            this.props.history.push(`/v1/downloader/${this.state.downloadId}/zip`)
+            this.props.history.push(`/v1/downloader/${this.props.downloadId}/zip`)
          )
      }
 
     componentDidMount() {
         let id = this.props.match.params.id;
         this.downloadService.getDownload(id).then((result) => {
-            this.setState({
-                files: result.data.files,
-                downloadId: result.data.id
-            })
+            this.props.setFiles(result.data.files, result.data.id)  
         })
     }
 
     render() {
-
-
         return(
-            <DownloadModal files={this.state.files} onZipDownload={this.onZipDownload} onFileDownload={this.onFileDownload}/>
+            <DownloadView files={this.props.files} onZipDownload={this.onZipDownload} history={this.props.history} downloadId={this.props.downloadId} onFileDownload={this.onFileDownload} preview={true}/>
         )
     }
 }
 
-export default Download
+const mapStateToProps = (state) => {
+    return {
+        files: state.downloader.files,
+        downloadId: state.downloader.downloadId
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setFiles: (files, downloadId) => dispatch(setFiles(files, downloadId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Download)
