@@ -6,6 +6,10 @@ import { setFiles } from '../actions'
 
 
 class Download extends Component {
+    state={
+        error:false
+    }
+
     constructor() {
         super();
         this.downloadService = new DownloadService();
@@ -24,15 +28,22 @@ class Download extends Component {
      }
 
     componentDidMount() {
+        
         let id = this.props.match.params.id;
         this.downloadService.getDownload(id).then((result) => {
-            this.props.setFiles(result.data.files, result.data.id)  
+            this.props.setFiles(result.data.files, result.data.id) 
+          
+            
+        }).catch((err)=> {
+            this.setState({
+                error: true
+            })
         })
     }
 
     render() {
         return(
-            <DownloadView files={this.props.files} onZipDownload={this.onZipDownload} history={this.props.history} downloadId={this.props.downloadId} onFileDownload={this.onFileDownload} preview={true}/>
+            <DownloadView error={this.state.error} files={this.props.files} onZipDownload={this.onZipDownload} history={this.props.history} downloadId={this.props.downloadId} onFileDownload={this.onFileDownload} preview={true}/>
         )
     }
 }

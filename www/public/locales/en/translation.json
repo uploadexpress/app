@@ -15,6 +15,17 @@
         }
     },
 
+    "download":{
+        "header": "Download",
+        "button": "Download all",
+        "gallery": "Gallery",
+        "oops":{
+            "header": "Oops!",
+            "title": "Something went wrong!",
+            "subtitle": "This link does not exist." 
+        }
+    },
+
     "panel":{
         "uploadList":{
             "title": "Your uploads",
@@ -27,6 +38,7 @@
         "settings":{
             "administration": "Administration",
             "save": "Save changes",
+            "saved": "Saved",
             "pageStyling": "Download page styling",
             "title": "Title & description",
             "titleDescription": "The information that will appear on the download page.",
@@ -40,11 +52,49 @@
             "links": "Links to your social accounts",
             "urlFacebook": "URL of your Facebook Page",
             "urlTweeter": "URL of your Twitter profile",
-            "urlInstagram": "URL of your Instagram profile"
+            "urlInstagram": "URL of your Instagram profile",
+            "urlWebsite": "URL of your personal website",
+            "uploadImg": "Upload Image",
+            "delete": "Delete",
+            "logo": "Your logo",
+            "logoDescription": "Your logo will be shown on top of download window.",
+            "uploadPosition": "Upload position",
+            "uploadPositionDescription": "Choose position of upload window on the screen",
+            "center": "center",
+            "left": "left",
+            "right": "right",
+            "menuPosition": "Your social links position",
+            "menuPositionDescription": "Choose position of social account links on the screen",
+            "menuColor": "Social account links color",
+            "menuColorDescription": "Choose a color of social account links on the screen"
+        },
+
+        "signin":{
+            "signin": "Sign in",
+            "forgot": "Forgot?",
+            "login": "Log in",
+            "error": "Wrong password or email!"
+        },
+
+        "setup": {
+            "setup": "Setup",
+            "firstName":"First name",
+            "lastName": "Last name",
+            "email": "Email address",
+            "password": "Password",
+            "min": "8 characters min",
+            "passwordConfirm": "Confirm password",
+            "passwordErr": "Passwords don't match.",
+            "setupBtn": "Setup"
         }
+
+
     },
 
     "navbar":{
-        "uploads": "Your uploads"
+        "uploads": "Your uploads",
+        "settings": "Settings",
+        "logout": "Logout"
     }
+
 }

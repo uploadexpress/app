@@ -80,13 +80,15 @@ class Background extends React.Component {
                         <ReactFlagsSelect
                             countries={i18n.languages} selectedSize={14} optionsSize={12} defaultCountry={currLang} placeholder="Select Language" onSelect={onSelectFlag} />
                     </div>
-                    <div className="content-wrapper d-flex flex-column">
+                    <div className="content-wrapper d-flex flex-column" style={{alignItems: this.props.settings.upload_position}}>
                         {this.props.settings.logo &&
                             <div className="logo">
                                 <img src={this.props.settings.logo.url} alt="" />
                             </div>
                         }
+                        <div className={this.props.settings.upload_position == 'flex-end' ? ('d-flex flex-row-reverse'): ('d-flex')}>
                         {this.props.children}
+                        </div>
                     </div>
 
               
