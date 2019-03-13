@@ -15,4 +15,6 @@
 up.json
 
 .env
+.env.*
+
 build

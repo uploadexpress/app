@@ -14,8 +14,10 @@ func CreateAwsSession(configuration config.AwsConfiguration) (*session.Session, 
 			configuration.SecretKey,
 			"", // a token will be created when the session it's used.
 		),
-		Region: aws.String(configuration.Region)},
-	)
+		Region:           aws.String(configuration.Region),
+		Endpoint:         aws.String(configuration.Endpoint),
+		S3ForcePathStyle: aws.Bool(true),
+	})
 	if err != nil {
 		return nil, err
 	}

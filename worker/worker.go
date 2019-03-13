@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/viper"
 	"github.com/uploadexpress/app/store"
 
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"github.com/uploadexpress/app/jobs"
 )
 

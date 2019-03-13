@@ -116,7 +116,8 @@ func (uploadController *UploadController) CreatePreSignedRequest(c *gin.Context)
 
 	str, err := s3.CreatePutObjectPreSignedUrl(config.NewAwsConfigurationFromContext(c), uploadId, *file)
 	if err != nil {
-		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("request_sign_failed", "Failed to sign request", nil))
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("request_sign_failed", err.Error(), nil))
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"url": str})

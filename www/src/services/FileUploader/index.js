@@ -16,4 +16,5 @@ const startUploading = (uploadId, file, onUploadProgress) => {
     })
   });
 }
+
 export default startUploading

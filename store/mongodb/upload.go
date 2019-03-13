@@ -67,7 +67,7 @@ func (db *mongo) EditUpload(id string, params params.M) error {
 	return nil
 }
 
-func (db *mongo) AttachPreview(uploadId string, fileId string, url string, width int, height int) error {
+func (db *mongo) AttachPreview(uploadId string, fileId string, previewUrl string, thumbnailUrl string, thumbnailWidth int, thumbnailHeight int) error {
 	session := db.Session.Copy()
 	defer session.Close()
 	uploads := db.C(models.UploadsCollection).With(session)
@@ -79,9 +79,10 @@ func (db *mongo) AttachPreview(uploadId string, fileId string, url string, width
 
 	update := bson.M{
 		"$set": bson.M{
-			"files.$.preview_url":    url,
-			"files.$.preview_width":  width,
-			"files.$.preview_height": height,
+			"files.$.preview_url":      previewUrl,
+			"files.$.thumbnail_url":    thumbnailUrl,
+			"files.$.thumbnail_width":  thumbnailWidth,
+			"files.$.thumbnail_height": thumbnailHeight,
 		},
 	}
 

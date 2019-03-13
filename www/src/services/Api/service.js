@@ -2,14 +2,14 @@ import axios from 'axios';
 
 export default class Service {
   constructor() {
-    this.baseURL = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : window.location.origin + '/v1'
+    this.baseURL = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : window.api_url 
 
     this.http = axios.create({
       baseURL: this.baseURL,
     })
 
     this.http.interceptors.request.use((config) => {
-      const apiToken = localStorage.getItem('id_token')
+      const apiToken = this.getToken()
       config.headers = { 'Authorization': `Bearer ${apiToken}` }
       return config
     }, error => {

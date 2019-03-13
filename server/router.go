@@ -81,8 +81,7 @@ func (a *API) SetupRouter() {
 		}
 	}
 
+	staticController := controllers.NewStaticController()
 	router.LoadHTMLFiles("front/index.html")
-	router.NoRoute(func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", gin.H{})
-	})
+	router.NoRoute(staticController.RenderIndex)
 }

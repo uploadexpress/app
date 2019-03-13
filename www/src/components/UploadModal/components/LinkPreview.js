@@ -22,10 +22,7 @@ class LinkPreview extends Component {
                 <img className="share-img" src={EmojiParty} style={{width:'28%'}} alt="" />
                 <div className="share-title">{t('upload.linkPreview.done')}</div>
                 <div className="share-subtitle">{t('upload.linkPreview.copyLink')}</div>
-
                 <input className="share-link" onFocus={(e) => { e.target.select() }} type="text" value={"https://upload.express/download/" + this.props.id} readonly />
-
-
             </div>
             <div className="list-footer">
                 <CopyToClipboard text={'https://upload.express/download/' + this.props.id} onCopy={() => this.setState({copied: true})}>

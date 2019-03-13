@@ -8,12 +8,10 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/uploadexpress/app/models"
-
-	"github.com/uploadexpress/app/config"
-
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/uploadexpress/app/config"
+	"github.com/uploadexpress/app/models"
 )
 
 func CreatePutObjectPreSignedUrl(configuration config.AwsConfiguration, uploadId string, file models.File) (string, error) {
@@ -58,7 +56,7 @@ func PutPublicObject(configuration config.AwsConfiguration, key string, reader i
 		return "", err
 	}
 
-	return fmt.Sprintf("https://s3-%s.amazonaws.com/%s/%s", configuration.Region, configuration.Bucket, key), nil
+	return fmt.Sprintf("%s/%s/%s", configuration.Endpoint, configuration.Bucket, key), nil
 }
 
 func RemoveObject(configuration config.AwsConfiguration, key string) error {

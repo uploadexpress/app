@@ -4,14 +4,16 @@ import (
 	"bytes"
 	"fmt"
 	"image"
-	jpgImage "image/jpeg"
-	pngImage "image/png"
 	"io/ioutil"
+	"log"
 
-	"github.com/Sirupsen/logrus"
+	jpgImage "image/jpeg"
+
+	"github.com/disintegration/imageorient"
 	"github.com/disintegration/imaging"
 	"github.com/h2non/filetype"
 	"github.com/h2non/filetype/matchers"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/uploadexpress/app/config"
 	"github.com/uploadexpress/app/helpers/params"
@@ -56,40 +58,72 @@ func (tg ThumbnailGenerator) Execute(store store.Store, configuration *viper.Vip
 	}
 
 	if filetype.MatchesMap(fileHeader, SupportedThumbnailTypes) {
-		match := filetype.MatchMap(fileHeader, SupportedThumbnailTypes)
-
 		s3image, err := s3.GetObjectReader(awsConfig, uploadId, file)
 		if err != nil {
 			logrus.Error("could not fetch the image " + file.Name)
+			return
 		}
 
 		var img image.Image
-		switch match {
-		case matchers.TypeJpeg:
-			img, err = jpgImage.Decode(s3image)
-			break
-		case matchers.TypePng:
-			img, err = pngImage.Decode(s3image)
-			break
-		}
+		img, _, err = imageorient.Decode(s3image)
 		if err != nil {
-			logrus.Error("could not decode the image")
+			log.Fatalf("imageorient.Decode failed: %v", err)
+			return
 		}
 
-		dstImage256 := imaging.Resize(img, 256, 0, imaging.Lanczos)
+		var dstImage256 *image.NRGBA
+		var dstImage1024 *image.NRGBA
+		dstImage256 = resizeImage(img, 256)
+		dstImage1024 = resizeImage(img, 1024)
 
-		buff := new(bytes.Buffer)
-		err = pngImage.Encode(buff, dstImage256)
+		url256, err := encodeImage(awsConfig, uploadId, file, dstImage256, 100)
 		if err != nil {
-			fmt.Println("failed to create buffer", err)
+			fmt.Println("failed to upload buffer", err)
+			return
 		}
-		reader := bytes.NewReader(buff.Bytes())
 
-		url, err := s3.PutPublicObject(awsConfig, fmt.Sprintf("%s/%s/preview.png", uploadId, file.Id), ioutil.NopCloser(reader))
+		url1024, err := encodeImage(awsConfig, uploadId, file, dstImage1024, 60)
+		if err != nil {
+			fmt.Println("failed to upload buffer", err)
+			return
+		}
 
-		err = store.AttachPreview(uploadId, file.Id, url, dstImage256.Rect.Max.X, dstImage256.Rect.Max.Y)
+		err = store.AttachPreview(uploadId, file.Id, url1024, url256, dstImage256.Rect.Max.X, dstImage256.Rect.Max.Y)
 		if err != nil {
 			logrus.Error(err.Error())
+			return
 		}
 	}
+}
+
+func encodeImage(awsConfig config.AwsConfiguration, uploadId string, file models.File, nrgba *image.NRGBA, quality int) (string, error) {
+	buff := new(bytes.Buffer)
+	err := jpgImage.Encode(buff, nrgba, &jpgImage.Options{
+		Quality: quality,
+	})
+	if err != nil {
+		return "", err
+	}
+	reader := bytes.NewReader(buff.Bytes())
+
+	url, err := s3.PutPublicObject(awsConfig, fmt.Sprintf("previews/%s/%s_%d.png", uploadId, file.Id, nrgba.Rect.Max.X), ioutil.NopCloser(reader))
+	if err != nil {
+		logrus.Error(err.Error())
+	}
+
+	return url, nil
+}
+
+func resizeImage(img image.Image, size int) *image.NRGBA {
+	width := img.Bounds().Max.X
+	height := img.Bounds().Max.Y
+
+	var resizedImage *image.NRGBA
+	if width > height {
+		resizedImage = imaging.Resize(img, size, 0, imaging.Lanczos)
+	} else {
+		resizedImage = imaging.Resize(img, 0, size, imaging.Lanczos)
+	}
+
+	return resizedImage
 }
