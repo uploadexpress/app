@@ -4,9 +4,9 @@ GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
-NPMCMD=npm
-NPMINSTALL=$(NPMCMD) install
-NPMBUILD=$(NPMCMD) run build
+YARNCMD=yarn
+YARNINSTALL=$(YARNCMD) install
+YARNBUILD=$(YARNCMD) build
 BUILD_FOLDER=build
 BINARY_NAME=uploadexpress
 BINARY_UNIX=$(BINARY_NAME)_unix
@@ -19,8 +19,8 @@ all: test build
 build:
 	$(GOBUILD) -o $(BUILD_FOLDER)/$(BINARY_NAME) -v $(SERVER_MAIN_PATH)
 	cd $(FRONT_PATH); \
-	$(NPMINSTALL); \
-	$(NPMBUILD);
+	$(YARNINSTALL); \
+	$(YARNBUILD);
 	cp -R $(FRONT_BUILD_FOLDER) $(FRONT_DESTINATION)
 	if [ -e .env ]; \
 		then cp .env build; \
