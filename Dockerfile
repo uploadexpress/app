@@ -14,7 +14,7 @@ RUN yarn build
 FROM alpine:latest
 WORKDIR /app
 COPY --from=build-backend /go/src/github.com/uploadexpress/app/main .
-COPY --from=build-frontend /usr/src/app ./front
+COPY --from=build-frontend /usr/src/app/build ./front
 EXPOSE 4000
 RUN chmod +x ./main
 CMD ["./main"]
