@@ -96,7 +96,7 @@ class UploadList extends Component {
                                                     {row.copied ? (
                                                         <div className="upload-copied">Copied!</div>
                                                     ) : (
-                                                            <CopyToClipboard text={'https://upload.express/download/' + row.id} onCopy={() => { this.handleCopied(row.id) }}>
+                                                            <CopyToClipboard text={`${window.hostname}/download/${row.id}`} onCopy={() => { this.handleCopied(row.id) }}>
                                                                 <button className="btn upload-btn-copy">Copy</button>
                                                             </CopyToClipboard>
                                                         )}

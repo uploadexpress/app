@@ -78,7 +78,7 @@ class Background extends React.Component {
                         }
 
                         <ReactFlagsSelect
-                            countries={i18n.languages} selectedSize={14} optionsSize={12} defaultCountry={currLang} placeholder="Select Language" onSelect={onSelectFlag} />
+                            countries={i18n.languages} selectedSize={14} optionsSize={12} defaultCountry={currLang.toLowerCase()} placeholder="Select Language" onSelect={onSelectFlag} />
                     </div>
                     <div className="content-wrapper d-flex flex-column">
                         {this.props.settings.logo &&

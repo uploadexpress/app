@@ -9,32 +9,33 @@ class LinkPreview extends Component {
         copied: false
     }
 
-    
-    render(){
+
+    render() {
         const { t } = this.props;
-    return (
-        <div className="listfiles">
-            <div className="list-title">
-                {t('upload.linkPreview.title')}
+        const downloadUrl = `${window.hostname}/download/${this.props.id}`;
+        return (
+            <div className="listfiles">
+                <div className="list-title">
+                    {t('upload.linkPreview.title')}
+                </div>
+                <hr />
+                <div className="list-container text-center">
+                    <img className="share-img" src={EmojiParty} style={{ width: '28%' }} alt="" />
+                    <div className="share-title">{t('upload.linkPreview.done')}</div>
+                    <div className="share-subtitle">{t('upload.linkPreview.copyLink')}</div>
+                    <input className="share-link" onFocus={(e) => { e.target.select() }} type="text" value={downloadUrl} readonly />
+                </div>
+                <div className="list-footer">
+                    <CopyToClipboard text={downloadUrl} onCopy={() => this.setState({ copied: true })}>
+                        <button className="btn green-btn">{t('upload.linkPreview.copy')}</button>
+                    </CopyToClipboard>
+                    {this.state.copied === true &&
+                        <div className="link-preview-copied"> {t('upload.linkPreview.copied')}</div>
+                    }
+                </div>
             </div>
-            <hr />
-            <div className="list-container text-center">
-                <img className="share-img" src={EmojiParty} style={{width:'28%'}} alt="" />
-                <div className="share-title">{t('upload.linkPreview.done')}</div>
-                <div className="share-subtitle">{t('upload.linkPreview.copyLink')}</div>
-                <input className="share-link" onFocus={(e) => { e.target.select() }} type="text" value={"https://upload.express/download/" + this.props.id} readonly />
-            </div>
-            <div className="list-footer">
-                <CopyToClipboard text={'https://upload.express/download/' + this.props.id} onCopy={() => this.setState({copied: true})}>
-                    <button className="btn green-btn">{t('upload.linkPreview.copy')}</button>
-                </CopyToClipboard>
-                {this.state.copied === true &&
-                <div className="link-preview-copied"> {t('upload.linkPreview.copied')}</div>
-                }
-            </div>
-        </div>
-    )
+        )
+    }
 }
-} 
 
 export default withTranslation()(LinkPreview)

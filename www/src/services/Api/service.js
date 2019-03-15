@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default class Service {
   constructor() {
-    this.baseURL = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : window.api_url 
+    this.baseURL = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : `${window.hostname}/v1` 
 
     this.http = axios.create({
       baseURL: this.baseURL,
