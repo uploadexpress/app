@@ -6,12 +6,23 @@
             "done": "Готово!",
             "copyLink": "Скопируйте ссылку:",
             "copy": "Скопировать",
-            "copied": "Скопировано"
+            "copied": "Готово"
         },
         "listFile": {
             "title": "Ваши файлы",
             "addFile": "Добавить файл",
             "upload": "Загрузить"
+        }
+    },
+
+    "download":{
+        "header": "Скачивание",
+        "button": "Скачать все",
+        "gallery": "Галлерея",
+        "oops":{
+            "header": "Ой!",
+            "title": "Что-то не так!",
+            "subtitle": "Этой ссылки не существует." 
         }
     },
     
@@ -27,6 +38,7 @@
         "settings":{
             "administration": "Административная панель",
             "save": "Сохранить изменения",
+            "saved": "Сохранено",
             "pageStyling": "Стилизация страницы загрузки",
             "title": "Название и описание",
             "titleDescription": "Информация появится на странице загрузки",
@@ -40,12 +52,47 @@
             "links": "Ссылки на ваши социальные аккаунты",
             "urlFacebook": "URL вашей Facebook страницы",
             "urlTweeter": "URL вашего Twitter аккаунта",
-            "urlInstagram": "URL вашего Instagram аккаунта"
+            "urlInstagram": "URL вашего Instagram аккаунта",
+            "urlWebsite": "URL of your personal website",
+            "uploadImg": "Загрузить изображение",
+            "delete": "Удалить",
+            "logo": "Ваше лого",
+            "logoDescription": "Ваше лого будет отображаться сверху окна загрузки",
+            "uploadPosition": "Расположение загрузки",
+            "uploadPositionDescription": "Выберите расположение окна загрузки на экране",
+            "center": "центр",
+            "left": "лево",
+            "right": "право",
+            "menuPosition": "Расположение социальных сетей",
+            "menuPositionDescription": "Выберите расположение ссылок ваших социальных сетей",
+            "menuColor": "Цвет ссылок",
+            "menuColorDescription": "Выберите цвет ссылок социальных сетей"
+        },
+
+        "signin":{
+            "signin": "Вход",
+            "forgot": "Забыли?",
+            "login": "Войти",
+            "error": "Неправильный пароль или email!"
+        },
+
+        "setup": {
+            "setup": "Настройки",
+            "firstName":"Имя",
+            "lastName": "Фамилия",
+            "email": "Электронная почта",
+            "password": "Пароль",
+            "min": "8 символов минимально",
+            "passwordConfirm": "Подтверждение пароля",
+            "passwordErr": "Пароли не совпадают",
+            "setupBtn": "Настроить"
         }
     },
 
     "navbar":{
-        "uploads": "Ваши загрузки"
+        "uploads": "Ваши загрузки",
+        "settings": "Настройки",
+        "logout": "Выход"
     }
     
 }

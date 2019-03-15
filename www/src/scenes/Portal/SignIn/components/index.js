@@ -4,6 +4,7 @@ import Modal from '../../../../components/Modal/index'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import '../style/index.css'
 import AuthService from '../../../../services/Api/AuthService'
+import { withTranslation } from 'react-i18next';
 
 class SignIn extends Component {
 
@@ -52,12 +53,13 @@ class SignIn extends Component {
     
 
     render() {
+        const { t } = this.props;
         return (
             <div>
                 <Background>
                     <Modal height={"auto"}>
                         <div className="listfiles">
-                            <div className="list-title">Sign in</div>
+                            <div className="list-title">{t('panel.signin.signin')}</div>
                             <hr />
                             <form onSubmit = {this.handleFormSubmit}>
                                 <div className="list-container">
@@ -78,16 +80,16 @@ class SignIn extends Component {
                                             </div>
                                             <input type="password" className="form-control password-input" name="password" placeholder="Password" aria-label="Password" onChange={this.handleChange} />
                                             <div className="input-group-append">
-                                                <button className="btn btn-forgot " type="button">Forgot?</button>
+                                                <button className="btn btn-forgot " type="button">{t('panel.signin.forgot')}</button>
                                             </div>
                                         </div>
                                         {this.state.error === true &&
-                                    <div className="error-message">Wrong email or password!</div>}
+                                    <div className="error-message">{t('panel.signin.error')}</div>}
                                     </div>
                                 </div>
                                 <div className="list-footer">
                                 
-                                    <button type="submit" className="btn blue-btn">Log in</button>
+                                    <button type="submit" className="btn blue-btn">{t('panel.signin.login')}</button>
                                 </div>
 
                             </form>
@@ -101,4 +103,4 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn
+export default withTranslation()(SignIn)

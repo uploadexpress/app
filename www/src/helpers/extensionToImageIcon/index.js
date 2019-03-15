@@ -1,14 +1,14 @@
 const extensionToImageIcon = (name) => {
     const splittedFileName = name.split('.')
-    const extension = splittedFileName[splittedFileName.length - 1]
+    const extension = splittedFileName[splittedFileName.length - 1].toUpperCase()
     const extensions = {
-        "jpg": require('../../img/jpg-file.svg'),
-        "jpeg": require('../../img/jpg-file.svg'),
-        "pdf": require('../../img/pdf-file.svg'),
-        "zip": require('../../img/zip-file.svg'),
-        "doc": require('../../img/doc-file.svg'),
-        "docx": require('../../img/doc-file.svg'),
-        "png": require('../../img/png-file.svg'),
+        "JPG": require('../../img/jpg-file.svg'),
+        "JPEG": require('../../img/jpg-file.svg'),
+        "PDF": require('../../img/pdf-file.svg'),
+        "ZIP": require('../../img/zip-file.svg'),
+        "DOC": require('../../img/doc-file.svg'),
+        "DOCX": require('../../img/doc-file.svg'),
+        "PNG": require('../../img/png-file.svg'),
     }
 
     return (
@@ -16,10 +16,10 @@ const extensionToImageIcon = (name) => {
             extensions[extension]
         ) : (
                 require('../../img/file-icon.svg')
-
             )
-
     )
 }
+
+
 
 export default extensionToImageIcon

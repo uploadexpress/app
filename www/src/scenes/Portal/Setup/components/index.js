@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Background from '../../../../components/Background/index'
 import Modal from '../../../../components/Modal/index'
 import '../style/index.css'
+import { withTranslation } from 'react-i18next';
 import SetupService from '../../../../services/Api/SetupService'
 
 class Setup extends Component {
@@ -42,12 +43,13 @@ class Setup extends Component {
     }
 
     render() {
+        const { t } = this.props;
         return (
             <div>
                 <Background>
-                    <Modal height={410} >
+                    <Modal height={426} >
                         <div className="listfiles">
-                            <div className="list-title">Setup</div>
+                            <div className="list-title">{t('panel.setup.setup')}</div>
                             <hr />
                             <form onSubmit={this.handleSubmit}>
                                 <div className="list-container">
@@ -56,47 +58,49 @@ class Setup extends Component {
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <div class="input-group-sm">
-                                                        <label className="setup-label" for="first-name">First name</label>
+                                                        <label className="setup-label" for="first-name">{t('panel.setup.firstName')}</label>
                                                         <input type="text" class="form-control" id="first_name" placeholder="John" required onChange={this.handleChange} />
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div class="input-group-sm ">
-                                                        <label className="setup-label" for="last-name">Last name</label>
+                                                        <label className="setup-label" for="last-name">{t('panel.setup.lastName')}</label>
                                                         <input type="text" class="form-control" id="last_name" placeholder="Smith" required onChange={this.handleChange} />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="input-group-sm pt-3">
-                                            <label className="setup-label" for="email">Email address</label>
+                                        <div class="input-group-sm pt-1">
+                                            <label className="setup-label" for="email">{t('panel.setup.email')}</label>
                                             <input type="email" class="form-control" id="email" placeholder="my@email.com" required onChange={this.handleChange} />
                                         </div>
                                         <div className="container-fluid p-0">
                                             <div className="row">
-                                                <div className="col-md-6">
-                                                    <div class="input-group-sm pt-3 ">
-                                                        <label className="setup-label" for="password">Password</label>
+                                                <div className="col-md-12">
+                                                    <div class="input-group-sm pt-1 ">
+                                                        <label className="setup-label" for="password">{t('panel.setup.password')}</label>
                                                         <input type="password" class="form-control" id="password" placeholder="Password" required onChange={this.handleChange} />
-                                                        <small id="passwordHelp" class="form-text text-muted">8 characters minimum</small>
+                                                        <small id="passwordHelp" class="form-text text-muted">{t('panel.setup.min')}</small>
                                                     </div>
                                                 </div>
-                                                <div className="col-md-6">
-                                                    <div class="input-group-sm pt-3">
-                                                        <label className="setup-label" for="confirm_password">Confirm password</label>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-12">
+                                                    <div class="input-group-sm pt-1">
+                                                        <label className="setup-label" for="confirm_password">{t('panel.setup.passwordConfirm')}</label>
                                                         <input type="password" class="form-control" id="confirm_password" required placeholder="Confirm password" onChange={this.handleChange} />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        {this.state.errorPass === true && 
-                                            <div className="setup-password-error"> Passwords don't match.</div>
+                                        {this.state.errorPass === true &&
+                                            <div className="setup-password-error"> {t('panel.setup.passwordErr')}</div>
                                         }
                                     </div>
                                 </div>
                                 <div className="list-footer">
 
-                                    <button type="submit" className="btn blue-btn">Setup</button>
+                                    <button type="submit" className="btn blue-btn">{t('panel.setup.setupBtn')}</button>
                                 </div>
 
                             </form>
@@ -115,4 +119,4 @@ class Setup extends Component {
 
 
 
-export default Setup;
+export default withTranslation()(Setup);

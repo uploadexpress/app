@@ -29,7 +29,7 @@ class Settings extends Component {
     })
   }
 
-  sendSettings = () => { 
+  sendSettings = () => {
     this.settingsService.sendSettings(this.props.settings);
     this.setState({
       saved: true
@@ -40,18 +40,18 @@ class Settings extends Component {
   onLogoChange = (e) => {
     var logo = e.target.files[0]
     this.settingsService.sendLogo(logo).then(res => {
-      this.props.setSetting ("logo", res.data.logo)
- 
+      this.props.setSetting("logo", res.data.logo)
+
     })
   }
 
   onBackgroundChange = (e) => {
-     var backgrounds = Array.from(e.target.files);
-     backgrounds.forEach(background => { 
-      this.settingsService.sendBackground(background).then( res => {
+    var backgrounds = Array.from(e.target.files);
+    backgrounds.forEach(background => {
+      this.settingsService.sendBackground(background).then(res => {
         this.props.setSetting("backgrounds", res.data.backgrounds)
       })
-     });
+    });
   }
 
   deleteBackgroundPreview = (id) => {
@@ -62,7 +62,7 @@ class Settings extends Component {
     )
   }
 
- 
+
 
   render() {
     const { t } = this.props;
@@ -76,7 +76,7 @@ class Settings extends Component {
                   <div className="col-12 d-flex mt-4">
                     <div className="flex-grow-1 container-name">{t('panel.settings.administration')}</div>
                     {(this.state.saved) ? (
-                      <div className="settings-saved">Saved</div>
+                      <div className="settings-saved">{t('panel.settings.saved')}</div>
                     ) : (
                         <button className="btn btn-pannel" onClick={this.sendSettings}>{t('panel.settings.save')}</button>
                       )}
@@ -94,11 +94,11 @@ class Settings extends Component {
                     <div className="settings-title">{t('panel.settings.title')}</div>
                     <div className="settings-subtitle">{t('panel.settings.titleDescription')}</div>
                     <div className="settings-input-container">
-                      <input type="text" className="form-control settings-input" placeholder="Gaspal" value={this.props.settings.name} onChange={(e) => { this.onInputChange("name", e.target.value) }}></input>
+                      <input type="text" className="form-control settings-input" placeholder="upload.express" value={this.props.settings.name} onChange={(e) => { this.onInputChange("name", e.target.value) }}></input>
                       <div className="settings-input-description">{t('panel.settings.companyName')}</div>
                     </div>
                     <div className="settings-input-container">
-                      <input type="text" className="form-control" placeholder="The app that lets you find the cheapest gas station around you" value={this.props.settings.description} onChange={(e) => { this.onInputChange("description", e.target.value) }} />
+                      <input type="text" className="form-control" placeholder="Share your files easily" value={this.props.settings.description} onChange={(e) => { this.onInputChange("description", e.target.value) }} />
                       <div className="settings-input-description">{t('panel.settings.companyDescription')}</div>
                     </div>
                   </div>
@@ -110,7 +110,7 @@ class Settings extends Component {
                     <div className="settings-subtitle">{t('panel.settings.backgroundDescription')}</div>
                   </div>
                   <div className="col-md-4 text-right mt-auto mb-auto">
-                    <label htmlFor="background"> <a className="btn btn-pannel-grey">Upload Image</a></label>
+                    <label htmlFor="background"> <a className="btn btn-pannel-grey">{t('panel.settings.uploadImg')}</a></label>
                     <input type="file" id="background" accept="image/x-png,image/jpeg" multiple="multiple" className="input-logo" onChange={this.onBackgroundChange} />
                   </div>
                 </div>
@@ -121,7 +121,7 @@ class Settings extends Component {
                         return (
                           <div className="settings-img-preview d-flex flex-column p-2">
                             <img width={82} height={50} src={background.url} alt="" />
-                            <button type="button" onClick={() => { this.deleteBackgroundPreview(background.id) }} className="settings-delete-btn btn btn-sm">Delete</button>
+                            <button type="button" onClick={() => { this.deleteBackgroundPreview(background.id) }} className="settings-delete-btn btn btn-sm">{t('panel.settings.delete')}</button>
                           </div>
                         )
                       })}
@@ -133,11 +133,11 @@ class Settings extends Component {
 
                 <div className="row">
                   <div className="col-md-8">
-                    <div className="settings-title">Your logo</div>
-                    <div className="settings-subtitle">Your logo will be shown on top of download window.</div>
+                    <div className="settings-title">{t('panel.settings.logo')}</div>
+                    <div className="settings-subtitle">{t('panel.settings.logoDescription')}</div>
                   </div>
                   <div className="col-md-4 text-right mt-auto mb-auto">
-                    <label htmlFor="logo"><a className="btn btn-pannel-grey">Upload Image</a></label>
+                    <label htmlFor="logo"><a className="btn btn-pannel-grey">{t('panel.settings.uploadImg')}</a></label>
                     <input type="file" id="logo" className="input-logo" accept="image/x-png,image/jpeg" onChange={this.onLogoChange} />
                   </div>
                 </div>
@@ -145,33 +145,33 @@ class Settings extends Component {
                 <div className="row">
                   <div className="col-md-6 d-flex flex-column justify-content-between align-items-start">
                     <div class="form-group mb-0">
-                      <label for="upload-position" className="settings-title">Upload position</label>
-                      <div className="settings-subtitle">Choose position of upload window on the screen</div>
+                      <label for="upload-position" className="settings-title">{t('panel.settings.uploadPosition')}</label>
+                      <div className="settings-subtitle">{t('panel.settings.uploadPositionDescription')}</div>
                     </div>
                     <select value={this.props.settings.upload_position} class="form-control" id="upload-position" onChange={(e) => { this.onInputChange("upload_position", e.target.value) }}>
-                        <option value="flex-start">left</option>
-                        <option value="center">center</option>
-                        <option value="flex-end">right</option>
-                      </select>
+                      <option value="flex-start">{t('panel.settings.left')}</option>
+                      <option value="center">{t('panel.settings.center')}</option>
+                      <option value="flex-end">{t('panel.settings.right')}</option>
+                    </select>
                   </div>
 
                   <div className="col-md-6 d-flex flex-column justify-content-between align-items-start">
                     <div class="form-group mb-0">
-                      <label for="menu-position" className="settings-title">Social account links position</label>
-                      <div className="settings-subtitle">Choose position of social account links on the screen</div>
-                      
+                      <label for="menu-position" className="settings-title">{t('panel.settings.menuPosition')}</label>
+                      <div className="settings-subtitle">{t('panel.settings.menuPositionDescription')}</div>
+
                     </div>
                     <select class="form-control" value={this.props.settings.menu_position} id="upload-position" onChange={(e) => { this.onInputChange("menu_position", e.target.value) }}>
-                        <option value="flex-start">left</option>
-                        <option value="center">center</option>
-                        <option value="flex-end">right</option>
-                      </select>
+                      <option value="flex-start">{t('panel.settings.left')}</option>
+                      <option value="center">{t('panel.settings.center')}</option>
+                      <option value="flex-end">{t('panel.settings.right')}</option>
+                    </select>
                   </div>
 
 
                   <div className="col-md-12 text-center">
-                    <div className="settings-title">Social account links color</div>
-                    <div className="settings-subtitle">Choose a color of social account links on the screen</div>
+                    <div className="settings-title">{t('panel.settings.menuColor')}</div>
+                    <div className="settings-subtitle">{t('panel.settings.menuColorDescription')}</div>
                     <SketchPicker
                       color={this.props.settings.color}
                       onChangeComplete={(color) => { this.onInputChange("color", color.hex) }}
@@ -193,19 +193,19 @@ class Settings extends Component {
                     <div className="settings-title">{t('panel.settings.socialAccounts')}</div>
                     <div className="settings-subtitle">{t('panel.settings.links')}</div>
                     <div className="settings-input-container">
-                      <input type="text" className="form-control settings-input" placeholder="https://gaspalapp.com" value={this.props.settings.website} onChange={(e) => { this.onInputChange("website", e.target.value) }}></input>
-                      <div className="settings-input-description">URL of your personal Website</div>
+                      <input type="text" className="form-control settings-input" placeholder="https://upload.express" value={this.props.settings.website} onChange={(e) => { this.onInputChange("website", e.target.value) }}></input>
+                      <div className="settings-input-description">{t('panel.settings.urlWebsite')}</div>
                     </div>
                     <div className="settings-input-container">
-                      <input type="text" className="form-control settings-input" placeholder="https://www.facebook.com/gaspalFR" value={this.props.settings.facebook} onChange={(e) => { this.onInputChange("facebook", e.target.value) }}></input>
+                      <input type="text" className="form-control settings-input" placeholder="https://www.facebook.com/uploadexpress" value={this.props.settings.facebook} onChange={(e) => { this.onInputChange("facebook", e.target.value) }}></input>
                       <div className="settings-input-description">{t('panel.settings.urlFacebook')}</div>
                     </div>
                     <div className="settings-input-container">
-                      <input type="text" className="form-control settings-input" placeholder="https://www.twitter.com/gaspalFR" value={this.props.settings.twitter} onChange={(e) => { this.onInputChange("twitter", e.target.value) }}></input>
+                      <input type="text" className="form-control settings-input" placeholder="https://www.twitter.com/uploadexpress" value={this.props.settings.twitter} onChange={(e) => { this.onInputChange("twitter", e.target.value) }}></input>
                       <div className="settings-input-description">{t('panel.settings.urlTweeter')}</div>
                     </div>
                     <div className="settings-input-container">
-                      <input type="text" className="form-control settings-input" placeholder="https://www.instagram.com/gaspalFR" value={this.props.settings.instagram} onChange={(e) => { this.onInputChange("instagram", e.target.value) }}></input>
+                      <input type="text" className="form-control settings-input" placeholder="https://www.instagram.com/uploadexpress" value={this.props.settings.instagram} onChange={(e) => { this.onInputChange("instagram", e.target.value) }}></input>
                       <div className="settings-input-description">{t('panel.settings.urlInstagram')}</div>
                     </div>
                   </div>
@@ -221,7 +221,7 @@ class Settings extends Component {
                 }
               ]}
                 onFileDownload={() => { }}
-                preview = {false}
+                preview={false}
               />
             </div>
           </div>

@@ -23,30 +23,69 @@
 
 .preview-img:hover {
   opacity: 0.3;
-  cursor:pointer;
+  cursor:zoom-in;
 }
 
 .selected {
  opacity: 0.3
 }
 
-.preview-selected-img {
+.card-body-preview {
   position: absolute;
-  top: 1%;  
-  right:2%; 
+  width:100%;
+  background-color: white;
+  border-bottom: 1px solid rgb(207, 207, 207);
+  border-left: 1px solid rgb(207, 207, 207);
+  border-right: 1px solid rgb(207, 207, 207);
+  bottom:0;
+  cursor: default
 }
 
-.preview-btn{
+.preview-download-img{
+  cursor: pointer
+}
+
+.preview-btn-right{
   position: absolute;
   right: 20px;
   top: 50%;
   font-size:14px;
   font-weight: bold;
   transform: translate(0, -50%);
-  color:#5BA3D4;
 }
 
-.preview-btn:hover {
-  text-decoration: none;
-  color: rgb(44, 100, 138);
+.preview-btn-left{
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  font-size:14px;
+  font-weight: bold;
+  transform: translate(0, -50%);
+}
+
+.preview-btn-right:hover {
+  cursor:pointer;
+}
+
+.preview-btn-left:hover {
+  cursor:pointer;
+}
+
+.preview-img-name{
+  font-size: 14px;
+  font-weight: bold;
+  color: #363A3E;
+}
+
+.oops-title{
+  font-size: 20px;
+  font-weight: bolder;
+  margin-top: 18px;
+  color: #4A4A4A; 
+}
+
+.oops-subtitle{
+  font-size: 16px;
+  color: #4A4A4A;
+
 }
