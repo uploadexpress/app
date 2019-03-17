@@ -26,8 +26,8 @@ const Navbar = (props) => {
                             {`${props.user.first_name} ${props.user.last_name}`}
                         </div>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <Link className="dropdown-item" to='/panel/settings'>Settings</Link>
-                            <button type="button" className="form-submit dropdown-item" onClick={handleLogout}>Logout</button>
+                            <Link className="dropdown-item" to='/panel/settings'>{t('navbar.settings')}</Link>
+                            <button type="button" className="form-submit dropdown-item" onClick={handleLogout}>{t('navbar.logout')}</button>
                         </div>
                     </li>
                 </ul>

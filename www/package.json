@@ -25,6 +25,7 @@
     "react-dom": "^16.8.1",
     "react-dropzone": "^8.0.4",
     "react-i18next": "^10.2.0",
+    "react-images": "^0.5.19",
     "react-paginate": "^6.3.0",
     "react-photo-gallery": "^6.3.2",
     "react-redux": "^6.0.0",

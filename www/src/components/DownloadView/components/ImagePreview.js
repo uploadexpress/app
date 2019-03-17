@@ -1,66 +1,96 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ImgSelected from '../../../img/img-preview-selected.svg'
+import ImgDownloadPreview from '../../../img/img-download-preview.svg'
+import ImgDownloadPreviewHover from '../../../img/img-download-preview-hover.svg'
+
+
 
 const imgWithClick = { cursor: 'pointer' };
 
-const Photo = ({ index, onClick, photo, margin, direction, top, left }) => {
-  const imgStyle = { 
-      margin: margin,
-  };
-  if (direction === 'column') {
-    imgStyle.position = 'absolute';
-    imgStyle.left = left;
-    imgStyle.top = top;
-  }
+class Photo extends Component {
 
-  const handleClick = event => {
-    onClick(event, { photo, index });
-  };
-
-  return (
-      <div className="preview-container" style={onClick ? { ...imgStyle, ...imgWithClick } : imgStyle}>
-    <img
-      className={photo.selected ? 'preview-img selected': 'preview-img'}
-      
-      {...photo}
-      onClick={onClick ? handleClick : null}
-    />
-    { photo.selected &&
-        <div className="preview-selected-img">
-            <img width={20} height={20} src={ImgSelected} alt="" />
-        </div>
+    state = {
+        onHover: false
     }
-    </div>
-  );
+
+    onHover = (isHovering) => {
+        this.setState({
+            onHover: isHovering
+        })
+
+
+    }
+
+    render() {
+        const { index, onClick, photo, margin, direction, top, left } = this.props
+        const imgStyle = {
+            margin: margin,
+        };
+        if (direction === 'column') {
+            imgStyle.position = 'absolute';
+            imgStyle.left = left;
+            imgStyle.top = top;
+        }
+
+        const handleClick = event => {
+            onClick(event, { photo, index });
+        };
+
+        return (
+            <div className="preview-container" onMouseEnter={() => {this.onHover(true)}}
+                onMouseLeave={()=>{this.onHover(false)}} style={onClick ? { ...imgStyle, ...imgWithClick } : imgStyle}>
+
+                <img
+                    className={photo.selected ? 'preview-img selected' : 'preview-img'}
+
+                    {...photo}
+                    onClick={onClick ? handleClick : null}
+
+                />
+
+                {this.state.onHover &&
+                    <div class="card-body-preview">
+                        <div class="d-flex justify-content-between m-2">
+                            <div className="preview-img-name">
+                                {photo.name}
+                            </div>
+                            <img width={24} className="preview-download-img" onClick={photo.onFileDownload} onMouseOver={e => e.currentTarget.src = ImgDownloadPreviewHover} onMouseOut={e => e.currentTarget.src = ImgDownloadPreview} src={ImgDownloadPreview} alt="" />
+                        </div>
+                    </div>
+
+                }
+            </div>
+        )
+    }
 };
 
 export const photoPropType = PropTypes.shape({
-  src: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  alt: PropTypes.string,
-  title: PropTypes.string,
-  srcSet: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  sizes: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    src: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    alt: PropTypes.string,
+    title: PropTypes.string,
+    srcSet: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    sizes: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 });
 
 Photo.propTypes = {
-  index: PropTypes.number.isRequired,
-  onClick: PropTypes.func,
-  photo: photoPropType.isRequired,
-  margin: PropTypes.number,
-  top: props => {
-    if (props.direction === 'column' && typeof props.top !== 'number') {
-      return new Error('top is a required number when direction is set to `column`');
-    }
-  },
-  left: props => {
-    if (props.direction === 'column' && typeof props.left !== 'number') {
-      return new Error('left is a required number when direction is set to `column`');
-    }
-  },
-  direction: PropTypes.string,
+    index: PropTypes.number.isRequired,
+    onClick: PropTypes.func,
+    photo: photoPropType.isRequired,
+    margin: PropTypes.number,
+    top: props => {
+        if (props.direction === 'column' && typeof props.top !== 'number') {
+            return new Error('top is a required number when direction is set to `column`');
+        }
+    },
+    left: props => {
+        if (props.direction === 'column' && typeof props.left !== 'number') {
+            return new Error('left is a required number when direction is set to `column`');
+        }
+    },
+    direction: PropTypes.string,
 };
+
 
 export default Photo;
