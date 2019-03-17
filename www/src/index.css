@@ -64,6 +64,7 @@ code {
 }
 
 .upload-modal { 
+  box-shadow: 0 0 1px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.03);
   margin-top: 24px;
   background: white;
   border-radius: 10px;
