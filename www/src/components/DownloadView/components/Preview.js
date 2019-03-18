@@ -3,14 +3,21 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Gallery from 'react-photo-gallery';
 import Lightbox from 'react-images';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '../../Modal';
 import ImagePreview from './ImagePreview';
 import { selectFile } from '../../../scenes/Download/actions';
+
 
 class Preview extends Component {
   state = {
     lightboxIsOpen: false,
     currentImage: 0,
+    slideshow: false,
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   closeLightbox = () => {
@@ -27,8 +34,14 @@ class Preview extends Component {
     });
   }
 
-  gotoNext = () => {
+  gotoNext = (imagesLength) => {
     const { currentImage } = this.state;
+    if (currentImage === imagesLength - 1) {
+      this.setState({
+        currentImage: 0,
+      });
+      return;
+    }
     this.setState({
       currentImage: currentImage + 1,
     });
@@ -42,10 +55,25 @@ class Preview extends Component {
     });
   }
 
+  onSlideshow = (imagesLength) => {
+    this.setState({
+      slideshow: true,
+    });
+    this.interval = setInterval(() => {
+      this.gotoNext(imagesLength);
+    }, 5000);
+  }
+
+  stopSlideshow = () => {
+    this.setState({
+      slideshow: false,
+    });
+    clearInterval(this.interval);
+  }
 
   render() {
     const { files, onFileDownload } = this.props;
-    const { currentImage, lightboxIsOpen } = this.state;
+    const { currentImage, lightboxIsOpen, slideshow } = this.state;
     const images = files.filter(file => file.preview_url);
 
     return (
@@ -72,11 +100,22 @@ class Preview extends Component {
               <Lightbox
                 currentImage={currentImage}
                 images={images.map(file => ({ src: file.preview_url }))}
-                backdropClosesModal={true}
-                customControls = {<button type="button"  onClick={() => {this.props.onFileDownload(images[this.state.currentImage].id)}} class="btn preview-download-btn btn-sm">Download</button>} 
+                backdropClosesModal
+                customControls={[
+                  <button type="button" onClick={() => { onFileDownload(images[currentImage].id); }} className="btn preview-download-btn btn-sm">Download</button>,
+                  (slideshow) ? (
+                    <button type="button" className="btn-slideshow" onClick={this.stopSlideshow}>
+                      <FontAwesomeIcon icon="pause" />
+                    </button>
+                  ) : (
+                    <button type="button" className="btn-slideshow" onClick={() => { this.onSlideshow(images.length); }}>
+                      <FontAwesomeIcon icon="play" />
+                    </button>
+                  ),
+                ]}
                 isOpen={lightboxIsOpen}
                 onClickPrev={this.gotoPrevious}
-                onClickNext={this.gotoNext}
+                onClickNext={() => { this.gotoNext(images.length); }}
                 onClose={this.closeLightbox}
               />
             </div>

@@ -1,7 +1,9 @@
 import React, { Component, Suspense } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faFolderPlus, faKey, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import {
+  faFolderPlus, faKey, faEnvelope, faPlay, faPause,
+} from '@fortawesome/free-solid-svg-icons';
 import Spinner from 'react-spinkit';
 import { connect } from 'react-redux';
 import { faFacebookF, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -15,7 +17,7 @@ import Setup from './scenes/Portal/Setup/components/index';
 import SettingsService from './services/Api/SettingsService';
 import { setSettings } from './scenes/Portal/Settings/actions';
 
-library.add(faFolderPlus, faKey, faEnvelope, faFacebookF, faTwitter, faInstagram);
+library.add(faFolderPlus, faKey, faEnvelope, faPause, faPlay, faFacebookF, faTwitter, faInstagram);
 
 class App extends Component {
   state = {
