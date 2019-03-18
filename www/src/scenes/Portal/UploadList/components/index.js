@@ -76,7 +76,6 @@ class UploadList extends Component {
     } = this.state;
     return (
       <Portal history={history}>
-
         <div className="container">
           <div className="row">
             <div className="col-12 d-flex justify-content-between align-items-center">
@@ -144,7 +143,7 @@ class UploadList extends Component {
             <div>
               <div className="portal-upload-background" role="presentation" onKeyDown={this.handleClick} onClick={this.handleClick} />
               <div className="portal-upload">
-                <UploadModal public={false} shouldDisplayName />
+                <UploadModal publicUpload={false} shouldDisplayName />
               </div>
             </div>
           )

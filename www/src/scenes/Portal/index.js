@@ -26,7 +26,10 @@ const Portal = (props) => {
 Portal.propTypes = {
   history: PropTypes.shape({}).isRequired,
   user: PropTypes.shape({}).isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 export default withAuth(Portal);

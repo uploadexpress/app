@@ -5,9 +5,12 @@ import AuthService from '../../../../services/Api/AuthService';
 const withAuth = (AuthComponent) => {
   const Auth = new AuthService();
   return class AuthWrapped extends Component {
-    propTypes = {
+    static propTypes = {
       history: PropTypes.shape({}).isRequired,
-      children: PropTypes.element.isRequired,
+      children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+      ]).isRequired,
     }
 
     constructor() {
