@@ -72,13 +72,13 @@ class Preview extends Component {
               <Lightbox
                 currentImage={currentImage}
                 images={images.map(file => ({ src: file.preview_url }))}
-                backdropClosesModal
+                backdropClosesModal={true}
+                customControls = {<button type="button"  onClick={() => {this.props.onFileDownload(images[this.state.currentImage].id)}} class="btn preview-download-btn btn-sm">Download</button>} 
                 isOpen={lightboxIsOpen}
                 onClickPrev={this.gotoPrevious}
                 onClickNext={this.gotoNext}
                 onClose={this.closeLightbox}
               />
-
             </div>
           </div>
         </Modal>
