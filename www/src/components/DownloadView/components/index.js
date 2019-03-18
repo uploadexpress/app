@@ -17,8 +17,8 @@ class DownloadView extends Component {
 
   hasPreview = () => {
     const { files } = this.props;
-    files.reduce((accumulateur, valeurCourante) => {
-      if (valeurCourante.preview_url) {
+    return files.reduce((accumulateur, current) => {
+      if (current.preview_url) {
         return true;
       }
       return accumulateur;
