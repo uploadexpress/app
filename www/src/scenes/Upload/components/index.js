@@ -1,13 +1,11 @@
-import React from 'react'
+import React from 'react';
 import Background from '../../../components/Background';
 import UploadModal from '../../../components/UploadModal/components';
 
-const Upload = () => {
-    return(
-        <Background>
-            <UploadModal public={true}/> 
-        </Background>
-    )
-}
+const Upload = () => (
+  <Background>
+    <UploadModal public />
+  </Background>
+);
 
-export default Upload
+export default Upload;

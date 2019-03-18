@@ -1,4 +1,4 @@
 export default {
-    files: [],
-    downloadId: null
-}
+  files: [],
+  downloadId: null,
+};

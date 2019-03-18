@@ -1,155 +1,173 @@
 import React, { Component } from 'react';
-import File from './File';
-import UploadService from '../../../services/Api/UploadService'
-import uploadFile from '../../../services/FileUploader'
-import { promiseSerial } from '../../../helpers/promiseSerial';
-import { updateProgress, startUploading, endUploading } from '../actions';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import { withTranslation } from 'react-i18next';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
+import File from './File';
+import UploadService from '../../../services/Api/UploadService';
+import uploadFile from '../../../services/FileUploader';
+import promiseSerial from '../../../helpers/promiseSerial';
+import { updateProgress, startUploading, endUploading } from '../actions';
+import buttonize from '../../../helpers/buttonize';
 import { UploaderStatus } from '../constants';
-import stringTruncate from '../../../helpers/stringTruncate'
 
 class Listfiles extends Component {
-    state = {
-        uploadId: null,
-        filesToUpload: [],
-        isButtonDisabled: false,
-        uploadName: "Unnamed"
-    }
+  state = {
+    isButtonDisabled: false,
+    uploadName: 'Unnamed',
+  }
 
-    constructor() {
-        super();
-        this.uploadService = new UploadService();
-    }
+  constructor() {
+    super();
+    this.uploadService = new UploadService();
+  }
 
-    onUploadProgress = (fileId, progressEvent) => {
-        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-        this.props.updateProgress(fileId, percentCompleted);
-    }
+  onUploadProgress = (fileId, progressEvent) => {
+    const { updateProgress } = this.props;
+    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+    updateProgress(fileId, percentCompleted);
+  }
 
-    onDrop = (acceptedFiles) => {
-        this.props.onFilesSelected(acceptedFiles);
-    }
+  onDrop = (acceptedFiles) => {
+    const { onFilesSelected } = this.props;
+    onFilesSelected(acceptedFiles);
+  }
 
-    beginUpload = (data) => {
-        // Returns the ID to the main component
-        this.props.onUploadCreated(data.id);
+  beginUpload = (data) => {
+    const { files, onUploadCreated, endUploading } = this.props;
+    // Returns the ID to the main component
+    onUploadCreated(data.id);
 
-        const uploadPromises = this.props.files.map((file) => {
-            return () => {
-                return uploadFile(data.id, file, (event) => {
-                    this.onUploadProgress(file.id, event)
-                })
-            }
-        })
+    const uploadPromises = files.map(file => () => uploadFile(data.id, file, (event) => {
+      this.onUploadProgress(file.id, event);
+    }));
 
-        promiseSerial(uploadPromises).then(() => {
-            this.uploadService.putComplete(data.id)
-            this.props.endUploading();
-        })
-    }
+    promiseSerial(uploadPromises).then(() => {
+      this.uploadService.putComplete(data.id);
+      endUploading();
+    });
+  }
 
-    createFiles = () => {
-        this.props.startUploading();
-        let files = this.props.files.map(file => {
-            return {
-                'id': file.id,
-                'name': file.fileInput.name,
-                'size': file.fileInput.size,
-            }
+  createFiles = () => {
+    const { files, startUploading, publicUpload } = this.props;
+    const { uploadName } = this.state;
 
-        })
+    startUploading();
 
-        this.uploadService.createUpload(files, this.state.uploadName, this.props.public).then(res => {
-            this.beginUpload(res.data);
-        })
+    const filesData = files.map(file => ({
+      id: file.id,
+      name: file.fileInput.name,
+      size: file.fileInput.size,
+    }));
 
-        this.setState({
-            isButtonDisabled: true
-        });
-    }
+    this.uploadService.createUpload(filesData, uploadName, publicUpload).then((res) => {
+      this.beginUpload(res.data);
+    });
 
-    uploadName = (e) => {
-        this.setState({
-            uploadName: e.target.value
-        })
+    this.setState({
+      isButtonDisabled: true,
+    });
+  }
 
-    }
+  uploadName = (e) => {
+    this.setState({
+      uploadName: e.target.value,
+    });
+  }
 
-    renderFiles() {
-        return this.props.files.map(file => {
-            return (
-                <File
-                    key={file.id}
-                    name={file.fileInput.name}
-                    progress={file.progress}
-                    status={file.status}
-                    id={file.id}
-                />
-            )
-        })
-    }
+  renderFiles() {
+    const { files } = this.props;
+    return files.map(file => (
+      <File
+        key={file.id}
+        name={file.fileInput.name}
+        progress={file.progress}
+        status={file.status}
+        id={file.id}
+      />
+    ));
+  }
 
-    render() {
-        const { t } = this.props;
-
-        return (
-            <div className="listfiles">
-                <div>
-                    <div className="list-title">{t('upload.listFile.title')}</div>
-                    {this.props.shouldDisplayName &&
-                        <div className="upload-name">
-                            <div class="input-group input-group-sm mb-3">   
-                            <input type="text" class="form-control" placeholder="Upload name" onChange = {this.uploadName}  />
-                        </div> </div>}
-                    <hr />
+  render() {
+    const { t, shouldDisplayName, status } = this.props;
+    const { isButtonDisabled } = this.state;
+    return (
+      <div className="listfiles">
+        <div>
+          <div className="list-title">{t('upload.listFile.title')}</div>
+          {shouldDisplayName
+            && (
+              <div className="upload-name">
+                <div className="input-group input-group-sm mb-3">
+                  <input type="text" className="form-control" placeholder="Upload name" onChange={this.uploadName} />
                 </div>
-                <div className='list-container'>
-                    <Dropzone
-                        onDrop={this.onDrop}
-                        disableClick={true}
-                        disabled={this.props.status === UploaderStatus.UPLOADING}
+              </div>
+            )}
+          <hr />
+        </div>
+        <div className="list-container">
+          <Dropzone
+            onDrop={this.onDrop}
+            disableClick
+            disabled={status === UploaderStatus.UPLOADING}
+          >
+            {({ getRootProps, getInputProps, open }) => (
+              <div style={{ outline: 'none', minHeight: '100%' }} {...getRootProps()}>
+                <input {...getInputProps()} />
 
+                {this.renderFiles()}
+
+                {status === UploaderStatus.FILE_LIST
+                  && (
+                    /* eslint-disable */ // (Take care with buttonize)
+                    <div 
+                      {...buttonize(open)}
+                      className="add-file" onClick={open}
                     >
-                        {({ getRootProps, getInputProps, open }) => (
-                            <div style={{ outline: 'none', minHeight: '100%' }}{...getRootProps()}>
-                                <input {...getInputProps()} />
+                      <FontAwesomeIcon className="add-file-img" icon="folder-plus" />
+                      <div className="d-inline add-file-text">{t('upload.listFile.addFile')}</div>
+                    </div>
+                  )
+                }
+              </div>
 
-                                {this.renderFiles()}
-
-                                {this.props.status === UploaderStatus.FILE_LIST &&
-                                    <div className="add-file" onClick={() => open()}>
-                                        <FontAwesomeIcon className="add-file-img" icon="folder-plus" />
-                                        <div className="d-inline add-file-text">{t('upload.listFile.addFile')}</div>
-                                    </div>
-                                }
-                            </div>
-
-                        )}
-                    </Dropzone>
-                </div>
-                <div className="list-footer">
-                    <button onClick={this.createFiles} disabled={this.state.isButtonDisabled} className="blue-btn">{t('upload.listFile.upload')}</button>
-                </div>
-            </div>
-        )
-    }
+            )}
+          </Dropzone>
+        </div>
+        <div className="list-footer">
+          <button onClick={this.createFiles} disabled={isButtonDisabled} className="blue-btn">{t('upload.listFile.upload')}</button>
+        </div>
+      </div>
+    );
+  }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updateProgress: (fileId, progress) => dispatch(updateProgress(fileId, progress)),
-        startUploading: () => dispatch(startUploading()),
-        endUploading: () => dispatch(endUploading())
-    }
+const mapDispatchToProps = dispatch => ({
+  updateProgress: (fileId, progress) => dispatch(updateProgress(fileId, progress)),
+  startUploading: () => dispatch(startUploading()),
+  endUploading: () => dispatch(endUploading()),
+});
+
+const mapStateToProps = state => ({
+  status: state.uploader.status,
+});
+
+Listfiles.defaultProps = {
+  publicUpload: false
 }
 
-const mapStateToProps = (state) => {
-    return {
-        status: state.uploader.status
-    }
+Listfiles.propTypes = {
+  t: PropTypes.func.isRequired,
+  files: PropTypes.array.isRequired,
+  startUploading: PropTypes.func.isRequired,
+  updateProgress: PropTypes.func.isRequired,
+  onUploadCreated: PropTypes.func.isRequired,
+  onFilesSelected: PropTypes.func.isRequired,
+  endUploading: PropTypes.func.isRequired,
+  publicUpload: PropTypes.bool.isRequired,
+  shouldDisplayName: PropTypes.bool.isRequired,
+  status: PropTypes.symbol.isRequired,
 }
 
-export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Listfiles))
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Listfiles));

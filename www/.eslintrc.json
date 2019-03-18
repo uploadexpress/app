@@ -1,0 +1,29 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "plugins": [
+    "react"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "no-shadow": "off",
+    "jsx-a11y/label-has-for": "off"
+  }
+}

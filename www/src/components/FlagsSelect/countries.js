@@ -1,4 +1,4 @@
 export default ({
-    "en":"EN",
-    "ru":"RU"
+  en: 'EN',
+  ru: 'RU',
 });

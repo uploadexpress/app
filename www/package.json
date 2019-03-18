@@ -32,13 +32,16 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.5",
     "react-spinkit": "^3.0.0",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "yarn eslint .",
+    "lint:fix": "yarn lint --fix"
   },
   "browserslist": [
     ">0.2%",
@@ -47,6 +50,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "redux-logger": "^3.0.6"
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-react": "^7.12.4"
   }
 }
