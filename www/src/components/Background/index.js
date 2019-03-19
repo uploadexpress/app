@@ -5,17 +5,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import ReactFlagsSelect from '../FlagsSelect';
 
-const backgroundStyle = image => ({
-  backgroundImage: `url(${image})`,
-  height: '100vh',
-  width: '100%',
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-  backgroundColor: 'black',
-  position: 'relative',
-  transition: '2s',
-});
+const backgroundStyle = (image) => {
+  const backgroundImage = image === null ? 'linear-gradient(#2193b0, #6dd5ed)' : `url(${image})`;
+  return {
+    backgroundImage,
+    height: '100vh',
+    width: '100%',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundColor: 'black',
+    position: 'relative',
+    transition: '2s',
+  };
+};
 
 class Background extends React.Component {
   state = {
