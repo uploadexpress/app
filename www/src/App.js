@@ -35,6 +35,7 @@ class App extends Component {
 
   render() {
     const { loading } = this.state;
+    const { settings } = this.props;
     return loading
       ? (<div className=" spinner d-flex justify-content-center align-items-center"><Spinner /></div>)
       : (
@@ -43,7 +44,7 @@ class App extends Component {
             <div className="App">
               <Route exact path="/" component={Upload} />
               <Route exact path="/download/:id" component={Download} />
-              <Route exact path="/panel" component={UploadList} />
+              <Route exact path="/panel" component={settings.setup ? UploadList : Setup} />
               <Route exact path="/panel/settings" component={Settings} />
               <Route path="/panel/signin" component={SignIn} />
               <Route path="/panel/setup" component={Setup} />
@@ -58,8 +59,13 @@ const mapDispatchToProps = dispatch => ({
   setSettings: settings => dispatch(setSettings(settings)),
 });
 
+const mapStateToProps = state => ({
+  settings: state.settings,
+});
+
 App.propTypes = {
   setSettings: PropTypes.func.isRequired,
+  settings: PropTypes.shape({}).isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

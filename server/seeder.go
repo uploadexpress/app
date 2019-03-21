@@ -52,6 +52,10 @@ func (a *API) SetupSeeds() error {
 				Value: false,
 			},
 			{
+				Name:  "setup",
+				Value: false,
+			},
+			{
 				Name:  "twitter",
 				Value: "https://www.twitter.com/upload.express",
 			},

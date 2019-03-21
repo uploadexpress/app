@@ -2,9 +2,11 @@
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Background from '../../../../components/Background/index';
 import Modal from '../../../../components/Modal/index';
 import SetupService from '../../../../services/Api/SetupService';
+import { setSetting } from '../../Settings/actions';
 import '../style/index.css';
 
 class Setup extends Component {
@@ -36,7 +38,7 @@ class Setup extends Component {
       password, confirmPassword, email, lastName, firstName,
     } = this.state;
 
-    const { history } = this.props;
+    const { history, setSetting } = this.props;
 
     if (password !== confirmPassword) {
       this.setState({
@@ -46,6 +48,7 @@ class Setup extends Component {
     }
     this.setupService.setup(email, password, lastName, firstName)
       .then(() => {
+        setSetting('setup', true);
         history.replace('/panel');
       });
   }
@@ -124,9 +127,14 @@ class Setup extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  setSetting: (name, value) => { dispatch(setSetting(name, value)); },
+});
+
 Setup.propTypes = {
   t: PropTypes.func.isRequired,
   history: PropTypes.shape({}).isRequired,
+  setSetting: PropTypes.func.isRequired,
 };
 
-export default withTranslation()(Setup);
+export default connect(null, mapDispatchToProps)(withTranslation()(Setup));

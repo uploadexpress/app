@@ -55,6 +55,16 @@ func (sc *SetupController) SetupApp(c *gin.Context) {
 		return
 	}
 
+	_, err = store.EditSetting(c, models.Setting{
+		Name:  "setup",
+		Value: true,
+	})
+	if err != nil {
+		c.Error(err)
+		c.Abort()
+		return
+	}
+
 	secret := config.GetString(c, "jwt_secret")
 	accessToken, err := helpers.GenerateAccessToken(secret, user.Id)
 	if err != nil {
