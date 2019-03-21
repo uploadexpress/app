@@ -17,6 +17,8 @@ class Settings extends Component {
   constructor() {
     super();
     this.settingsService = new SettingsService();
+    this.selectBackgroundRef = React.createRef();
+    this.selectLogoRef = React.createRef();
   }
 
   onInputChange = (name, value) => {
@@ -111,11 +113,22 @@ class Settings extends Component {
                     <div className="settings-subtitle">{t('panel.settings.backgroundDescription')}</div>
                   </div>
                   <div className="col-md-4 text-right mt-auto mb-auto">
-                    <label htmlFor="background">
-                      {' '}
-                      <button type="button" className="btn btn-pannel-grey">{t('panel.settings.uploadImg')}</button>
-                    </label>
-                    <input type="file" id="background" accept="image/x-png,image/jpeg" multiple="multiple" className="input-logo" onChange={this.onBackgroundChange} />
+                    <button
+                      type="button"
+                      className="btn btn-pannel-grey"
+                      onClick={() => { this.selectBackgroundRef.current.click(); }}
+                    >
+                      {t('panel.settings.uploadImg')}
+                    </button>
+                    <input
+                      ref={this.selectBackgroundRef}
+                      type="file"
+                      id="background"
+                      accept="image/x-png,image/jpeg"
+                      multiple="multiple"
+                      className="input-logo"
+                      onChange={this.onBackgroundChange}
+                    />
                   </div>
                 </div>
                 <div className="row">
@@ -139,8 +152,21 @@ class Settings extends Component {
                     <div className="settings-subtitle">{t('panel.settings.logoDescription')}</div>
                   </div>
                   <div className="col-md-4 text-right mt-auto mb-auto">
-                    <label htmlFor="logo"><button type="button" className="btn btn-pannel-grey">{t('panel.settings.uploadImg')}</button></label>
-                    <input type="file" id="logo" className="input-logo" accept="image/x-png,image/jpeg" onChange={this.onLogoChange} />
+                    <button
+                      type="button"
+                      onClick={() => { this.selectLogoRef.current.click(); }}
+                      className="btn btn-pannel-grey"
+                    >
+                      {t('panel.settings.uploadImg')}
+                    </button>
+                    <input
+                      ref={this.selectLogoRef}
+                      type="file"
+                      id="logo"
+                      className="input-logo"
+                      accept="image/x-png,image/jpeg"
+                      onChange={this.onLogoChange}
+                    />
                   </div>
                 </div>
 

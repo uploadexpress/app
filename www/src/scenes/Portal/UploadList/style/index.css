@@ -51,7 +51,6 @@
 .pagination > li > span:hover,
 .pagination > li > a:focus,
 .pagination > li > span:focus {
-  z-index: 2;
   color: #1b4060;
   background-color: #eeeeee;
   border-color: #ddd;
@@ -64,7 +63,6 @@
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
   outline-style: none;
-  z-index: 3;
   color: #fff;
   background-color: #5BA3D4;
   border-color: #5BA3D4;
