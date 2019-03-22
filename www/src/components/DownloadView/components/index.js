@@ -40,6 +40,7 @@ class DownloadView extends Component {
         id={file.id}
         size={file.size}
         onFileDownload={onFileDownload}
+        key={file.id}
       />
     ));
   }

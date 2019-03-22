@@ -42,7 +42,7 @@ class App extends Component {
         <BrowserRouter>
           <Suspense fallback={<Spinner />}>
             <div className="App">
-              <Route exact path="/" component={Upload} />
+              <Route exact path="/" component={settings.public_uploader ? Upload : SignIn} />
               <Route exact path="/download/:id" component={Download} />
               <Route exact path="/panel" component={settings.setup ? UploadList : Setup} />
               <Route exact path="/panel/settings" component={Settings} />

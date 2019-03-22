@@ -1,0 +1,104 @@
+{
+    "upload":{
+        "dropfile" : "Déposez vos fichiers ici",
+        "linkPreview" : {
+            "title" : "Partagez votre lien",
+            "done" : "C'est fini !",
+            "copyLink" : "Copiez votre lien de téléchargement : ",
+            "copy" : "Copier",
+            "copied" : "Copié !"
+        },
+        "listFile" : {
+            "title" : "Vos dossiers",
+            "addFile" : "Ajouter fichier",
+            "upload" : "Transférer"
+        }
+    },
+
+    "download":{
+        "header" : "Télécharger",
+        "button" : "Télécharger tout",
+        "gallery" : "Galerie",
+        "oops":{
+            "header" : "Oups !",
+            "title" : "Quelque chose a mal tourné !",
+            "subtitle" : "Ce lien n'existe pas." 
+        }
+    },
+
+    "panel":{
+        "uploadList":{
+            "title" : "Vos téléchargements",
+            "uploadFile" : "Télécharger un nouveau fichier",
+            "name" : "Nom",
+            "link" : "Link",
+            "files" : "Fichiers",
+            "downloads" : "Téléchargements",
+            "previous" : "précédent",
+            "next" : "suivant"
+        },
+        "settings":{
+            "administration" : "Administration",
+            "save" : "Enregistrer les modifications",
+            "saved" : "Enregistré",
+            "pageStyling" : "Style de la page de téléchargement",
+            "title" : "Titre et description",
+            "titleDescription" : "Les informations qui apparaîtront sur la page de téléchargement.",
+            "companyName" : "Le nom de votre société",
+            "companyDescription" : "La description de votre entreprise",
+            "identity" : "Identité",
+            "backgroundImage" : "Image de fond",
+            "backgroundDescription" : "L'image d'arrière-plan montrée à vos clients lors du téléchargement d'un fichier. Cette image doit représenter votre entreprise.",
+            "upload" : "Sélectionner l'image",
+            "socialAccounts" : "Comptes sociaux",
+            "links" : "Liens vers vos comptes sociaux",
+            "urlFacebook" : "URL de votre page Facebook",
+            "urlTweeter" : "URL de votre profil Twitter",
+            "urlInstagram" : "URL de votre profil Instagram",
+            "urlWebsite" : "URL de votre site web personnel",
+            "uploadImg" : "Télécharger l'image",
+            "delete" : "Supprimer",
+            "logo" : "Votre logo",
+            "logoDescription" : "Votre logo sera affiché en haut de la fenêtre de téléchargement.",
+            "uploadPosition" : "Position de chargement",
+            "uploadPositionDescription" : "Choisir la position de la fenêtre de téléchargement à l'écran",
+            "centre" : "centre",
+            "gauche" : "gauche",
+            "right" : "droite",
+            "menuPosition" : "Votre position de lien social",
+            "menuPositionDescription" : "Choisissez la position des liens du compte social à l'écran",
+            "menuColor" : "La couleur des liens des comptes sociaux",
+            "menuColorDescription" : "Choisissez une couleur de liens de comptes sociaux à l'écran",
+            "publicUploader" : "Fenêtre de téléchargement publique",
+            "publicUploaderDescription" : "Si vous cochez cette case, vous autorisez des tiers à envoyer des fichiers à votre téléchargeur. Sinon, l'uploader ne sera disponible que sur votre panel"
+        },
+
+        "signin":{
+            "signin" : "S'inscrire",
+            "forgot" : "Oublié ?",
+            "login" : "Connectez-vous",
+            "error" : "Mot de passe ou email incorrect !"
+        },
+
+        "setup" : {
+            "setup" : "Installation",
+            "firstName" : "Prénom",
+            "lastName" : "Nom de famille",
+            "email" : "Adresse e-mail",
+            "password" : "Mot de passe",
+            "min" : "8 caractères min",
+            "passwordConfirm" : "Confirmer le mot de passe",
+            "passwordErr" : "Les mots de passe ne correspondent pas.",
+            "setupBtn" : "Installer"
+        }
+
+
+    },
+
+    "navbar":{
+        "uploads" : "Vos téléchargements",
+        "settings" : "Réglages",
+        "logout" : "Déconnexion"
+    }
+
+}

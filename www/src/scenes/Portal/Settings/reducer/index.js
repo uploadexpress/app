@@ -1,5 +1,7 @@
 import initState from './initState';
-import { SET_SETTINGS, SET_SETTING, DELETE_BACKGROUND } from '../actions';
+import {
+  SET_SETTINGS, SET_SETTING, DELETE_BACKGROUND, DELETE_LOGO,
+} from '../actions';
 
 export default function settings(state = initState, action) {
   switch (action.type) {
@@ -18,6 +20,12 @@ export default function settings(state = initState, action) {
       return {
         ...state,
         backgrounds,
+      };
+    }
+    case DELETE_LOGO: {
+      return {
+        ...state,
+        logo: undefined,
       };
     }
     default:

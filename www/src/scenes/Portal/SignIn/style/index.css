@@ -19,10 +19,6 @@
     color:#41454A;
 }
 
-.password-input{
-    border-right-style:hidden;
-}
-
 .error-message{
     font-size:14px;
     color: #cc0000;

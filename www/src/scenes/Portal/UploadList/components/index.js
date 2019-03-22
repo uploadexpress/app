@@ -106,10 +106,10 @@ class UploadList extends Component {
                       <td className="table-body-title">
 
                         {row.copied ? (
-                          <div className="upload-copied">Copied!</div>
+                          <div className="upload-copied">{t('upload.linkPreview.copied')}</div>
                         ) : (
                           <CopyToClipboard text={`${window.hostname}/download/${row.id}`} onCopy={() => { this.handleCopied(row.id); }}>
-                            <button type="button" className="btn upload-btn-copy">Copy</button>
+                            <button type="button" className="btn upload-btn-copy">{t('upload.linkPreview.copy')}</button>
                           </CopyToClipboard>
                         )}
                       </td>
@@ -123,8 +123,8 @@ class UploadList extends Component {
                 && (
                   <div className="text-center">
                     <ReactPaginate
-                      previousLabel="previous"
-                      nextLabel="next"
+                      previousLabel={t('panel.uploadList.previous')}
+                      nextLabel={t('panel.uploadList.next')}
                       breakLabel="..."
                       pageCount={paging.total}
                       onPageChange={this.handlePageClick}

@@ -76,10 +76,7 @@ class SignIn extends Component {
                           <FontAwesomeIcon icon="key" />
                         </span>
                       </div>
-                      <input type="password" className="form-control password-input" name="password" placeholder="Password" aria-label="Password" onChange={this.handleChange} />
-                      <div className="input-group-append">
-                        <button className="btn btn-forgot " type="button">{t('panel.signin.forgot')}</button>
-                      </div>
+                      <input type="password" className="form-control" name="password" placeholder="Password" aria-label="Password" onChange={this.handleChange} />
                     </div>
                     {error === true
                       && <div className="error-message">{t('panel.signin.error')}</div>}
