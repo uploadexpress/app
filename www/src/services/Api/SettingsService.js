@@ -29,6 +29,11 @@ class SettingsService extends Service {
       const resourceUrl = `/settings/background/${backgroundId}/`;
       return this.http.delete(resourceUrl);
     }
+
+    deleteLogo = () => {
+      const resourceUrl = '/settings/logo/';
+      return this.http.delete(resourceUrl);
+    }
 }
 
 export default SettingsService;

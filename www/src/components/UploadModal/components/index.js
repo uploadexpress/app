@@ -33,9 +33,11 @@ class Upload extends Component {
 
   render() {
     const {
-      status, publicUpload, shouldDisplayName, files,
+      status, publicUpload, shouldDisplayName, files
     } = this.props;
     const { id } = this.state;
+
+
     return (
       <Modal>
         {status === UploaderStatus.NO_FILES
@@ -55,10 +57,8 @@ class Upload extends Component {
         }
         {status === UploaderStatus.DONE
           && <LinkPreview id={id} />
-
         }
       </Modal>
-
     );
   }
 }

@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Portal from '../../index';
-import { setSetting, deleteBackground } from '../actions';
+import { setSetting, deleteBackground, deleteLogo } from '../actions';
 import SettingsService from '../../../../services/Api/SettingsService';
 import DownloadView from '../../../../components/DownloadView/components';
 import '../../style/index.css';
@@ -65,10 +65,19 @@ class Settings extends Component {
     );
   }
 
+  deleteLogoPreview = () => {
+    const { deleteLogo } = this.props;
+
+    this.settingsService.deleteLogo().then(
+      () => {
+        deleteLogo();
+      },
+    );
+  }
+
   render() {
     const { t, history, settings } = this.props;
     const { saved } = this.state;
-
     return (
       <Portal history={history}>
         <div className="container-fluid p-0">
@@ -83,6 +92,17 @@ class Settings extends Component {
                     ) : (
                       <button type="button" className="btn btn-pannel" onClick={this.sendSettings}>{t('panel.settings.save')}</button>
                     )}
+                  </div>
+                </div>
+                <div className="row mt-4">
+                  <div className="col-12">
+                    <div className="form-check">
+                      <label className="form-check-label settings-section mt-0" htmlFor="public_upload">
+                        <input type="checkbox" checked={settings.public_uploader} className="form-check-input" id="public_upload" onChange={(e) => { this.onInputChange('public_uploader', e.target.checked); }} />
+                        {t('panel.settings.publicUploader')}
+                      </label>
+                      <div className="settings-subtitle">{t('panel.settings.publicUploaderDescription')}</div>
+                    </div>
                   </div>
                 </div>
                 <div className="row">
@@ -112,7 +132,7 @@ class Settings extends Component {
                     <div className="settings-title">{t('panel.settings.backgroundImage')}</div>
                     <div className="settings-subtitle">{t('panel.settings.backgroundDescription')}</div>
                   </div>
-                  <div className="col-md-4 text-right mt-auto mb-auto">
+                  <div className="col-md-4 text-center mt-auto mb-auto">
                     <button
                       type="button"
                       className="btn btn-pannel-grey"
@@ -135,7 +155,7 @@ class Settings extends Component {
                   <div className="col-md-12">
                     <div className="d-flex flex-wrap justify-content-center ">
                       {settings.backgrounds.map(background => (
-                        <div className="settings-img-preview d-flex flex-column p-2">
+                        <div key={background.id} className="settings-img-preview d-flex flex-column p-2">
                           <img width={82} height={50} src={background.url} alt="" />
                           <button type="button" onClick={() => { this.deleteBackgroundPreview(background.id); }} className="settings-delete-btn btn btn-sm">{t('panel.settings.delete')}</button>
                         </div>
@@ -146,12 +166,12 @@ class Settings extends Component {
 
                 </div>
 
-                <div className="row">
+                <div className="row mb-3">
                   <div className="col-md-8">
                     <div className="settings-title">{t('panel.settings.logo')}</div>
                     <div className="settings-subtitle">{t('panel.settings.logoDescription')}</div>
                   </div>
-                  <div className="col-md-4 text-right mt-auto mb-auto">
+                  <div className="col-md-4 text-center mt-auto mb-auto">
                     <button
                       type="button"
                       onClick={() => { this.selectLogoRef.current.click(); }}
@@ -167,9 +187,11 @@ class Settings extends Component {
                       accept="image/x-png,image/jpeg"
                       onChange={this.onLogoChange}
                     />
+                    { settings.logo
+                     && <button type="button" onClick={() => { this.deleteLogoPreview(); }} className="settings-delete-btn btn btn-sm">{t('panel.settings.delete')}</button>
+                    }
                   </div>
                 </div>
-
                 <div className="row">
                   <div className="col-md-6 d-flex flex-column justify-content-between align-items-start">
                     <div className="form-group mb-0">
@@ -265,6 +287,7 @@ const mapStatetoProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setSetting: (name, value) => dispatch(setSetting(name, value)),
   deleteBackground: id => dispatch(deleteBackground(id)),
+  deleteLogo: () => dispatch(deleteLogo()),
 });
 
 Settings.propTypes = {
@@ -273,6 +296,7 @@ Settings.propTypes = {
   settings: PropTypes.shape({}).isRequired,
   setSetting: PropTypes.func.isRequired,
   deleteBackground: PropTypes.func.isRequired,
+  deleteLogo: PropTypes.func.isRequired,
 };
 
 export default connect(mapStatetoProps, mapDispatchToProps)(withTranslation()(Settings));

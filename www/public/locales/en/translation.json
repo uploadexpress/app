@@ -33,7 +33,9 @@
             "name": "Name",
             "link": "Link",
             "files": "Files",
-            "downloads": "Downloads"
+            "downloads": "Downloads",
+            "previous": "previous",
+            "next": "next"
         },
         "settings":{
             "administration": "Administration",
@@ -66,7 +68,9 @@
             "menuPosition": "Your social links position",
             "menuPositionDescription": "Choose position of social account links on the screen",
             "menuColor": "Social account links color",
-            "menuColorDescription": "Choose a color of social account links on the screen"
+            "menuColorDescription": "Choose a color of social account links on the screen",
+            "publicUploader": "Public upload window",
+            "publicUploaderDescription": "If you tick this box, you allow third parties to send files to your uploader. Otherwise, the uploader will only be available on your panel"
         },
 
         "signin":{
