@@ -84,6 +84,7 @@
 
         "setup": {
             "setup": "Setup",
+            "explanation": "It's time to setup your uploader. You will use this email and password to access your panel which will let you customize the design of your download page and see your analytics.",
             "firstName":"First name",
             "lastName": "Last name",
             "email": "Email address",

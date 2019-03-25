@@ -22,10 +22,10 @@ const Navbar = (props) => {
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <Link to="/panel" className="nav-link">{t('navbar.uploads')}</Link>
+            <Link to="/panel" className="nav-link text-white">{t('navbar.uploads')}</Link>
           </li>
           <li className="nav-item dropdown">
-            <div className="nav-link dropdown-toggle cursor" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div className="nav-link text-white dropdown-toggle cursor" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {`${user.first_name} ${user.last_name}`}
             </div>
             <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
