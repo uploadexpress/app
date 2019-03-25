@@ -81,6 +81,8 @@ func (downloaderController DownloaderController) DownloadZip(c *gin.Context) {
 		fileName = upload.Name + ".zip"
 	}
 
+	_ = store.UpdateDownloadCount(c, upload.Id) //ignored the error, for analytics only, not fatal.
+
 	writeZip(c, upload.Id, fileName, upload.Files)
 }
 
