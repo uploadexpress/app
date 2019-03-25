@@ -120,7 +120,7 @@ class Listfiles extends Component {
 
                 {status === UploaderStatus.FILE_LIST
                   && (
-                    /* eslint-disable */ // (Take care with buttonize)
+                    /* eslint-disable */ // (Taken care with buttonize)
                     <div 
                       {...buttonize(open)}
                       className="add-file" onClick={open}
@@ -128,6 +128,7 @@ class Listfiles extends Component {
                       <FontAwesomeIcon className="add-file-img" icon="folder-plus" />
                       <div className="d-inline add-file-text">{t('upload.listFile.addFile')}</div>
                     </div>
+                    /* eslint-enable */
                   )
                 }
               </div>
@@ -136,7 +137,7 @@ class Listfiles extends Component {
           </Dropzone>
         </div>
         <div className="list-footer">
-          <button onClick={this.createFiles} disabled={isButtonDisabled} className="blue-btn">{t('upload.listFile.upload')}</button>
+          <button type="button" onClick={this.createFiles} disabled={isButtonDisabled} className="blue-btn">{t('upload.listFile.upload')}</button>
         </div>
       </div>
     );
@@ -154,20 +155,20 @@ const mapStateToProps = state => ({
 });
 
 Listfiles.defaultProps = {
-  publicUpload: false
-}
+  publicUpload: false,
+};
 
 Listfiles.propTypes = {
   t: PropTypes.func.isRequired,
-  files: PropTypes.array.isRequired,
+  files: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   startUploading: PropTypes.func.isRequired,
   updateProgress: PropTypes.func.isRequired,
   onUploadCreated: PropTypes.func.isRequired,
   onFilesSelected: PropTypes.func.isRequired,
   endUploading: PropTypes.func.isRequired,
-  publicUpload: PropTypes.bool.isRequired,
+  publicUpload: PropTypes.bool,
   shouldDisplayName: PropTypes.bool.isRequired,
   status: PropTypes.symbol.isRequired,
-}
+};
 
 export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Listfiles));

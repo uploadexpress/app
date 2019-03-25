@@ -200,3 +200,43 @@ func (sc SettingsController) DeleteBackground(c *gin.Context) {
 
 	c.JSON(http.StatusOK, nil)
 }
+
+func (sc SettingsController) DeleteLogo(c *gin.Context) {
+	var logo models.Image
+
+	// retrieve the list of settings
+	setting, err := store.FetchSetting(c, "logo")
+	if err != nil {
+		c.Error(err)
+		c.Abort()
+		return
+	}
+
+	err = mapstructure.Decode(setting.Value, &logo)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("map_decode_failed", err.Error(), err))
+		return
+	}
+
+	// delete from S3 if the object isn't a remote image
+	if !logo.Remote {
+		err = s3.RemoveObject(config.NewAwsConfigurationFromContext(c), fmt.Sprintf("logo/%s.png", logo.Id))
+		if err != nil {
+			c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("aws_deletion_error", err.Error(), err))
+			return
+		}
+	}
+
+	// remove the image from the database
+	settings, err := store.EditSetting(c, models.Setting{
+		Name:  "logo",
+		Value: nil,
+	})
+	if err != nil {
+		c.Error(err)
+		c.Abort()
+		return
+	}
+
+	c.JSON(http.StatusOK, settings)
+}

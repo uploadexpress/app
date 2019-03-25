@@ -9,8 +9,8 @@
             "copied" : "Copié !"
         },
         "listFile" : {
-            "title" : "Vos dossiers",
-            "addFile" : "Ajouter fichier",
+            "title" : "Vos fichiers",
+            "addFile" : "Ajouter un fichier",
             "upload" : "Transférer"
         }
     },
@@ -28,10 +28,10 @@
 
     "panel":{
         "uploadList":{
-            "title" : "Vos téléchargements",
-            "uploadFile" : "Télécharger un nouveau fichier",
+            "title" : "Vos envois",
+            "uploadFile" : "Envoyer des fichiers",
             "name" : "Nom",
-            "link" : "Link",
+            "link" : "Lien",
             "files" : "Fichiers",
             "downloads" : "Téléchargements",
             "previous" : "précédent",
@@ -39,42 +39,44 @@
         },
         "settings":{
             "administration" : "Administration",
-            "save" : "Enregistrer les modifications",
-            "saved" : "Enregistré",
-            "pageStyling" : "Style de la page de téléchargement",
-            "title" : "Titre et description",
-            "titleDescription" : "Les informations qui apparaîtront sur la page de téléchargement.",
-            "companyName" : "Le nom de votre société",
-            "companyDescription" : "La description de votre entreprise",
+            "save" : "Sauvegarder",
+            "saved" : "Sauvegardé!",
+            "pageStyling" : "Design de la page de téléchargement",
+            "title" : "Titre de la page",
+            "titleDescription" : "Nom de la page de téléchargement. Affiché dans l'onglet du navigateur.",
             "identity" : "Identité",
-            "backgroundImage" : "Image de fond",
-            "backgroundDescription" : "L'image d'arrière-plan montrée à vos clients lors du téléchargement d'un fichier. Cette image doit représenter votre entreprise.",
-            "upload" : "Sélectionner l'image",
-            "socialAccounts" : "Comptes sociaux",
-            "links" : "Liens vers vos comptes sociaux",
+            "backgroundImage" : "Images de fond",
+            "backgroundDescription" : "Les images d'arrière-plan montrées à vos clients lors du téléchargement d'un fichier. Ces images doivent représenter votre entreprise.",
+            "socialAccounts" : "Réseaux sociaux",
+            "links" : "Liens vers vos comptes de réseaux sociaux",
             "urlFacebook" : "URL de votre page Facebook",
             "urlTweeter" : "URL de votre profil Twitter",
             "urlInstagram" : "URL de votre profil Instagram",
             "urlWebsite" : "URL de votre site web personnel",
-            "uploadImg" : "Télécharger l'image",
+            "uploadImg" : "Sélectionner une image",
             "delete" : "Supprimer",
-            "logo" : "Votre logo",
-            "logoDescription" : "Votre logo sera affiché en haut de la fenêtre de téléchargement.",
-            "uploadPosition" : "Position de chargement",
-            "uploadPositionDescription" : "Choisir la position de la fenêtre de téléchargement à l'écran",
-            "centre" : "centre",
-            "gauche" : "gauche",
+            "logo" : "Logo",
+            "logoDescription" : "Le logo sera affiché au dessus de la fenêtre de téléchargement.",
+            "uploadPosition" : "Position de la fenêtre de téléchargement",
+            "uploadPositionDescription" : "Vous pouvez choisir ici la position de la fenêtre de téléchargement",
+            "center" : "centre",
+            "left" : "gauche",
             "right" : "droite",
-            "menuPosition" : "Votre position de lien social",
-            "menuPositionDescription" : "Choisissez la position des liens du compte social à l'écran",
-            "menuColor" : "La couleur des liens des comptes sociaux",
-            "menuColorDescription" : "Choisissez une couleur de liens de comptes sociaux à l'écran",
+            "menuPosition" : "Position du menu",
+            "menuPositionDescription" : "Vous pouvez choisir ici la position du menu",
+            "menuColor" : "Couleur du menu",
+            "menuColorDescription" : "Vous pouvez choisir ici la couleur du menu",
             "publicUploader" : "Fenêtre de téléchargement publique",
-            "publicUploaderDescription" : "Si vous cochez cette case, vous autorisez des tiers à envoyer des fichiers à votre téléchargeur. Sinon, l'uploader ne sera disponible que sur votre panel"
+            "publicUploaderDescription" : "Si vous cochez cette case, vous autorisez des tiers à vous envoyer des fichiers. Sinon, l'uploader ne sera disponible que sur votre panel",
+            "linkName": "Nom du lien",
+            "linkUrl": "URL du lien",
+            "navigationLinksTitle": "Liens du menu",
+            "navigationLinksSubTitle": "Les liens ci-dessous seront ajoutés au menu de votre page de téléchargement",
+            "addLink": "Ajouter un lien"
         },
 
         "signin":{
-            "signin" : "S'inscrire",
+            "signin" : "Se connecter",
             "forgot" : "Oublié ?",
             "login" : "Connectez-vous",
             "error" : "Mot de passe ou email incorrect !"
@@ -96,7 +98,7 @@
     },
 
     "navbar":{
-        "uploads" : "Vos téléchargements",
+        "uploads" : "Vos envois",
         "settings" : "Réglages",
         "logout" : "Déconnexion"
     }

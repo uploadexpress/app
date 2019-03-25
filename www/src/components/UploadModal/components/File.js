@@ -63,6 +63,7 @@ const File = (props) => {
                   src={ImgCancel}
                   alt=""
                 />
+                {/* eslint-enable */}
               </div>
             )
           }
@@ -90,6 +91,6 @@ File.propTypes = {
   name: PropTypes.string.isRequired,
   deleteFile: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
-}
+};
 
 export default connect(null, mapDispatchToProps)(File);

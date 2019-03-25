@@ -57,6 +57,12 @@ class Background extends React.Component {
     return url;
   }
 
+  renderLinks = () => {
+    const { settings } = this.props;
+    return settings.links.map(setting => (
+      <a className="menu-link ml-2" href={this.withHttp(setting.url)} rel="noopener noreferrer" target="_blank">{setting.name}</a>
+    ));
+  }
 
   render() {
     const { i18n, settings, children } = this.props;
@@ -70,9 +76,7 @@ class Background extends React.Component {
       <div style={backgroundStyle(backgroundUrl)} className="background">
 
         <div className="menu" style={{ color: settings.color, justifyContent: settings.menu_position }}>
-          {settings.website
-            && <a className="menu-link" href={this.withHttp(settings.website)} rel="noopener noreferrer" target="_blank">Website</a>
-          }
+          {this.renderLinks()}
           {settings.facebook
             && (
               <a className="menu-link" href={this.withHttp(settings.facebook)} rel="noopener noreferrer" target="_blank">

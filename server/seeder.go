@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/uploadexpress/app/models"
 	"github.com/uploadexpress/app/store/mongodb"
+	"gopkg.in/mgo.v2/bson"
 )
 
 func (a *API) SetupSeeds() error {
@@ -68,8 +69,14 @@ func (a *API) SetupSeeds() error {
 				Value: "https://www.instagram.com/upload.express",
 			},
 			{
-				Name:  "website",
-				Value: "https://upload.express",
+				Name: "links",
+				Value: []models.Link{
+					{
+						Id:   bson.NewObjectId().Hex(),
+						Name: "Website",
+						Url:  "https://upload.express",
+					},
+				},
 			},
 		}
 

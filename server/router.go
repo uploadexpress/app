@@ -78,6 +78,8 @@ func (a *API) SetupRouter() {
 			settings.POST("/logo/", settingsController.CreateLogo)
 			settings.POST("/background/", settingsController.CreateBackground)
 			settings.DELETE("/background/:id/", settingsController.DeleteBackground)
+			settings.DELETE("/logo/", settingsController.DeleteLogo)
+
 		}
 	}
 

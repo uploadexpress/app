@@ -89,6 +89,7 @@ class DownloadView extends Component {
                       <a onClick={this.showPreview} className={settings.upload_position == 'flex-end' ? ('preview-btn-left') : ('preview-btn-right')}>
                         {t('download.gallery')}
                       </a>
+                      /* eslint-enable */
                     )
                   }
                 </div>

@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import { SketchPicker } from 'react-color';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ObjectID from 'bson-objectid';
 import PropTypes from 'prop-types';
 import Portal from '../../index';
 import { setSetting, deleteBackground, deleteLogo } from '../actions';
+import buttonize from '../../../../helpers/buttonize';
 import SettingsService from '../../../../services/Api/SettingsService';
 import DownloadView from '../../../../components/DownloadView/components';
+import ImgCancel from '../../../../img/img-cancel.svg';
 import '../../style/index.css';
 
 class Settings extends Component {
@@ -27,6 +31,51 @@ class Settings extends Component {
     this.setState({
       saved: false,
     });
+  }
+
+  onLinkUrlChange = (id, url) => {
+    const { settings } = this.props;
+
+    const newLinks = settings.links.map(link => ({
+      ...link,
+      url: link.id === id ? url : link.url,
+    }));
+
+    this.onInputChange('links', newLinks);
+  }
+
+  onLinkNameChange = (id, name) => {
+    const { settings } = this.props;
+
+    const newLinks = settings.links.map(link => ({
+      ...link,
+      name: link.id === id ? name : link.name,
+    }));
+
+    this.onInputChange('links', newLinks);
+  }
+
+  addLink = () => {
+    const { settings } = this.props;
+
+    const newLinks = [
+      ...settings.links,
+      {
+        id: ObjectID().toHexString(),
+        name: 'Name',
+        url: 'https://upload.express',
+      },
+    ];
+
+    this.onInputChange('links', newLinks);
+  }
+
+  removeLink = (id) => {
+    const { settings } = this.props;
+
+    const newLinks = settings.links.filter(link => (link.id !== id));
+
+    this.onInputChange('links', newLinks);
   }
 
   sendSettings = () => {
@@ -75,6 +124,31 @@ class Settings extends Component {
     );
   }
 
+  renderLinkSettings = () => {
+    const { settings, t } = this.props;
+    return settings.links.map(link => (
+      <div className="d-flex">
+        {/* eslint-disable */}
+        <img
+          className="settings-remove-button"
+          {...buttonize(() => {this.removeLink(link.id)})}
+          onClick={() => {this.removeLink(link.id)}}
+          src={ImgCancel}
+          alt=""
+        />        
+        {/* eslint-enable */}
+        <div className="settings-input-container flex-grow-1 mr-4">
+          <input type="text" className="form-control settings-input" placeholder="Name" value={link.name} onChange={(e) => { this.onLinkNameChange(link.id, e.target.value); }} />
+          <div className="settings-input-description">{t('panel.settings.linkName')}</div>
+        </div>
+        <div className="settings-input-container flex-grow-1">
+          <input type="text" className="form-control settings-input" placeholder="https://upload.express" value={link.url} onChange={(e) => { this.onLinkUrlChange(link.id, e.target.value); }} />
+          <div className="settings-input-description">{t('panel.settings.linkUrl')}</div>
+        </div>
+      </div>
+    ));
+  }
+
   render() {
     const { t, history, settings } = this.props;
     const { saved } = this.state;
@@ -94,17 +168,6 @@ class Settings extends Component {
                     )}
                   </div>
                 </div>
-                <div className="row mt-4">
-                  <div className="col-12">
-                    <div className="form-check">
-                      <label className="form-check-label settings-section mt-0" htmlFor="public_upload">
-                        <input type="checkbox" checked={settings.public_uploader} className="form-check-input" id="public_upload" onChange={(e) => { this.onInputChange('public_uploader', e.target.checked); }} />
-                        {t('panel.settings.publicUploader')}
-                      </label>
-                      <div className="settings-subtitle">{t('panel.settings.publicUploaderDescription')}</div>
-                    </div>
-                  </div>
-                </div>
                 <div className="row">
                   <div className="col-12">
                     <div className="settings-section">{t('panel.settings.pageStyling')}</div>
@@ -118,11 +181,7 @@ class Settings extends Component {
                     <div className="settings-subtitle">{t('panel.settings.titleDescription')}</div>
                     <div className="settings-input-container">
                       <input type="text" className="form-control settings-input" placeholder="upload.express" value={settings.name} onChange={(e) => { this.onInputChange('name', e.target.value); }} />
-                      <div className="settings-input-description">{t('panel.settings.companyName')}</div>
-                    </div>
-                    <div className="settings-input-container">
-                      <input type="text" className="form-control" placeholder="Share your files easily" value={settings.description} onChange={(e) => { this.onInputChange('description', e.target.value); }} />
-                      <div className="settings-input-description">{t('panel.settings.companyDescription')}</div>
+                      <div className="settings-input-description">{t('panel.settings.title')}</div>
                     </div>
                   </div>
                 </div>
@@ -162,8 +221,6 @@ class Settings extends Component {
                       ))}
                     </div>
                   </div>
-
-
                 </div>
 
                 <div className="row mb-3">
@@ -209,7 +266,6 @@ class Settings extends Component {
                     <div className="form-group mb-0">
                       <label htmlFor="menu-position" className="settings-title">{t('panel.settings.menuPosition')}</label>
                       <div className="settings-subtitle">{t('panel.settings.menuPositionDescription')}</div>
-
                     </div>
                     <select className="form-control" value={settings.menu_position} id="upload-position" onChange={(e) => { this.onInputChange('menu_position', e.target.value); }}>
                       <option value="flex-start">{t('panel.settings.left')}</option>
@@ -218,7 +274,6 @@ class Settings extends Component {
                     </select>
                   </div>
 
-
                   <div className="col-md-12 text-center">
                     <div className="settings-title">{t('panel.settings.menuColor')}</div>
                     <div className="settings-subtitle">{t('panel.settings.menuColorDescription')}</div>
@@ -226,6 +281,18 @@ class Settings extends Component {
                       color={settings.color}
                       onChangeComplete={(color) => { this.onInputChange('color', color.hex); }}
                     />
+                  </div>
+                </div>
+
+                <div className="row mt-4">
+                  <div className="col-12">
+                    <div className="form-check">
+                      <label className="form-check-label settings-section mt-0" htmlFor="public_upload">
+                        <input type="checkbox" checked={settings.public_uploader} className="form-check-input" id="public_upload" onChange={(e) => { this.onInputChange('public_uploader', e.target.checked); }} />
+                        {t('panel.settings.publicUploader')}
+                      </label>
+                      <div className="settings-subtitle">{t('panel.settings.publicUploaderDescription')}</div>
+                    </div>
                   </div>
                 </div>
 
@@ -238,12 +305,20 @@ class Settings extends Component {
 
                 <div className="row">
                   <div className="col-md-12">
+                    <div className="settings-title">{t('panel.settings.navigationLinksTitle')}</div>
+                    <div className="settings-subtitle">{t('panel.settings.navigationLinksSubTitle')}</div>
+                    {this.renderLinkSettings()}
+                    {/* eslint-disable */ }
+                    <div 
+                      {...buttonize(this.addLink)}
+                      className="settings-add-link" onClick={this.addLink}
+                    >
+                      <FontAwesomeIcon className="settings-add-link-img" icon="folder-plus" />
+                      <div className="d-inline settings-add-link-text">{t('panel.settings.addLink')}</div>
+                    </div>
+                    {/* eslint-enable */}
                     <div className="settings-title">{t('panel.settings.socialAccounts')}</div>
                     <div className="settings-subtitle">{t('panel.settings.links')}</div>
-                    <div className="settings-input-container">
-                      <input type="text" className="form-control settings-input" placeholder="https://upload.express" value={settings.website} onChange={(e) => { this.onInputChange('website', e.target.value); }} />
-                      <div className="settings-input-description">{t('panel.settings.urlWebsite')}</div>
-                    </div>
                     <div className="settings-input-container">
                       <input type="text" className="form-control settings-input" placeholder="https://www.facebook.com/uploadexpress" value={settings.facebook} onChange={(e) => { this.onInputChange('facebook', e.target.value); }} />
                       <div className="settings-input-description">{t('panel.settings.urlFacebook')}</div>
