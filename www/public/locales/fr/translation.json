@@ -84,6 +84,7 @@
 
         "setup" : {
             "setup" : "Installation",
+            "explanation": "Il est temps de configurer votre uploader. Vous utiliserez le compte que vous allez créer ci-dessous pour accéder à un panel qui vous permettra de personnaliser le design de votre page de téléchargement et de voir vos statistiques.",
             "firstName" : "Prénom",
             "lastName" : "Nom de famille",
             "email" : "Adresse e-mail",

@@ -59,12 +59,14 @@ class Setup extends Component {
     return (
       <div>
         <Background>
-          <Modal height={426}>
+          <Modal height="inherit">
             <div className="listfiles">
-              <div className="list-title">{t('panel.setup.setup')}</div>
-              <hr />
+              <div className="list-title pb-0">{t('panel.setup.setup')}</div>
+              <div className="setup-description text-muted">
+                {t('panel.setup.explanation')}
+              </div>
               <form onSubmit={this.handleSubmit}>
-                <div className="list-container">
+                <div className="list-container" style={{ height: '280px' }}>
                   <div className="list-body setup-body">
                     <div className="container-fluid p-0">
                       <div className="row">
