@@ -8,6 +8,8 @@ func (a *API) SetupDatabase() (*mgo.Session, error) {
 		return nil, err
 	}
 
+	session.SetMode(mgo.Nearest, true)
+
 	a.Database = session.DB(a.Config.GetString("db_name"))
 
 	return session, nil
