@@ -49,12 +49,14 @@ func (tg ThumbnailGenerator) Execute(store store.Store, configuration *viper.Vip
 
 	reader, err := s3.GetObjectHeader(awsConfig, uploadId, file)
 	if err != nil {
-		logrus.Error("could not fetch the header for file" + file.Id)
+		logrus.Error("could not fetch the header for file %s, err: %s", file.Id, err.Error())
+		return
 	}
 
 	fileHeader, err := ioutil.ReadAll(reader)
 	if err != nil {
-		logrus.Error("could not read the header for file" + file.Id)
+		logrus.Error("could not read the header for file " + file.Id)
+		return
 	}
 
 	if filetype.MatchesMap(fileHeader, SupportedThumbnailTypes) {

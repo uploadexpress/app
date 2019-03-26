@@ -122,3 +122,28 @@ func (uploadController *UploadController) CreatePreSignedRequest(c *gin.Context)
 
 	c.JSON(http.StatusOK, gin.H{"url": str})
 }
+
+func (uploadController *UploadController) DeleteUpload(c *gin.Context) {
+	uploadId := c.Param("upload_id")
+	upload, err := store.FetchUpload(c, uploadId)
+	if err != nil {
+		_ = c.Error(err)
+		c.Abort()
+		return
+	}
+
+	err = s3.RemoveUpload(config.NewAwsConfigurationFromContext(c), upload)
+	if err != nil {
+		_ = c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("directory_deletion_failed", err.Error(), nil))
+		return
+	}
+
+	err = store.DeleteUpload(c, upload)
+	if err != nil {
+		_ = c.Error(err)
+		c.Abort()
+		return
+	}
+
+	c.JSON(http.StatusOK, nil)
+}

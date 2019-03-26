@@ -119,3 +119,16 @@ func (db *mongo) UpdateDownloadCount(uploadId string) error {
 
 	return nil
 }
+
+func (db *mongo) DeleteUpload(upload *models.Upload) error {
+	session := db.Session.Copy()
+	defer session.Close()
+	uploads := db.C(models.UploadsCollection).With(session)
+
+	err := uploads.Remove(bson.M{"_id": upload.Id})
+	if err != nil {
+		return helpers.NewError(http.StatusInternalServerError, "upload_delete_failed", "Failed to delete the upload", err)
+	}
+
+	return nil
+}

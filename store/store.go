@@ -14,6 +14,7 @@ type Store interface {
 	UploadCount() (int, error)
 	UpdateDownloadCount(string) error
 	EditUpload(string, params.M) error
+	DeleteUpload(upload *models.Upload) error
 
 	CreateUser(*models.User) error
 	DeleteUser(*models.User, string) error
