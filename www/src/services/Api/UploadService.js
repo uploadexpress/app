@@ -22,6 +22,11 @@ class UploadService extends Service {
     });
   }
 
+  deleteUpload = (uploadId) => {
+    const resourceUrl = `/uploader/${uploadId}/`;
+    return this.http.delete(resourceUrl);
+  }
+
   putComplete = (uploadId) => {
     const resourceUrl = `/uploader/${uploadId}/complete`;
     return this.http.put(resourceUrl);
