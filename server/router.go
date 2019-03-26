@@ -58,6 +58,7 @@ func (a *API) SetupRouter() {
 			uploader.GET("/:upload_id/file/:file_id/upload_url", uploaderController.CreatePreSignedRequest)
 			uploader.Use(authMiddleware)
 			uploader.GET("/", uploaderController.Index)
+			uploader.DELETE("/:upload_id/", uploaderController.DeleteUpload)
 		}
 
 		downloader := v1.Group("/downloader")

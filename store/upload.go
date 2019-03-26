@@ -36,3 +36,7 @@ func UpdateDownloadCount(c context.Context, uploadId string) error {
 func EditUpload(c context.Context, id string, params params.M) error {
 	return FromContext(c).EditUpload(id, params)
 }
+
+func DeleteUpload(c context.Context, upload *models.Upload) error {
+	return FromContext(c).DeleteUpload(upload)
+}
