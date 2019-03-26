@@ -35,7 +35,8 @@
             "files": "Файлы",
             "downloads": "Загрузки",
             "previous": "предыдущая",
-            "next": "следующая"
+            "next": "следующая",
+            "actions": "Действия"
         },
         "settings":{
             "administration": "Административная панель",
