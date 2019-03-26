@@ -35,7 +35,8 @@
             "files" : "Fichiers",
             "downloads" : "Téléchargements",
             "previous" : "précédent",
-            "next" : "suivant"
+            "next" : "suivant",
+            "actions": "Actions"
         },
         "settings":{
             "administration" : "Administration",

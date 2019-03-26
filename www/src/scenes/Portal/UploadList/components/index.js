@@ -106,7 +106,7 @@ class UploadList extends Component {
                     <th className="table-head-title">{t('panel.uploadList.link')}</th>
                     <th className="table-head-title">{t('panel.uploadList.files')}</th>
                     <th className="table-head-title">{t('panel.uploadList.downloads')}</th>
-                    <th className="table-head-title">Actions</th>
+                    <th className="table-head-title">{t('panel.uploadList.actions')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -127,7 +127,7 @@ class UploadList extends Component {
                       <td className="table-body-title">{row.files.length}</td>
                       <td className="table-body-title">{row.download_count}</td>
                       <td className="table-body-title">
-                        <button type="button" style={{ color: '#cc0000', fontSize: '14px' }} className="btn p-0" onClick={() => { this.deleteUpload(row.id); }}>Delete</button>
+                        <button type="button" style={{ color: '#cc0000', fontSize: '14px' }} className="btn p-0" onClick={() => { this.deleteUpload(row.id); }}>{t('panel.settings.delete')}</button>
                       </td>
                     </tr>
                   ))}
