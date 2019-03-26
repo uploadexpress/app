@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/uploadexpress/app/config"
@@ -12,7 +11,6 @@ import (
 	"github.com/uploadexpress/app/helpers/params"
 
 	"github.com/gin-gonic/gin"
-	"github.com/uploadexpress/app/constants"
 	"github.com/uploadexpress/app/helpers"
 	"github.com/uploadexpress/app/models"
 	"github.com/uploadexpress/app/services/s3"
@@ -31,13 +29,6 @@ func (uploadController *UploadController) Create(c *gin.Context) {
 
 	if err := c.BindJSON(upload); err != nil {
 		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_input", "Failed to bind the body data", err))
-		return
-	}
-
-	maxSize := 2 * constants.GB
-	if upload.Size() > maxSize {
-		err := fmt.Errorf("the file are too heavy, maximum upload size: %d", maxSize)
-		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("files_too_big", err.Error(), err))
 		return
 	}
 
