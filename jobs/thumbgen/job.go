@@ -84,7 +84,7 @@ func (tg ThumbnailGenerator) Execute(store store.Store, configuration *viper.Vip
 			return
 		}
 
-		url1024, err := encodeImage(awsConfig, uploadId, file, dstImage1024, 60)
+		url1024, err := encodeImage(awsConfig, uploadId, file, dstImage1024, 80)
 		if err != nil {
 			fmt.Println("failed to upload buffer", err)
 			return

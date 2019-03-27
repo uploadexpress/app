@@ -134,3 +134,16 @@ func (db *mongo) RemoveBackground(id string) error {
 
 	return err
 }
+
+func (db *mongo) SettingExists(name string) (bool, error) {
+	session := db.Session.Copy()
+	defer session.Close()
+	settings := db.C(models.SettingsCollection).With(session)
+
+	count, err := settings.Find(bson.M{"name": name}).Count()
+	if err != nil {
+		return false, helpers.NewError(http.StatusInternalServerError, "fetch_setting_failed", "could not fetch the setting", err)
+	}
+
+	return count > 0, err
+}
