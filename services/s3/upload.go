@@ -89,6 +89,11 @@ func RemoveUpload(configuration config.AwsConfiguration, upload *models.Upload) 
 		return err
 	}
 
+	err = RemoveDirectory(configuration, fmt.Sprintf("backgrounds/%s/", upload.Id))
+	if err != nil {
+		logrus.Warn("the upload did not have any backgrounds")
+	}
+
 	err = RemoveDirectory(configuration, fmt.Sprintf("previews/%s/", upload.Id))
 	if err != nil {
 		logrus.Warn("the upload did not have any preview")

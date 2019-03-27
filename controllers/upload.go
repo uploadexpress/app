@@ -1,7 +1,10 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
+
+	"gopkg.in/mgo.v2/bson"
 
 	"github.com/uploadexpress/app/config"
 
@@ -112,6 +115,40 @@ func (uploadController *UploadController) CreatePreSignedRequest(c *gin.Context)
 	}
 
 	c.JSON(http.StatusOK, gin.H{"url": str})
+}
+
+func (uploadController *UploadController) AttachBackground(c *gin.Context) {
+	uploadId := c.Param("upload_id")
+	var currentBackgrounds []*models.Image
+	upload, err := store.FetchUpload(c, uploadId)
+	if err != nil {
+		_ = c.Error(err)
+		c.Abort()
+		return
+	}
+	currentBackgrounds = upload.Backgrounds
+
+	backgroundId := bson.NewObjectId().Hex()
+	body := c.Request.Body
+	url, err := s3.PutPublicObject(config.NewAwsConfigurationFromContext(c), fmt.Sprintf("backgrounds/%s/%s.png", upload.Id, backgroundId), body)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("aws_upload_error", err.Error(), err))
+		return
+	}
+
+	currentBackgrounds = append(currentBackgrounds, &models.Image{
+		Id:     backgroundId,
+		Url:    url,
+		Remote: false,
+	})
+	err = store.EditUpload(c, uploadId, params.M{"backgrounds": currentBackgrounds})
+	if err != nil {
+		c.Error(err)
+		c.Abort()
+		return
+	}
+
+	c.JSON(http.StatusOK, nil)
 }
 
 func (uploadController *UploadController) DeleteUpload(c *gin.Context) {

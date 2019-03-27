@@ -6,13 +6,13 @@ import (
 )
 
 type Upload struct {
-	Id                    string  `json:"id" bson:"_id,omitempty"`
-	Name                  string  `json:"name" bson:"name"`
-	Files                 []*File `json:"files" bson:"files"`
-	DownloadCount         int     `json:"download_count" bson:"download_count"`
-	Public                bool    `json:"public" bson:"public"`
-	UsePreviewBackgrounds bool    `json:"preview_backgrounds" bson:"preview_backgrounds"`
-	Ready                 bool    `json:"-" bson:"ready"`
+	Id            string   `json:"id" bson:"_id,omitempty"`
+	Name          string   `json:"name" bson:"name"`
+	Files         []*File  `json:"files" bson:"files"`
+	Backgrounds   []*Image `json:"backgrounds" bson:"backgrounds"'`
+	DownloadCount int      `json:"download_count" bson:"download_count"`
+	Public        bool     `json:"public" bson:"public"`
+	Ready         bool     `json:"-" bson:"ready"`
 }
 
 func (upload *Upload) BeforeCreate() {

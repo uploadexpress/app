@@ -59,6 +59,7 @@ func (a *API) SetupRouter() {
 			uploader.Use(authMiddleware)
 			uploader.GET("/", uploaderController.Index)
 			uploader.DELETE("/:upload_id/", uploaderController.DeleteUpload)
+			uploader.POST("/:upload_id/background", uploaderController.AttachBackground)
 		}
 
 		downloader := v1.Group("/downloader")
