@@ -60,6 +60,11 @@
     overflow-y: auto;
 }
 
+.settings-input-social{
+    width: 250px; 
+    float: right;
+}
+
 .sketch-picker{
     margin: 0 auto;
 }

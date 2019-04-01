@@ -73,7 +73,10 @@
             "linkUrl": "URL ссылки",
             "navigationLinksTitle": "Ссылки навигации",
             "navigationLinksSubTitle": "Эта ссылка будет лтображена вверху страницы",
-            "addLink": "Добавить новую ссылку"
+            "addLink": "Добавить новую ссылку",
+            "chooseNetwork": "--Выберите социальную сеть--",
+            "addNetwork": "Выбрать",
+            "yourNetworkUrl": "Ваша {{name}} ссылка:"
         },
 
         "signin":{

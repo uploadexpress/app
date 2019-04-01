@@ -73,7 +73,10 @@
             "linkUrl": "Link URL",
             "navigationLinksTitle": "Navigation links",
             "navigationLinksSubTitle": "The following links will be appended to the top navigation bar",
-            "addLink": "Add a new link"
+            "addLink": "Add a new link",
+            "chooseNetwork": "--Choose a social network--",
+            "addNetwork": "Add",
+            "yourNetworkUrl": "Your {{name}} URL"
         },
 
         "signin":{

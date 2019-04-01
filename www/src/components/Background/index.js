@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import ReactFlagsSelect from '../FlagsSelect';
+import socialNetworks from '../../helpers/socialNetworks';
 
 const backgroundStyle = (image) => {
   const backgroundImage = image === null ? 'linear-gradient(#2193b0, #6dd5ed)' : `url(${image})`;
@@ -64,6 +65,26 @@ class Background extends React.Component {
     ));
   }
 
+  socialIcon = (key) => {
+    const social = socialNetworks.find(network => network.key === key);
+    return social.icon;
+  }
+
+  renderSocials = () => {
+    const { settings } = this.props;
+    return settings.social_networks.map(network => (
+      network.url !== undefined
+      && (
+        <a className="menu-link" href={this.withHttp(network.url)} rel="noopener noreferrer" target="_blank">
+          <FontAwesomeIcon
+            className="social-account"
+            icon={this.socialIcon(network.key)}
+          />
+        </a>
+      )
+    ));
+  }
+
   render() {
     const { i18n, settings, children } = this.props;
     const { backgroundUrl } = this.state;
@@ -77,20 +98,7 @@ class Background extends React.Component {
 
         <div className="menu" style={{ color: settings.color, justifyContent: settings.menu_position }}>
           {this.renderLinks()}
-          {settings.facebook
-            && (
-              <a className="menu-link" href={this.withHttp(settings.facebook)} rel="noopener noreferrer" target="_blank">
-                <FontAwesomeIcon className="social-account" icon={['fab', 'facebook-f']} />
-                {' '}
-              </a>
-            )
-          }
-          {settings.twitter
-            && <a className="menu-link" href={this.withHttp(settings.twitter)} rel="noopener noreferrer" target="_blank"><FontAwesomeIcon className="social-account" icon={['fab', 'twitter']} /></a>
-          }
-          {settings.instagram
-            && <a className="menu-link" href={this.withHttp(settings.instagram)} rel="noopener noreferrer" target="_blank"><FontAwesomeIcon className="social-account" href={settings.instagram} icon={['fab', 'instagram']} /></a>
-          }
+          {this.renderSocials()}
 
           <ReactFlagsSelect
             countries={i18n.languages}

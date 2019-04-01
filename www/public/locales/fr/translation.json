@@ -73,7 +73,11 @@
             "linkUrl": "URL du lien",
             "navigationLinksTitle": "Liens du menu",
             "navigationLinksSubTitle": "Les liens ci-dessous seront ajoutés au menu de votre page de téléchargement",
-            "addLink": "Ajouter un lien"
+            "addLink": "Ajouter un lien",
+            "chooseNetwork": "--Choisissez un réseau social--",
+            "addNetwork": "Ajouter",
+            "yourNetworkUrl": "URL de votre {{name}}"
+
         },
 
         "signin":{

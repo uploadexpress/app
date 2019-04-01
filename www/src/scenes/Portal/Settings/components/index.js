@@ -12,10 +12,12 @@ import SettingsService from '../../../../services/Api/SettingsService';
 import DownloadView from '../../../../components/DownloadView/components';
 import ImgCancel from '../../../../img/img-cancel.svg';
 import '../../style/index.css';
+import socialNetworks from '../../../../helpers/socialNetworks';
 
 class Settings extends Component {
   state = {
     saved: false,
+    selectedSocial: 'none',
   }
 
   constructor() {
@@ -42,6 +44,15 @@ class Settings extends Component {
     }));
 
     this.onInputChange('links', newLinks);
+  }
+
+  onSocialChange = (url, id) => {
+    const { settings } = this.props;
+    const newUrl = settings.social_networks.map(network => ({
+      ...network,
+      url: network.id === id ? url : network.url,
+    }));
+    this.onInputChange('social_networks', newUrl);
   }
 
   onLinkNameChange = (id, name) => {
@@ -76,6 +87,12 @@ class Settings extends Component {
     const newLinks = settings.links.filter(link => (link.id !== id));
 
     this.onInputChange('links', newLinks);
+  }
+
+  removeSocial = (id) => {
+    const { settings } = this.props;
+    const newSocials = settings.social_networks.filter(network => (network.id !== id));
+    this.onInputChange('social_networks', newSocials);
   }
 
   sendSettings = () => {
@@ -124,6 +141,78 @@ class Settings extends Component {
     );
   }
 
+  onSocialSelect = (e) => {
+    this.setState({
+      selectedSocial: e.target.value,
+    });
+  }
+
+  socialName = (key) => {
+    const social = socialNetworks.find(network => network.key === key);
+    return social.name;
+  }
+
+  addSocial = (e) => {
+    const { selectedSocial } = this.state;
+    const { settings } = this.props;
+
+    const newSocials = [
+      ...settings.social_networks,
+      {
+        id: ObjectID().toHexString(),
+        key: selectedSocial,
+      },
+    ];
+
+    this.setState({
+      selectedSocial: 'none',
+    });
+
+    this.onInputChange('social_networks', newSocials);
+    e.preventDefault();
+  }
+
+  renderSocialSettings = () => {
+    const { t, settings } = this.props;
+    const { selectedSocial } = this.state;
+    return (
+      <div>
+        <form onSubmit={this.addSocial}>
+          <div className="d-flex justify-content-between align-items-center mt-2 mb-4">
+            <select value={selectedSocial} className="form-control mr-3" placeholder="Social Links" onChange={this.onSocialSelect}>
+              <option disabled selected value="none">
+                {t('panel.settings.chooseNetwork')}
+              </option>
+              {socialNetworks.filter(network => settings.social_networks.find(social => social.key === network.key) == null).map(network => (
+                <option value={network.key}>{this.socialName(network.key)}</option>
+              ))}
+            </select>
+            <input type="submit" className="btn btn-pannel" value={t('panel.settings.addNetwork')} />
+          </div>
+        </form>
+        {settings.social_networks.map(network => (
+          <div className="d-flex flex-column">
+            <div className="d-flex align-items-center">
+              <img
+                onClick={() => { this.removeSocial(network.id); }}
+                className="mr-3"
+                src={ImgCancel}
+                alt=""
+              />
+              <div style={{ fontSize: '15px' }} className="settings-title mt-0">
+                {t('panel.settings.yourNetworkUrl', { name: this.socialName(network.key) })}
+              </div>
+            </div>
+            <div className="settings-input-container flex-grow-1">
+              <input type="text" className="form-control" value={network.url} onChange={(e) => { this.onSocialChange(e.target.value, network.id); }} />
+            </div>
+          </div>
+        ))}
+
+      </div>
+    );
+  }
+
   renderLinkSettings = () => {
     const { settings, t } = this.props;
     return settings.links.map(link => (
@@ -131,11 +220,11 @@ class Settings extends Component {
         {/* eslint-disable */}
         <img
           className="settings-remove-button"
-          {...buttonize(() => {this.removeLink(link.id)})}
-          onClick={() => {this.removeLink(link.id)}}
+          {...buttonize(() => { this.removeLink(link.id) })}
+          onClick={() => { this.removeLink(link.id) }}
           src={ImgCancel}
           alt=""
-        />        
+        />
         {/* eslint-enable */}
         <div className="settings-input-container flex-grow-1 mr-4">
           <input type="text" className="form-control settings-input" placeholder="Name" value={link.name} onChange={(e) => { this.onLinkNameChange(link.id, e.target.value); }} />
@@ -164,8 +253,8 @@ class Settings extends Component {
                     {(saved) ? (
                       <div className="settings-saved">{t('panel.settings.saved')}</div>
                     ) : (
-                      <button type="button" className="btn btn-pannel" onClick={this.sendSettings}>{t('panel.settings.save')}</button>
-                    )}
+                        <button type="button" className="btn btn-pannel" onClick={this.sendSettings}>{t('panel.settings.save')}</button>
+                      )}
                   </div>
                 </div>
                 <div className="row">
@@ -244,8 +333,8 @@ class Settings extends Component {
                       accept="image/x-png,image/jpeg"
                       onChange={this.onLogoChange}
                     />
-                    { settings.logo
-                     && <button type="button" onClick={() => { this.deleteLogoPreview(); }} className="settings-delete-btn btn btn-sm">{t('panel.settings.delete')}</button>
+                    {settings.logo
+                      && <button type="button" onClick={() => { this.deleteLogoPreview(); }} className="settings-delete-btn btn btn-sm">{t('panel.settings.delete')}</button>
                     }
                   </div>
                 </div>
@@ -295,7 +384,6 @@ class Settings extends Component {
                     </div>
                   </div>
                 </div>
-
                 <div className="row">
                   <div className="col-12">
                     <div className="settings-section">{t('panel.settings.identity')}</div>
@@ -308,8 +396,8 @@ class Settings extends Component {
                     <div className="settings-title">{t('panel.settings.navigationLinksTitle')}</div>
                     <div className="settings-subtitle">{t('panel.settings.navigationLinksSubTitle')}</div>
                     {this.renderLinkSettings()}
-                    {/* eslint-disable */ }
-                    <div 
+                    {/* eslint-disable */}
+                    <div
                       {...buttonize(this.addLink)}
                       className="settings-add-link" onClick={this.addLink}
                     >
@@ -319,18 +407,7 @@ class Settings extends Component {
                     {/* eslint-enable */}
                     <div className="settings-title">{t('panel.settings.socialAccounts')}</div>
                     <div className="settings-subtitle">{t('panel.settings.links')}</div>
-                    <div className="settings-input-container">
-                      <input type="text" className="form-control settings-input" placeholder="https://www.facebook.com/uploadexpress" value={settings.facebook} onChange={(e) => { this.onInputChange('facebook', e.target.value); }} />
-                      <div className="settings-input-description">{t('panel.settings.urlFacebook')}</div>
-                    </div>
-                    <div className="settings-input-container">
-                      <input type="text" className="form-control settings-input" placeholder="https://www.twitter.com/uploadexpress" value={settings.twitter} onChange={(e) => { this.onInputChange('twitter', e.target.value); }} />
-                      <div className="settings-input-description">{t('panel.settings.urlTweeter')}</div>
-                    </div>
-                    <div className="settings-input-container">
-                      <input type="text" className="form-control settings-input" placeholder="https://www.instagram.com/uploadexpress" value={settings.instagram} onChange={(e) => { this.onInputChange('instagram', e.target.value); }} />
-                      <div className="settings-input-description">{t('panel.settings.urlInstagram')}</div>
-                    </div>
+                    {this.renderSocialSettings()}
                   </div>
                 </div>
               </div>
