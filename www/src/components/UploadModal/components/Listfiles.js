@@ -90,13 +90,13 @@ class Listfiles extends Component {
   }
 
   render() {
-    const { t, shouldDisplayName, status } = this.props;
+    const { t, publicUpload, status } = this.props;
     const { isButtonDisabled } = this.state;
     return (
       <div className="listfiles">
         <div>
           <div className="list-title">{t('upload.listFile.title')}</div>
-          {shouldDisplayName
+          { !publicUpload
             && (
               <div className="upload-name">
                 <div className="input-group input-group-sm mb-3">

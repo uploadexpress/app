@@ -28,11 +28,13 @@ class Background extends React.Component {
   }
 
   componentDidMount = () => {
-    const { settings } = this.props;
-    if (settings.backgrounds.length > 0) {
-      settings.backgrounds.forEach((element) => { new Image().src = element.url; });
+    const { settings, downloadBackgrounds } = this.props;
+    const backgrounds = downloadBackgrounds.length > 0 ? downloadBackgrounds : settings.backgrounds;
+    if (backgrounds.length > 0) {
+      const backgroundUrls = backgrounds.map(background => (background.url));
       this.setState({
-        backgroundUrl: settings.backgrounds[0].url,
+        backgrounds: backgroundUrls,
+        backgroundUrl: backgroundUrls[0],
         currentIndex: 0,
       });
     }
@@ -40,12 +42,11 @@ class Background extends React.Component {
   }
 
   changeBackgroundImage = () => {
-    const { settings } = this.props;
-    const { currentIndex } = this.state;
-    if (settings.backgrounds.length > 0) {
-      const index = currentIndex >= settings.backgrounds.length - 1 ? 0 : currentIndex + 1;
+    const { currentIndex, backgrounds } = this.state;
+    if (backgrounds.length > 0) {
+      const index = currentIndex >= backgrounds.length - 1 ? 0 : currentIndex + 1;
       this.setState({
-        backgroundUrl: settings.backgrounds[index].url,
+        backgroundUrl: backgrounds[index],
         currentIndex: index,
       });
     }
@@ -86,13 +87,17 @@ class Background extends React.Component {
   }
 
   render() {
-    const { i18n, settings, children } = this.props;
+    const {
+      i18n,
+      settings,
+      children,
+    } = this.props;
+
     const { backgroundUrl } = this.state;
     const onSelectFlag = (countryCode) => {
       i18n.changeLanguage(countryCode);
     };
     const currLang = i18n.language.split('-')[0].toUpperCase();
-
     return (
       <div style={backgroundStyle(backgroundUrl)} className="background">
 
@@ -128,12 +133,14 @@ class Background extends React.Component {
 
 const mapStateToProps = state => ({
   settings: state.settings,
+  downloadBackgrounds: state.downloader.backgrounds,
 });
 
 Background.propTypes = {
   i18n: PropTypes.shape({}).isRequired,
   settings: PropTypes.shape({}).isRequired,
   children: PropTypes.element.isRequired,
+  downloadBackgrounds: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default withTranslation()(connect(mapStateToProps)(Background));

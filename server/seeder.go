@@ -74,21 +74,21 @@ func (a *API) SetupSeeds() error {
 		},
 		{
 			Name: "social_networks",
-			Value: []models.Link{
+			Value: []models.SocialNetwork{
 				{
-					Id:   bson.NewObjectId().Hex(),
-					Name: "twitter",
-					Url:  "https://www.twitter.com/upload.express",
+					Id:  bson.NewObjectId().Hex(),
+					Key: "twitter",
+					Url: "https://www.twitter.com/upload.express",
 				},
 				{
-					Id:   bson.NewObjectId().Hex(),
-					Name: "facebook",
-					Url:  "https://www.facebook.com/upload.express",
+					Id:  bson.NewObjectId().Hex(),
+					Key: "facebook",
+					Url: "https://www.facebook.com/upload.express",
 				},
 				{
-					Id:   bson.NewObjectId().Hex(),
-					Name: "instagram",
-					Url:  "https://www.instagram.com/upload.express",
+					Id:  bson.NewObjectId().Hex(),
+					Key: "instagram",
+					Url: "https://www.instagram.com/upload.express",
 				},
 			},
 		},

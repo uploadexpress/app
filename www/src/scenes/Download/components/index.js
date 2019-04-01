@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Spinner from 'react-spinkit';
 import DownloadView from '../../../components/DownloadView/components';
 import DownloadService from '../../../services/Api/DownloadService';
 import { setFiles } from '../actions';
@@ -8,6 +9,7 @@ import { setFiles } from '../actions';
 class Download extends Component {
   state = {
     error: false,
+    loading: true,
   }
 
   constructor() {
@@ -19,10 +21,14 @@ class Download extends Component {
     const { match, setFiles } = this.props;
     const { id } = match.params;
     this.downloadService.getDownload(id).then((result) => {
-      setFiles(result.data.files, result.data.id);
+      setFiles(result.data.files, result.data.id, result.data.backgrounds);
+      this.setState({
+        loading: false,
+      });
     }).catch(() => {
       this.setState({
         error: true,
+        loading: false,
       });
     });
   }
@@ -40,19 +46,21 @@ class Download extends Component {
   }
 
   render() {
-    const { error } = this.state;
+    const { error, loading } = this.state;
     const { files, history, downloadId } = this.props;
-    return (
-      <DownloadView
-        error={error}
-        files={files}
-        onZipDownload={this.onZipDownload}
-        history={history}
-        downloadId={downloadId}
-        onFileDownload={this.onFileDownload}
-        preview
-      />
-    );
+    return loading
+      ? (<div className=" spinner d-flex justify-content-center align-items-center"><Spinner /></div>)
+      : (
+        <DownloadView
+          error={error}
+          files={files}
+          onZipDownload={this.onZipDownload}
+          history={history}
+          downloadId={downloadId}
+          onFileDownload={this.onFileDownload}
+          preview
+        />
+      );
   }
 }
 
@@ -62,7 +70,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setFiles: (files, downloadId) => dispatch(setFiles(files, downloadId)),
+  setFiles: (files, downloadId, backgrounds) => dispatch(setFiles(files, downloadId, backgrounds)),
 });
 
 Download.propTypes = {
