@@ -61,18 +61,6 @@ func (a *API) SetupSeeds() error {
 			},
 		},
 		{
-			Name:  "twitter",
-			Value: "https://www.twitter.com/upload.express",
-		},
-		{
-			Name:  "facebook",
-			Value: "https://www.facebook.com/upload.express",
-		},
-		{
-			Name:  "instagram",
-			Value: "https://www.instagram.com/upload.express",
-		},
-		{
 			Name: "social_networks",
 			Value: []models.SocialNetwork{
 				{
