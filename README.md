@@ -26,7 +26,7 @@
 
 To deploy upload.express, the easiest way is to use the our managed service. You can get up and running in a few seconds and save yourself hours of maintenance. 
 
-By using [upload.express pro](https://pro.upload.express), you'll be supporting open-source a software and helping us maintaining the project.
+By using [upload.express pro](https://pro.upload.express), you'll be supporting open-source a software and helping us maintain the project.
 
 ## Built With
 
