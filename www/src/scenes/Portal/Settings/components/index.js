@@ -180,20 +180,22 @@ class Settings extends Component {
         <form onSubmit={this.addSocial}>
           <div className="d-flex justify-content-between align-items-center mt-2 mb-4">
             <select value={selectedSocial} className="form-control mr-3" placeholder="Social Links" onChange={this.onSocialSelect}>
-              <option disabled selected value="none">
+              <option disabled value="none">
                 {t('panel.settings.chooseNetwork')}
               </option>
               {socialNetworks.filter(network => settings.social_networks
                 .find(social => social.key === network.key) == null)
                 .map(network => (
-                  <option value={network.key}>{this.socialName(network.key)}</option>
+                  <option key={network.key} value={network.key}>
+                    {this.socialName(network.key)}
+                  </option>
                 ))}
             </select>
             <input type="submit" className="btn btn-pannel" value={t('panel.settings.addNetwork')} />
           </div>
         </form>
         {settings.social_networks.map(network => (
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column" key={network.id}>
             <div className="d-flex align-items-center">
               <img
                 onClick={() => { this.removeSocial(network.id); }}
@@ -218,7 +220,7 @@ class Settings extends Component {
   renderLinkSettings = () => {
     const { settings, t } = this.props;
     return settings.links.map(link => (
-      <div className="d-flex">
+      <div key={link.id} className="d-flex">
         {/* eslint-disable */}
         <img
           className="settings-remove-button"

@@ -128,7 +128,7 @@
 }
 
 .option-preview-container{
-    height: 126px;
+    max-height: 90px;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -137,6 +137,5 @@
 }
 
 .option-preview-img{
-    margin-right: 8px;
     margin-bottom: 8px;
 }
