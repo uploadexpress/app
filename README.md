@@ -1,8 +1,6 @@
-&nbsp;
 <p align="center">
   <a href="https://upload.express">
-    <img src="https://user-images.githubusercontent.com/377682/55381066-66980a80-5522-11e9-962f-422241028257.jpg" width="200px" alt="
-    " />
+    <img src="https://user-images.githubusercontent.com/377682/55381066-66980a80-5522-11e9-962f-422241028257.jpg" width="200px" alt="upload.express logo" />
   </a>
 </p>
 <h3 align="center">A free, open-source file sharing software</h3>
@@ -26,7 +24,7 @@
 
 To deploy upload.express, the easiest way is to use the our managed service. You can get up and running in a few seconds and save yourself hours of maintenance. 
 
-By using [upload.express pro](https://pro.upload.express), you'll be supporting open-source a software and helping us maintain the project.
+By using [upload.express pro](https://pro.upload.express), you'll be supporting a open-source software and helping us maintain the project.
 
 ## Built With
 
