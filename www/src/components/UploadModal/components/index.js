@@ -76,15 +76,16 @@ function mapStateToProps(state) {
   };
 }
 
-Listfiles.defaultProps = {
+Upload.defaultProps = {
   shouldDisplayName: false,
+  publicUpload: false,
 };
 
 Upload.propTypes = {
   addFiles: PropTypes.func.isRequired,
   status: PropTypes.symbol.isRequired,
-  publicUpload: PropTypes.bool.isRequired,
-  shouldDisplayName: PropTypes.bool.isRequired,
+  publicUpload: PropTypes.bool,
+  shouldDisplayName: PropTypes.bool,
   files: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 

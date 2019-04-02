@@ -18,6 +18,7 @@ class Listfiles extends Component {
     uploadName: '',
     options: false,
     images: [],
+    galleryOnly: false,
   }
 
   constructor() {
@@ -56,7 +57,7 @@ class Listfiles extends Component {
 
   createFiles = () => {
     const { files, startUploading, publicUpload } = this.props;
-    const { uploadName } = this.state;
+    const { uploadName, galleryOnly } = this.state;
 
     startUploading();
 
@@ -66,9 +67,10 @@ class Listfiles extends Component {
       size: file.fileInput.size,
     }));
 
-    this.uploadService.createUpload(filesData, uploadName, publicUpload).then((res) => {
-      this.beginUpload(res.data);
-    });
+    this.uploadService.createUpload(filesData, uploadName, galleryOnly, publicUpload)
+      .then((res) => {
+        this.beginUpload(res.data);
+      });
 
     this.setState({
       isButtonDisabled: true,
@@ -111,7 +113,7 @@ class Listfiles extends Component {
   render() {
     const { t, publicUpload, status } = this.props;
     const {
-      isButtonDisabled, options, images, uploadName,
+      isButtonDisabled, options, images, uploadName, galleryOnly,
     } = this.state;
     return (
       <div className="listfiles">
@@ -134,6 +136,12 @@ class Listfiles extends Component {
               <div className="input-group input-group-sm">
                 <input value={uploadName} type="text" className="form-control mt-1" placeholder="Upload name" onChange={this.changeUploadName} />
               </div>
+            </div>
+            <div className="form-check mt-3">
+              <label className="form-check-label list-file-name mt-0" htmlFor="gallery_only">
+                <input type="checkbox" checked={galleryOnly} className="form-check-input" id="gallery_only" onChange={(e) => { this.setState({ galleryOnly: e.target.checked }); }} />
+                Show only gallery
+              </label>
             </div>
             <div className="mt-4 d-flex">
               <div className="list-file-name mr-2">{t('upload.listFile.uploadBackground')}</div>
@@ -166,7 +174,7 @@ class Listfiles extends Component {
             <div className="list-container">
               <Dropzone
                 onDrop={this.onDrop}
-                disableClick
+                onClick={evt => evt.preventDefault()}
                 disabled={status === UploaderStatus.UPLOADING}
               >
                 {({ getRootProps, getInputProps, open }) => (

@@ -22,7 +22,10 @@ Modal.propTypes = {
     PropTypes.string,
   ]),
 
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 
   width: PropTypes.oneOfType([
     PropTypes.number,

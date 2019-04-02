@@ -47,58 +47,63 @@ class DownloadView extends Component {
 
   render() {
     const {
-      t, error, onZipDownload, settings, preview, onFileDownload,
+      t, error, onZipDownload, settings, preview, onFileDownload, galleryOnly,
     } = this.props;
     const { showPreview } = this.state;
 
     return (
       <Background>
         <div className={settings.upload_position === 'flex-end' ? ('d-flex flex-row-reverse gallery') : ('d-flex gallery')}>
-          <Modal>
-            <div className="listfiles">
-              {(error) ? (
-                <div className="list-title">{t('download.oops.header')}</div>
-              ) : (
-                <div className="list-title">{t('download.header')}</div>
-              )}
-              <hr />
-              <div className="list-container">
-                {this.renderFiles()}
-                {error
-                && (
-                  <div className="list-body">
-                    <div className="list-container text-center">
-                      <img width={100} src={ImgOops} alt="" />
-                      <div className="oops-title">{t('download.oops.title')}</div>
-                      <div className="oops-subtitle">{t('download.oops.subtitle')}</div>
+          {!galleryOnly
+            && (
+              <Modal>
+                <div className="listfiles">
+                  {(error) ? (
+                    <div className="list-title">{t('download.oops.header')}</div>
+                  ) : (
+                    <div className="list-title">{t('download.header')}</div>
+                  )}
+                  <hr />
+                  <div className="list-container">
+                    {this.renderFiles()}
+                    {error
+                      && (
+                        <div className="list-body">
+                          <div className="list-container text-center">
+                            <img width={100} src={ImgOops} alt="" />
+                            <div className="oops-title">{t('download.oops.title')}</div>
+                            <div className="oops-subtitle">{t('download.oops.subtitle')}</div>
 
-                    </div>
+                          </div>
+                        </div>
+                      )
+                    }
                   </div>
-                )
-              }
-              </div>
 
-              {!error
-              && (
-                <div className="list-footer">
-                  <button type="button" onClick={onZipDownload} className="green-btn">{t('download.button')}</button>
-
-                  {preview && this.hasPreview()
+                  {!error
                     && (
-                      /* eslint-disable */
-                      <a onClick={this.showPreview} className={settings.upload_position == 'flex-end' ? ('preview-btn-left') : ('preview-btn-right')}>
-                        {t('download.gallery')}
-                      </a>
-                      /* eslint-enable */
-                    )
-                  }
+                      <div className="list-footer">
+                        <button type="button" onClick={onZipDownload} className="green-btn">{t('download.button')}</button>
+
+                        {preview && this.hasPreview()
+                          && (
+                            /* eslint-disable */
+                            <a onClick={this.showPreview} className={settings.upload_position == 'flex-end' ? ('preview-btn-left') : ('preview-btn-right')}>
+                              {t('download.gallery')}
+                            </a>
+                            /* eslint-enable */
+                          )
+                        }
+                      </div>
+                    )}
                 </div>
-              )}
-            </div>
-          </Modal>
-          {showPreview
-          && <Preview onFileDownload={onFileDownload} />
-        }
+              </Modal>
+
+            )}
+
+          {(showPreview || galleryOnly)
+            && <Preview onFileDownload={onFileDownload} />
+          }
         </div>
       </Background>
     );
@@ -109,14 +114,21 @@ const mapStateToProps = state => ({
   settings: state.settings,
 });
 
+DownloadView.defaultProps = {
+  galleryOnly: false,
+  onZipDownload: () => {},
+  error: false,
+};
+
 DownloadView.propTypes = {
   t: PropTypes.func.isRequired,
-  error: PropTypes.bool.isRequired,
-  onZipDownload: PropTypes.func.isRequired,
+  error: PropTypes.bool,
+  onZipDownload: PropTypes.func,
   settings: PropTypes.shape({}).isRequired,
   preview: PropTypes.bool.isRequired,
   onFileDownload: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  galleryOnly: PropTypes.bool,
 };
 
 export default connect(mapStateToProps)(withTranslation()(DownloadView));

@@ -41,6 +41,10 @@ class Background extends React.Component {
     setInterval(this.changeBackgroundImage, 5000);
   }
 
+  componentWillUnmount = () => {
+    clearInterval(this.changeBackgroundImage);
+  }
+
   changeBackgroundImage = () => {
     const { currentIndex, backgrounds } = this.state;
     if (backgrounds.length > 0) {
@@ -62,7 +66,7 @@ class Background extends React.Component {
   renderLinks = () => {
     const { settings } = this.props;
     return settings.links.map(setting => (
-      <a className="menu-link ml-2" href={this.withHttp(setting.url)} rel="noopener noreferrer" target="_blank">{setting.name}</a>
+      <a className="menu-link ml-2" key={setting.url} href={this.withHttp(setting.url)} rel="noopener noreferrer" target="_blank">{setting.name}</a>
     ));
   }
 
@@ -76,7 +80,7 @@ class Background extends React.Component {
     return settings.social_networks.map(network => (
       network.url !== undefined
       && (
-        <a className="menu-link" href={this.withHttp(network.url)} rel="noopener noreferrer" target="_blank">
+        <a className="menu-link" key={network.url} href={this.withHttp(network.url)} rel="noopener noreferrer" target="_blank">
           <FontAwesomeIcon
             className="social-account"
             icon={this.socialIcon(network.key)}
@@ -114,7 +118,7 @@ class Background extends React.Component {
             onSelect={onSelectFlag}
           />
         </div>
-        <div className="content-wrapper d-flex flex-column gallery-wrapper" style={{ alignItems: settings.upload_position }}>
+        <div className="content-wrapper d-flex flex-column" style={{ alignItems: settings.upload_position }}>
           {settings.logo
             && (
               <div className="logo">

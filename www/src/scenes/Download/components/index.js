@@ -21,7 +21,12 @@ class Download extends Component {
     const { match, setFiles } = this.props;
     const { id } = match.params;
     this.downloadService.getDownload(id).then((result) => {
-      setFiles(result.data.files, result.data.id, result.data.backgrounds);
+      setFiles(
+        result.data.files,
+        result.data.id,
+        result.data.backgrounds,
+        result.data.gallery_only,
+      );
       this.setState({
         loading: false,
       });
@@ -47,7 +52,9 @@ class Download extends Component {
 
   render() {
     const { error, loading } = this.state;
-    const { files, history, downloadId } = this.props;
+    const {
+      files, history, downloadId, galleryOnly,
+    } = this.props;
     return loading
       ? (<div className=" spinner d-flex justify-content-center align-items-center"><Spinner /></div>)
       : (
@@ -59,6 +66,7 @@ class Download extends Component {
           downloadId={downloadId}
           onFileDownload={this.onFileDownload}
           preview
+          galleryOnly={galleryOnly}
         />
       );
   }
@@ -67,11 +75,19 @@ class Download extends Component {
 const mapStateToProps = state => ({
   files: state.downloader.files,
   downloadId: state.downloader.downloadId,
+  galleryOnly: state.downloader.galleryOnly,
 });
 
 const mapDispatchToProps = dispatch => ({
-  setFiles: (files, downloadId, backgrounds) => dispatch(setFiles(files, downloadId, backgrounds)),
+  setFiles: (
+    files, downloadId, backgrounds, galleryOnly,
+  ) => dispatch(setFiles(files, downloadId, backgrounds, galleryOnly)),
 });
+
+Download.defaultProps = {
+  galleryOnly: false,
+  downloadId: '',
+};
 
 Download.propTypes = {
   match: PropTypes.shape({
@@ -81,8 +97,9 @@ Download.propTypes = {
   }).isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   history: PropTypes.shape({}).isRequired,
-  downloadId: PropTypes.string.isRequired,
+  downloadId: PropTypes.string,
   setFiles: PropTypes.func.isRequired,
+  galleryOnly: PropTypes.bool,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Download);

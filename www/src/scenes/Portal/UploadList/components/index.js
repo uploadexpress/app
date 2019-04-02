@@ -112,7 +112,7 @@ class UploadList extends Component {
                 <tbody>
 
                   {result.map(row => (
-                    <tr>
+                    <tr key={row.id}>
                       <td className="table-body-title">{row.name}</td>
                       <td className="table-body-title">
 

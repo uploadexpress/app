@@ -9,6 +9,7 @@ export default function download(state = initState, action) {
         files: action.files,
         downloadId: action.downloadId,
         backgrounds: action.backgrounds,
+        galleryOnly: action.galleryOnly,
       };
     }
 
