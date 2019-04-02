@@ -33,7 +33,7 @@ class Upload extends Component {
 
   render() {
     const {
-      status, publicUpload, shouldDisplayName, files
+      status, publicUpload, shouldDisplayName, files,
     } = this.props;
     const { id } = this.state;
 

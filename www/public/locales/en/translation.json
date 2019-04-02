@@ -11,7 +11,13 @@
         "listFile": {
             "title": "Your files",
             "addFile": "Add file",
-            "upload": "Upload"
+            "upload": "Upload",
+            "save": "Save",
+            "options": "Options",
+            "uploadName": "Choose your upload name:",
+            "uploadBackground": "Choose backgrounds for this upload:",
+            "uploadImage": "Upload Image"
+
         }
     },
 

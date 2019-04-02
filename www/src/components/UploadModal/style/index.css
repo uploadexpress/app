@@ -104,13 +104,39 @@
   transform: translate(0, -50%);
 }
 
-.upload-name{
+.options-container{
   margin-left: 20px;
   margin-right:20px;
+}
+
+.option-btn{
+    padding: 5px 9px;
+    margin: 0 20px 0 0;
+
 }
 
 .upload-name-label{
     font-size:14px;
     color:#83878B;
+    margin-bottom: 8px;
+}
+
+.option-upload-btn{
+    font-size: 14px;
+    margin: 0;
+    padding: 2px 4px;
+}
+
+.option-preview-container{
+    height: 126px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    justify-content: space-between;
+}
+
+.option-preview-img{
+    margin-right: 8px;
     margin-bottom: 8px;
 }

@@ -41,6 +41,15 @@
   cursor: default
 }
 
+@media (max-width: 1046px) {
+  .card-body-preview {
+    display: none!important;
+  }
+
+}
+
+
+
 .preview-download-img{
   cursor: pointer
 }
@@ -97,6 +106,10 @@
   padding: 2px 10px;
 }
 
+.list-container-gallery{
+  overflow-y: auto;
+}
+
 .preview-download-btn:hover{
   background-color: rgb(61, 108, 139);
   color: white;
@@ -106,4 +119,11 @@
   background-color: inherit;
   color: white;
   border: none;
+}
+
+@media (max-width: 1046px) {
+  .gallery{
+    flex-direction: column-reverse;
+    align-items: center;
+  }
 }

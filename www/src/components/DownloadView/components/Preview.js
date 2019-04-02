@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '../../Modal';
 import ImagePreview from './ImagePreview';
 import { selectFile } from '../../../scenes/Download/actions';
+import '../style/index.css';
 
 
 class Preview extends Component {
@@ -80,7 +81,7 @@ class Preview extends Component {
       <div className="ml-3 mr-3">
         <Modal width={700} height={370}>
           <div className="listfiles">
-            <div className="list-container m-2">
+            <div className="list-container-gallery m-2">
               <Gallery
                 columns={3}
                 ImageComponent={ImagePreview}
