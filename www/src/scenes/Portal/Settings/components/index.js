@@ -183,9 +183,11 @@ class Settings extends Component {
               <option disabled selected value="none">
                 {t('panel.settings.chooseNetwork')}
               </option>
-              {socialNetworks.filter(network => settings.social_networks.find(social => social.key === network.key) == null).map(network => (
-                <option value={network.key}>{this.socialName(network.key)}</option>
-              ))}
+              {socialNetworks.filter(network => settings.social_networks
+                .find(social => social.key === network.key) == null)
+                .map(network => (
+                  <option value={network.key}>{this.socialName(network.key)}</option>
+                ))}
             </select>
             <input type="submit" className="btn btn-pannel" value={t('panel.settings.addNetwork')} />
           </div>
@@ -253,8 +255,8 @@ class Settings extends Component {
                     {(saved) ? (
                       <div className="settings-saved">{t('panel.settings.saved')}</div>
                     ) : (
-                        <button type="button" className="btn btn-pannel" onClick={this.sendSettings}>{t('panel.settings.save')}</button>
-                      )}
+                      <button type="button" className="btn btn-pannel" onClick={this.sendSettings}>{t('panel.settings.save')}</button>
+                    )}
                   </div>
                 </div>
                 <div className="row">

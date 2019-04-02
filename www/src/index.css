@@ -115,6 +115,7 @@ hr {
   padding-top: 0.6rem;
   flex: 1;
   overflow-y:auto;
+  max-height: 226px;
   
 }
 
@@ -171,7 +172,6 @@ hr {
   color: #87D483;
   border: 1px solid #87D483;
   background-color: white;
-  border-color: inherit;
   -webkit-box-shadow: none;
   box-shadow: none;
 }

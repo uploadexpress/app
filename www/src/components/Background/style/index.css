@@ -1,0 +1,10 @@
+@media (max-width: 720px) {
+    .gallery-wrapper{
+      align-items: center!important;
+    }
+    .upload-modal{
+        width: 100vw !important;
+        height: 100%!important;
+    }
+
+  }

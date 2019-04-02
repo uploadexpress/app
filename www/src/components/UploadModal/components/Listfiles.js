@@ -15,12 +15,15 @@ import { UploaderStatus } from '../constants';
 class Listfiles extends Component {
   state = {
     isButtonDisabled: false,
-    uploadName: 'Unnamed',
+    uploadName: '',
+    options: false,
+    images: [],
   }
 
   constructor() {
     super();
     this.uploadService = new UploadService();
+    this.selectBackgroundRef = React.createRef();
   }
 
   onUploadProgress = (fileId, progressEvent) => {
@@ -36,14 +39,16 @@ class Listfiles extends Component {
 
   beginUpload = (data) => {
     const { files, onUploadCreated, endUploading } = this.props;
+    const { images } = this.state;
     // Returns the ID to the main component
     onUploadCreated(data.id);
 
+    const prom = images.map(image => () => this.uploadService.uploadBackground(data.id, image));
     const uploadPromises = files.map(file => () => uploadFile(data.id, file, (event) => {
       this.onUploadProgress(file.id, event);
     }));
 
-    promiseSerial(uploadPromises).then(() => {
+    promiseSerial([...prom, ...uploadPromises]).then(() => {
       this.uploadService.putComplete(data.id);
       endUploading();
     });
@@ -70,9 +75,23 @@ class Listfiles extends Component {
     });
   }
 
-  uploadName = (e) => {
+  changeUploadName = (e) => {
     this.setState({
       uploadName: e.target.value,
+    });
+  }
+
+  showOptions = () => {
+    const { options } = this.state;
+    this.setState({
+      options: !options,
+    });
+  }
+
+  onPreview = (e) => {
+    const imagesUrls = Array.from(e.target.files);
+    this.setState({
+      images: imagesUrls,
     });
   }
 
@@ -91,54 +110,93 @@ class Listfiles extends Component {
 
   render() {
     const { t, publicUpload, status } = this.props;
-    const { isButtonDisabled } = this.state;
+    const {
+      isButtonDisabled, options, images, uploadName,
+    } = this.state;
     return (
       <div className="listfiles">
-        <div>
+        <div className="d-flex justify-content-between align-items-center">
           <div className="list-title">{t('upload.listFile.title')}</div>
-          { !publicUpload
+          {!publicUpload
             && (
-              <div className="upload-name">
-                <div className="input-group input-group-sm mb-3">
-                  <input type="text" className="form-control" placeholder="Upload name" onChange={this.uploadName} />
-                </div>
-              </div>
+              options ? (
+                <button type="button" className="btn green-btn option-btn" onClick={this.showOptions}>{t('upload.listFile.save')}</button>
+              ) : (
+                <button type="button" className="btn green-btn option-btn" onClick={this.showOptions}>{t('upload.listFile.options')}</button>
+              )
             )}
-          <hr />
         </div>
-        <div className="list-container">
-          <Dropzone
-            onDrop={this.onDrop}
-            disableClick
-            disabled={status === UploaderStatus.UPLOADING}
-          >
-            {({ getRootProps, getInputProps, open }) => (
-              <div style={{ outline: 'none', minHeight: '100%' }} {...getRootProps()}>
-                <input {...getInputProps()} />
-
-                {this.renderFiles()}
-
-                {status === UploaderStatus.FILE_LIST
-                  && (
-                    /* eslint-disable */ // (Taken care with buttonize)
-                    <div 
-                      {...buttonize(open)}
-                      className="add-file" onClick={open}
-                    >
-                      <FontAwesomeIcon className="add-file-img" icon="folder-plus" />
-                      <div className="d-inline add-file-text">{t('upload.listFile.addFile')}</div>
-                    </div>
-                    /* eslint-enable */
-                  )
-                }
+        <hr />
+        {options ? (
+          <div className="options-container">
+            <div className="mt-3">
+              <div className="list-file-name">{t('upload.listFile.uploadName')}</div>
+              <div className="input-group input-group-sm">
+                <input value={uploadName} type="text" className="form-control mt-1" placeholder="Upload name" onChange={this.changeUploadName} />
               </div>
+            </div>
+            <div className="mt-4 d-flex">
+              <div className="list-file-name mr-2">{t('upload.listFile.uploadBackground')}</div>
+              <button
+                type="button"
+                className="btn blue-btn option-upload-btn"
+                onClick={() => { this.selectBackgroundRef.current.click(); }}
+              >
+                {t('upload.listFile.uploadImage')}
+              </button>
+              <input
+                ref={this.selectBackgroundRef}
+                type="file"
+                id="background"
+                accept="image/x-png,image/jpeg"
+                multiple="multiple"
+                className="input-logo"
+                onChange={this.onPreview}
+              />
+            </div>
+            <div className="option-preview-container mt-3">
+              {images.map(image => (
+                <img width={82} height={50} src={URL.createObjectURL(image)} className="option-preview-img" alt="" />
+              ))
+              }
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div className="list-container">
+              <Dropzone
+                onDrop={this.onDrop}
+                disableClick
+                disabled={status === UploaderStatus.UPLOADING}
+              >
+                {({ getRootProps, getInputProps, open }) => (
+                  <div style={{ outline: 'none', minHeight: '100%' }} {...getRootProps()}>
+                    <input {...getInputProps()} />
 
-            )}
-          </Dropzone>
-        </div>
-        <div className="list-footer">
-          <button type="button" onClick={this.createFiles} disabled={isButtonDisabled} className="blue-btn">{t('upload.listFile.upload')}</button>
-        </div>
+                    {this.renderFiles()}
+
+                    {status === UploaderStatus.FILE_LIST
+                        && (
+                          /* eslint-disable */ // (Taken care with buttonize)
+                          <div
+                            {...buttonize(open)}
+                            className="add-file" onClick={open}
+                          >
+                            <FontAwesomeIcon className="add-file-img" icon="folder-plus" />
+                            <div className="d-inline add-file-text">{t('upload.listFile.addFile')}</div>
+                          </div>
+                          /* eslint-enable */
+                        )
+                      }
+                  </div>
+                )}
+              </Dropzone>
+            </div>
+            <div className="list-footer">
+              <button type="button" onClick={this.createFiles} disabled={isButtonDisabled} className="blue-btn">{t('upload.listFile.upload')}</button>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

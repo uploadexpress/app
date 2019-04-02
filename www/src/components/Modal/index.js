@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../Background/style/index.css';
 
 const Modal = (props) => {
   const { height, width, children } = props;

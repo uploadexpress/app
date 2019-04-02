@@ -5,15 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import ReactFlagsSelect from '../FlagsSelect';
 import socialNetworks from '../../helpers/socialNetworks';
+import './style/index.css';
 
 const backgroundStyle = (image) => {
   const backgroundImage = image === null ? 'linear-gradient(#2193b0, #6dd5ed)' : `url(${image})`;
   return {
     backgroundImage,
-    height: '100vh',
+    minHeight: '100vh',
     width: '100%',
     backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundColor: 'black',
     position: 'relative',
@@ -114,7 +114,7 @@ class Background extends React.Component {
             onSelect={onSelectFlag}
           />
         </div>
-        <div className="content-wrapper d-flex flex-column" style={{ alignItems: settings.upload_position }}>
+        <div className="content-wrapper d-flex flex-column gallery-wrapper" style={{ alignItems: settings.upload_position }}>
           {settings.logo
             && (
               <div className="logo">
@@ -122,9 +122,9 @@ class Background extends React.Component {
               </div>
             )
           }
-          <div className={settings.upload_position === 'flex-end' ? ('d-flex flex-row-reverse') : ('d-flex')}>
-            {children}
-          </div>
+
+          {children}
+
         </div>
       </div>
     );

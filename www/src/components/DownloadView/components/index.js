@@ -53,18 +53,18 @@ class DownloadView extends Component {
 
     return (
       <Background>
-
-        <Modal>
-          <div className="listfiles">
-            {(error) ? (
-              <div className="list-title">{t('download.oops.header')}</div>
-            ) : (
-              <div className="list-title">{t('download.header')}</div>
-            )}
-            <hr />
-            <div className="list-container">
-              {this.renderFiles()}
-              {error
+        <div className={settings.upload_position === 'flex-end' ? ('d-flex flex-row-reverse gallery') : ('d-flex gallery')}>
+          <Modal>
+            <div className="listfiles">
+              {(error) ? (
+                <div className="list-title">{t('download.oops.header')}</div>
+              ) : (
+                <div className="list-title">{t('download.header')}</div>
+              )}
+              <hr />
+              <div className="list-container">
+                {this.renderFiles()}
+                {error
                 && (
                   <div className="list-body">
                     <div className="list-container text-center">
@@ -76,9 +76,9 @@ class DownloadView extends Component {
                   </div>
                 )
               }
-            </div>
+              </div>
 
-            {!error
+              {!error
               && (
                 <div className="list-footer">
                   <button type="button" onClick={onZipDownload} className="green-btn">{t('download.button')}</button>
@@ -94,11 +94,12 @@ class DownloadView extends Component {
                   }
                 </div>
               )}
-          </div>
-        </Modal>
-        {showPreview
+            </div>
+          </Modal>
+          {showPreview
           && <Preview onFileDownload={onFileDownload} />
         }
+        </div>
       </Background>
     );
   }

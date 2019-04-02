@@ -11,7 +11,12 @@
         "listFile" : {
             "title" : "Vos fichiers",
             "addFile" : "Ajouter un fichier",
-            "upload" : "Transférer"
+            "upload" : "Transférer",
+            "save": "Sauvegarder",
+            "options": "Options",
+            "uploadName": "Choisissez le nom de votre envoi:",
+            "uploadBackground": "Choisissez les images d'arrière-plan pour cet envoi:",
+            "uploadImage": "Envoyer des images"
         }
     },
 

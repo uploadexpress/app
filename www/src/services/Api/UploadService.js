@@ -31,6 +31,11 @@ class UploadService extends Service {
     const resourceUrl = `/uploader/${uploadId}/complete`;
     return this.http.put(resourceUrl);
   }
+
+  uploadBackground = (uploadId, image) => {
+    const resourceUrl = `uploader/${uploadId}/background`;
+    return this.http.post(resourceUrl, image);
+  }
 }
 
 
