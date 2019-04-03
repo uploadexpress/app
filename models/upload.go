@@ -9,10 +9,11 @@ type Upload struct {
 	Id            string   `json:"id" bson:"_id,omitempty"`
 	Name          string   `json:"name" bson:"name"`
 	Files         []*File  `json:"files" bson:"files"`
-	Backgrounds   []*Image `json:"backgrounds" bson:"backgrounds"'`
+	Backgrounds   []*Image `json:"backgrounds" bson:"backgrounds"`
 	DownloadCount int      `json:"download_count" bson:"download_count"`
 	Public        bool     `json:"public" bson:"public"`
 	Ready         bool     `json:"-" bson:"ready"`
+	GalleryOnly   bool     `json:"gallery_only" bson:"gallery_only"`
 }
 
 func (upload *Upload) BeforeCreate() {
