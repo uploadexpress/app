@@ -20,8 +20,9 @@ func GetObjectLink(configuration config.AwsConfiguration, uploadId string, file 
 	// Create S3 service client
 	svc := s3.New(sess)
 	req, _ := svc.GetObjectRequest(&s3.GetObjectInput{
-		Bucket: aws.String(configuration.Bucket),
-		Key:    aws.String(uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
+		Bucket:                     aws.String(configuration.Bucket),
+		Key:                        aws.String(uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
+		ResponseContentDisposition: aws.String("attachment; filename =\"" + file.Name + "\""),
 	})
 	urlStr, err := req.Presign(time.Hour)
 	if err != nil {
