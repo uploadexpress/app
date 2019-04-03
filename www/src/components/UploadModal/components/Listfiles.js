@@ -172,20 +172,20 @@ class Listfiles extends Component {
             </div>
           </div>
         ) : (
-            <div>
-              <div className="list-container">
-                <Dropzone
-                  onDrop={this.onDrop}
-                  onClick={evt => evt.preventDefault()}
-                  disabled={status === UploaderStatus.UPLOADING}
-                >
-                  {({ getRootProps, getInputProps, open }) => (
-                    <div style={{ outline: 'none', minHeight: '100%' }} {...getRootProps()}>
-                      <input {...getInputProps()} />
+          <div>
+            <div className="list-container">
+              <Dropzone
+                onDrop={this.onDrop}
+                onClick={evt => evt.preventDefault()}
+                disabled={status === UploaderStatus.UPLOADING}
+              >
+                {({ getRootProps, getInputProps, open }) => (
+                  <div style={{ outline: 'none', minHeight: '100%' }} {...getRootProps()}>
+                    <input {...getInputProps()} />
 
-                      {this.renderFiles()}
+                    {this.renderFiles()}
 
-                      {status === UploaderStatus.FILE_LIST
+                    {status === UploaderStatus.FILE_LIST
                         && (
                           /* eslint-disable */ // (Taken care with buttonize)
                           <div
@@ -198,15 +198,15 @@ class Listfiles extends Component {
                           /* eslint-enable */
                         )
                       }
-                    </div>
-                  )}
-                </Dropzone>
-              </div>
-              <div className="list-footer">
-                <button type="button" onClick={this.createFiles} disabled={isButtonDisabled} className="blue-btn">{t('upload.listFile.upload')}</button>
-              </div>
+                  </div>
+                )}
+              </Dropzone>
             </div>
-          )}
+            <div className="list-footer">
+              <button type="button" onClick={this.createFiles} disabled={isButtonDisabled} className="blue-btn">{t('upload.listFile.upload')}</button>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

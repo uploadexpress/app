@@ -58,16 +58,16 @@ class DownloadView extends Component {
             && (
               <div className="ml-3 mr-3">
                 <Modal>
-                <div className="listfiles">
-                  {(error) ? (
-                    <div className="list-title">{t('download.oops.header')}</div>
-                  ) : (
-                    <div className="list-title">{t('download.header')}</div>
-                  )}
-                  <hr />
-                  <div className="list-container">
-                    {this.renderFiles()}
-                    {error
+                  <div className="listfiles">
+                    {(error) ? (
+                      <div className="list-title">{t('download.oops.header')}</div>
+                    ) : (
+                      <div className="list-title">{t('download.header')}</div>
+                    )}
+                    <hr />
+                    <div className="list-container">
+                      {this.renderFiles()}
+                      {error
                       && (
                         <div className="list-body">
                           <div className="list-container text-center">
@@ -79,9 +79,9 @@ class DownloadView extends Component {
                         </div>
                       )
                     }
-                  </div>
+                    </div>
 
-                  {!error
+                    {!error
                     && (
                       <div className="list-footer">
                         <button type="button" onClick={onZipDownload} className="green-btn">{t('download.button')}</button>
@@ -97,8 +97,8 @@ class DownloadView extends Component {
                         }
                       </div>
                     )}
-                </div>
-              </Modal>
+                  </div>
+                </Modal>
               </div>
 
             )}

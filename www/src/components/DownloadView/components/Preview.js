@@ -73,7 +73,9 @@ class Preview extends Component {
   }
 
   render() {
-    const { files, onFileDownload, galleryOnly, onZipDownload } = this.props;
+    const {
+      files, onFileDownload, galleryOnly, onZipDownload,
+    } = this.props;
     const { currentImage, lightboxIsOpen, slideshow } = this.state;
     const images = files.filter(file => file.preview_url);
     const modalWidth = galleryOnly ? 900 : 700;
@@ -116,10 +118,10 @@ class Preview extends Component {
                     <FontAwesomeIcon icon="pause" />
                   </button>
                 ) : (
-                    <button type="button" className="btn-slideshow" onClick={() => { this.onSlideshow(images.length); }}>
-                      <FontAwesomeIcon icon="play" />
-                    </button>
-                  ),
+                  <button type="button" className="btn-slideshow" onClick={() => { this.onSlideshow(images.length); }}>
+                    <FontAwesomeIcon icon="play" />
+                  </button>
+                ),
               ]}
               isOpen={lightboxIsOpen}
               onClickPrev={this.gotoPrevious}
