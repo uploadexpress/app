@@ -111,7 +111,9 @@ class Listfiles extends Component {
   }
 
   render() {
-    const { t, publicUpload, status } = this.props;
+    const {
+      t, publicUpload, status, shouldDisplayOptions,
+    } = this.props;
     const {
       isButtonDisabled, options, images, uploadName, galleryOnly,
     } = this.state;
@@ -119,12 +121,12 @@ class Listfiles extends Component {
       <div className="listfiles">
         <div className="d-flex justify-content-between align-items-center">
           <div className="list-title">{t('upload.listFile.title')}</div>
-          {!publicUpload
+          {(!publicUpload && shouldDisplayOptions)
             && (
               options ? (
-                <button type="button" className="btn green-btn option-btn" onClick={this.showOptions}>{t('upload.listFile.save')}</button>
+                <button type="button" disabled={isButtonDisabled} className="btn green-btn option-btn" onClick={this.showOptions}>{t('upload.listFile.save')}</button>
               ) : (
-                <button type="button" className="btn green-btn option-btn" onClick={this.showOptions}>{t('upload.listFile.options')}</button>
+                <button type="button" disabled={isButtonDisabled} className="btn green-btn option-btn" onClick={this.showOptions}>{t('upload.listFile.options')}</button>
               )
             )}
         </div>
@@ -140,7 +142,7 @@ class Listfiles extends Component {
             <div className="form-check mt-3">
               <label className="form-check-label list-file-name mt-0" htmlFor="gallery_only">
                 <input type="checkbox" checked={galleryOnly} className="form-check-input" id="gallery_only" onChange={(e) => { this.setState({ galleryOnly: e.target.checked }); }} />
-                Show only gallery
+                {t('upload.listFile.onlyGallery')}
               </label>
             </div>
             <div className="mt-4 d-flex">
@@ -170,20 +172,20 @@ class Listfiles extends Component {
             </div>
           </div>
         ) : (
-          <div>
-            <div className="list-container">
-              <Dropzone
-                onDrop={this.onDrop}
-                onClick={evt => evt.preventDefault()}
-                disabled={status === UploaderStatus.UPLOADING}
-              >
-                {({ getRootProps, getInputProps, open }) => (
-                  <div style={{ outline: 'none', minHeight: '100%' }} {...getRootProps()}>
-                    <input {...getInputProps()} />
+            <div>
+              <div className="list-container">
+                <Dropzone
+                  onDrop={this.onDrop}
+                  onClick={evt => evt.preventDefault()}
+                  disabled={status === UploaderStatus.UPLOADING}
+                >
+                  {({ getRootProps, getInputProps, open }) => (
+                    <div style={{ outline: 'none', minHeight: '100%' }} {...getRootProps()}>
+                      <input {...getInputProps()} />
 
-                    {this.renderFiles()}
+                      {this.renderFiles()}
 
-                    {status === UploaderStatus.FILE_LIST
+                      {status === UploaderStatus.FILE_LIST
                         && (
                           /* eslint-disable */ // (Taken care with buttonize)
                           <div
@@ -196,15 +198,15 @@ class Listfiles extends Component {
                           /* eslint-enable */
                         )
                       }
-                  </div>
-                )}
-              </Dropzone>
+                    </div>
+                  )}
+                </Dropzone>
+              </div>
+              <div className="list-footer">
+                <button type="button" onClick={this.createFiles} disabled={isButtonDisabled} className="blue-btn">{t('upload.listFile.upload')}</button>
+              </div>
             </div>
-            <div className="list-footer">
-              <button type="button" onClick={this.createFiles} disabled={isButtonDisabled} className="blue-btn">{t('upload.listFile.upload')}</button>
-            </div>
-          </div>
-        )}
+          )}
       </div>
     );
   }
@@ -233,7 +235,7 @@ Listfiles.propTypes = {
   onFilesSelected: PropTypes.func.isRequired,
   endUploading: PropTypes.func.isRequired,
   publicUpload: PropTypes.bool,
-  shouldDisplayName: PropTypes.bool.isRequired,
+  shouldDisplayOptions: PropTypes.bool.isRequired,
   status: PropTypes.symbol.isRequired,
 };
 

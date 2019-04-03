@@ -33,7 +33,7 @@ class Upload extends Component {
 
   render() {
     const {
-      status, publicUpload, shouldDisplayName, files,
+      status, publicUpload, shouldDisplayOptions, files,
     } = this.props;
     const { id } = this.state;
 
@@ -48,7 +48,7 @@ class Upload extends Component {
           && (
             <Listfiles
               publicUpload={publicUpload}
-              shouldDisplayName={shouldDisplayName}
+              shouldDisplayOptions={shouldDisplayOptions}
               onFilesSelected={this.onFilesSelected}
               onUploadCreated={this.onUploadCreated}
               files={files}
@@ -77,7 +77,7 @@ function mapStateToProps(state) {
 }
 
 Upload.defaultProps = {
-  shouldDisplayName: false,
+  shouldDisplayOptions: false,
   publicUpload: false,
 };
 
@@ -85,7 +85,7 @@ Upload.propTypes = {
   addFiles: PropTypes.func.isRequired,
   status: PropTypes.symbol.isRequired,
   publicUpload: PropTypes.bool,
-  shouldDisplayName: PropTypes.bool,
+  shouldDisplayOptions: PropTypes.bool,
   files: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 

@@ -16,7 +16,8 @@
             "options": "Options",
             "uploadName": "Choose your upload name:",
             "uploadBackground": "Choose backgrounds for this upload:",
-            "uploadImage": "Upload Image"
+            "uploadImage": "Upload Image",
+            "onlyGallery": "Show only gallery"
 
         }
     },

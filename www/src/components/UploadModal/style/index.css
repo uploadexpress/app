@@ -112,7 +112,15 @@
 .option-btn{
     padding: 5px 9px;
     margin: 0 20px 0 0;
+}
 
+.option-btn:disabled{
+    color: #979797;
+    border: 1px solid #979797;
+}
+
+.option-btn:disabled:hover{
+    background: inherit;
 }
 
 .upload-name-label{

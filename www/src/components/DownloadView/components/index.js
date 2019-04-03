@@ -56,7 +56,8 @@ class DownloadView extends Component {
         <div className={settings.upload_position === 'flex-end' ? ('d-flex flex-row-reverse gallery') : ('d-flex gallery')}>
           {!galleryOnly
             && (
-              <Modal>
+              <div className="ml-3 mr-3">
+                <Modal>
                 <div className="listfiles">
                   {(error) ? (
                     <div className="list-title">{t('download.oops.header')}</div>
@@ -98,11 +99,12 @@ class DownloadView extends Component {
                     )}
                 </div>
               </Modal>
+              </div>
 
             )}
 
           {(showPreview || galleryOnly)
-            && <Preview onFileDownload={onFileDownload} />
+            && <Preview onZipDownload={onZipDownload} onFileDownload={onFileDownload} />
           }
         </div>
       </Background>
