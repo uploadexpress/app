@@ -153,23 +153,24 @@ class Settings extends Component {
   }
 
   addSocial = (e) => {
+    e.preventDefault();
     const { selectedSocial } = this.state;
     const { settings } = this.props;
 
-    const newSocials = [
-      ...settings.social_networks,
-      {
-        id: ObjectID().toHexString(),
-        key: selectedSocial,
-      },
-    ];
+    if (selectedSocial !== 'none') {
+      const newSocials = [
+        ...settings.social_networks,
+        {
+          id: ObjectID().toHexString(),
+          key: selectedSocial,
+        },
+      ];
+      this.setState({
+        selectedSocial: 'none',
+      });
 
-    this.setState({
-      selectedSocial: 'none',
-    });
-
-    this.onInputChange('social_networks', newSocials);
-    e.preventDefault();
+      this.onInputChange('social_networks', newSocials);
+    }
   }
 
   renderSocialSettings = () => {
