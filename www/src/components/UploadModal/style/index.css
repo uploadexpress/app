@@ -135,15 +135,7 @@
     padding: 2px 4px;
 }
 
-.option-preview-container{
-    max-height: 90px;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    overflow-y: scroll;
-    justify-content: space-between;
-}
-
 .option-preview-img{
     margin-bottom: 8px;
+    margin-right: 4px;
 }
