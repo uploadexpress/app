@@ -4,7 +4,7 @@ const generateStyleSheet = ({ imagesCount, duration, transition }) => {
   const t = imagesCount * (duration + transition);
   const p1 = Math.round(transition / t * 100);
   const p2 = Math.round((duration + transition) / t * 100);
-  const p3 = Math.round(p2 * 2);
+  const p3 = Math.round(p2 * 1.4);
 
   const vendorBackfaceVisibility = vendor.supportedProperty('backface-visibility');
   const vendorAnimation = vendor.supportedProperty('animation');
@@ -37,7 +37,8 @@ const generateStyleSheet = ({ imagesCount, duration, transition }) => {
         }`;
   }
 
-  return `#background-slider > figure {
+  return `
+      #background-slider > figure {
         height: 100%;
         width: 100%;
         position: absolute;
@@ -50,9 +51,9 @@ const generateStyleSheet = ({ imagesCount, duration, transition }) => {
         background-color: black;
         opacity: 0;
         margin: 0;
-        z-index: -1;
         ${animation}
       }
+
       ${keyframes}
     `;
 };

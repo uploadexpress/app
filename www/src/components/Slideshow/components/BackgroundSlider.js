@@ -4,8 +4,10 @@ import generateStyleSheet from './generateStyleSheet';
 import '../style/default.css';
 
 const BackgroundSlider = (props) => {
-  const { images, duration, transition } = props;
+  const { duration, transition } = props;
+  let { images } = props;
 
+  // 1 image or less: display gradient or default image
   if (images.length <= 1) {
     return (
       <div
@@ -19,8 +21,18 @@ const BackgroundSlider = (props) => {
     );
   }
 
+  // more than 5 images: select 5 random images from the array
+  if (images.length > 5) {
+    const n = 5;
+    images = images
+      .map(x => ({ x, r: Math.random() }))
+      .sort((a, b) => a.r - b.r)
+      .map(a => a.x)
+      .slice(0, n);
+  }
+
   return (
-    <div id="background-slider">
+    <div id="background-slider" className="default-background">
       {images.map((img, key) => (
         <figure
           key={img}
