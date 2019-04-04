@@ -26,7 +26,7 @@ func CreatePutObjectPreSignedUrl(configuration config.AwsConfiguration, uploadId
 	svc := s3.New(sess)
 	req, _ := svc.PutObjectRequest(&s3.PutObjectInput{
 		Bucket: aws.String(configuration.Bucket),
-		Key:    aws.String(uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
+		Key:    aws.String("uploads/" + uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
 	})
 	str, err := req.Presign(time.Hour)
 	if err != nil {
@@ -84,7 +84,7 @@ func RemoveUpload(configuration config.AwsConfiguration, upload *models.Upload) 
 		return fmt.Errorf("the upload does not exist")
 	}
 
-	err := RemoveDirectory(configuration, fmt.Sprintf("%s/", upload.Id))
+	err := RemoveDirectory(configuration, fmt.Sprintf("uploads/%s/", upload.Id))
 	if err != nil {
 		return err
 	}
