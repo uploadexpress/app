@@ -10,6 +10,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.2.1",
     "bson-objectid": "^1.2.4",
+    "css-vendor": "^2.0.1",
     "i": "^0.3.6",
     "i18next": "^15.0.4",
     "i18next-browser-languagedetector": "^3.0.1",

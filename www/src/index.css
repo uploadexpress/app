@@ -11,13 +11,9 @@ code {
     monospace;
 }
 
-.background{
-  background-color: black;
+.background-container{
   min-height: 626px;
-  
   padding:26px 32px 16px 32px;
-  
-  
 }
 
 .logo img {
@@ -50,8 +46,6 @@ code {
 .spinner {
   height:100vh;
 }
-
-
 
 .social-account{
   margin-top: 3px;
