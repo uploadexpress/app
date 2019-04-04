@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ImgStatusYes from '../../../img/img-status-yes.svg';
 import ImgCancel from '../../../img/img-cancel.svg';
+import FileBackground from '../../../img/file-background.svg';
 import { FileStatus } from '../constants';
 import { deleteFile } from '../actions';
 import buttonize from '../../../helpers/buttonize';
@@ -10,7 +11,9 @@ import stringTruncate from '../../../helpers/stringTruncate';
 import extensionToImageIcon from '../../../helpers/extensionToImageIcon';
 
 const File = (props) => {
-  const { progress, status, name } = props;
+  const {
+    progress, status, name, id,
+  } = props;
 
   let statusString = '';
   switch (status) {
@@ -34,7 +37,8 @@ const File = (props) => {
 
   return (
     <div className="list-body d-flex flex-row">
-      <img src={extensionToImageIcon(name)} alt="" />
+      {id === 'backgrounds' ? (<img src={FileBackground} alt="" />)
+        : (<img src={extensionToImageIcon(name)} alt="" />)}
       <div className="list-info d-flex flex-column justify-content-center">
         <div className=" d-flex flex-row justify-content-between ">
           <div className="flex-column">
@@ -53,7 +57,7 @@ const File = (props) => {
             )
           }
 
-          {status === FileStatus.EMPTY
+          {(id !== 'backgrounds' && status === FileStatus.EMPTY)
             && (
               <div className="list-img-status list-img-cancel">
                 {/* eslint-disable */}

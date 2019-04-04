@@ -10,7 +10,7 @@ import uploadFile from '../../../services/FileUploader';
 import promiseSerial from '../../../helpers/promiseSerial';
 import { updateProgress, startUploading, endUploading } from '../actions';
 import buttonize from '../../../helpers/buttonize';
-import { UploaderStatus } from '../constants';
+import { UploaderStatus, FileStatus } from '../constants';
 
 class Listfiles extends Component {
   state = {
@@ -19,6 +19,8 @@ class Listfiles extends Component {
     options: false,
     images: [],
     galleryOnly: false,
+    backgroundUploaded: 0,
+    backgroundStatus: FileStatus.EMPTY,
   }
 
   constructor() {
@@ -44,7 +46,16 @@ class Listfiles extends Component {
     // Returns the ID to the main component
     onUploadCreated(data.id);
 
-    const prom = images.map(image => () => this.uploadService.uploadBackground(data.id, image));
+    const prom = images
+      .map(image => () => this.uploadService.uploadBackground(data.id, image).then(() => {
+        let { backgroundUploaded } = this.state;
+        backgroundUploaded += 1;
+        this.setState({
+          backgroundUploaded,
+          backgroundStatus: images.length === backgroundUploaded
+            ? FileStatus.DONE : FileStatus.UPLOADING,
+        });
+      }));
     const uploadPromises = files.map(file => () => uploadFile(data.id, file, (event) => {
       this.onUploadProgress(file.id, event);
     }));
@@ -115,7 +126,13 @@ class Listfiles extends Component {
       t, publicUpload, status, shouldDisplayOptions,
     } = this.props;
     const {
-      isButtonDisabled, options, images, uploadName, galleryOnly,
+      isButtonDisabled,
+      options,
+      images,
+      uploadName,
+      galleryOnly,
+      backgroundUploaded,
+      backgroundStatus,
     } = this.state;
     return (
       <div className="listfiles">
@@ -132,43 +149,45 @@ class Listfiles extends Component {
         </div>
         <hr />
         {options ? (
-          <div className="options-container">
-            <div className="mt-3">
-              <div className="list-file-name">{t('upload.listFile.uploadName')}</div>
-              <div className="input-group input-group-sm">
-                <input value={uploadName} type="text" className="form-control mt-1" placeholder="Upload name" onChange={this.changeUploadName} />
+          <div className="overflow-auto mb-2">
+            <div className="options-container">
+              <div className="mt-3">
+                <div className="list-file-name">{t('upload.listFile.uploadName')}</div>
+                <div className="input-group input-group-sm">
+                  <input value={uploadName} type="text" className="form-control mt-1" placeholder="Upload name" onChange={this.changeUploadName} />
+                </div>
               </div>
-            </div>
-            <div className="form-check mt-3">
-              <label className="form-check-label list-file-name mt-0" htmlFor="gallery_only">
-                <input type="checkbox" checked={galleryOnly} className="form-check-input" id="gallery_only" onChange={(e) => { this.setState({ galleryOnly: e.target.checked }); }} />
-                {t('upload.listFile.onlyGallery')}
-              </label>
-            </div>
-            <div className="mt-4 d-flex">
-              <div className="list-file-name mr-2">{t('upload.listFile.uploadBackground')}</div>
-              <button
-                type="button"
-                className="btn blue-btn option-upload-btn"
-                onClick={() => { this.selectBackgroundRef.current.click(); }}
-              >
-                {t('upload.listFile.uploadImage')}
-              </button>
-              <input
-                ref={this.selectBackgroundRef}
-                type="file"
-                id="background"
-                accept="image/x-png,image/jpeg"
-                multiple="multiple"
-                className="input-logo"
-                onChange={this.onPreview}
-              />
-            </div>
-            <div className="option-preview-container mt-3">
-              {images.map(image => (
-                <img width={82} height={50} src={URL.createObjectURL(image)} className="option-preview-img" alt="" />
-              ))
-              }
+              <div className="form-check mt-3">
+                <label className="form-check-label list-file-name mt-0" htmlFor="gallery_only">
+                  <input type="checkbox" checked={galleryOnly} className="form-check-input" id="gallery_only" onChange={(e) => { this.setState({ galleryOnly: e.target.checked }); }} />
+                  Show only gallery
+                </label>
+              </div>
+              <div className="mt-4 d-flex">
+                <div className="list-file-name mr-2">{t('upload.listFile.uploadBackground')}</div>
+                <button
+                  type="button"
+                  className="btn blue-btn option-upload-btn"
+                  onClick={() => { this.selectBackgroundRef.current.click(); }}
+                >
+                  {t('upload.listFile.uploadImage')}
+                </button>
+                <input
+                  ref={this.selectBackgroundRef}
+                  type="file"
+                  id="background"
+                  accept="image/x-png,image/jpeg"
+                  multiple="multiple"
+                  className="input-logo"
+                  onChange={this.onPreview}
+                />
+              </div>
+              <div className="mt-3">
+                {images.map(image => (
+                  <img width={82} height={50} src={URL.createObjectURL(image)} className="option-preview-img" alt="" />
+                ))
+                }
+              </div>
             </div>
           </div>
         ) : (
@@ -182,6 +201,18 @@ class Listfiles extends Component {
                 {({ getRootProps, getInputProps, open }) => (
                   <div style={{ outline: 'none', minHeight: '100%' }} {...getRootProps()}>
                     <input {...getInputProps()} />
+
+                    {images.length !== 0
+                      && (
+                        <File
+                          key="backgrounds"
+                          id="backgrounds"
+                          name="Backgrounds"
+                          progress={(backgroundUploaded / images.length) * 100}
+                          status={backgroundStatus}
+                        />
+                      )
+                      }
 
                     {this.renderFiles()}
 
