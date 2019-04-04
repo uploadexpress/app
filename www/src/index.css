@@ -12,7 +12,8 @@ code {
 }
 
 .background-container{
-  min-height: 626px;
+  position: relative;
+  min-height: 100vh;
   padding:26px 32px 16px 32px;
 }
 
