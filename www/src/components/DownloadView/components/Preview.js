@@ -73,71 +73,86 @@ class Preview extends Component {
   }
 
   render() {
-    const { files, onFileDownload } = this.props;
+    const {
+      files, onFileDownload, galleryOnly, onZipDownload,
+    } = this.props;
     const { currentImage, lightboxIsOpen, slideshow } = this.state;
     const images = files.filter(file => file.preview_url);
+    const modalWidth = galleryOnly ? 900 : 700;
+    const modalHeight = galleryOnly ? 500 : 370;
 
     return (
-      <div className="ml-3 mr-3">
-        <Modal width={700} height={370}>
-          <div className="listfiles">
-            <div className="list-container-gallery m-2">
-              <Gallery
-                columns={3}
-                ImageComponent={ImagePreview}
-                direction="column"
-                onClick={this.openLightbox}
-                photos={images.map(file => ({
-                  id: file.id,
-                  onFileDownload: () => { onFileDownload(file.id); },
-                  name: file.name,
-                  src: file.thumbnail_url,
-                  width: file.thumbnail_width,
-                  height: file.thumbnail_height,
-                  selected: file.selected,
-                }))}
-              />
+      <Modal width={modalWidth} height={modalHeight}>
+        <div className="listfiles">
+          <div className="list-container-gallery m-2">
+            {galleryOnly
+              && (
+                <div className="text-right">
+                  <button type="button" onClick={onZipDownload} className="btn btn-sm blue-btn-sm m-2"> Download all</button>
+                </div>
+              )
+            }
+            <Gallery
+              columns={3}
+              ImageComponent={ImagePreview}
+              direction="column"
+              onClick={this.openLightbox}
+              photos={images.map(file => ({
+                id: file.id,
+                onFileDownload: () => { onFileDownload(file.id); },
+                name: file.name,
+                src: file.thumbnail_url,
+                width: file.thumbnail_width,
+                height: file.thumbnail_height,
+                selected: file.selected,
+              }))}
+            />
 
-              <Lightbox
-                currentImage={currentImage}
-                images={images.map(file => ({ src: file.preview_url }))}
-                backdropClosesModal
-                customControls={[
-                  <button type="button" onClick={() => { onFileDownload(images[currentImage].id); }} className="btn preview-download-btn btn-sm">Download</button>,
-                  (slideshow) ? (
-                    <button type="button" className="btn-slideshow" onClick={this.stopSlideshow}>
-                      <FontAwesomeIcon icon="pause" />
-                    </button>
-                  ) : (
-                    <button type="button" className="btn-slideshow" onClick={() => { this.onSlideshow(images.length); }}>
-                      <FontAwesomeIcon icon="play" />
-                    </button>
-                  ),
-                ]}
-                isOpen={lightboxIsOpen}
-                onClickPrev={this.gotoPrevious}
-                onClickNext={() => { this.gotoNext(images.length); }}
-                onClose={this.closeLightbox}
-              />
-            </div>
+            <Lightbox
+              currentImage={currentImage}
+              images={images.map(file => ({ src: file.preview_url }))}
+              customControls={[
+                <button type="button" onClick={() => { onFileDownload(images[currentImage].id); }} className="btn preview-download-btn btn-sm">Download</button>,
+                (slideshow) ? (
+                  <button type="button" className="btn-slideshow" onClick={this.stopSlideshow}>
+                    <FontAwesomeIcon icon="pause" />
+                  </button>
+                ) : (
+                  <button type="button" className="btn-slideshow" onClick={() => { this.onSlideshow(images.length); }}>
+                    <FontAwesomeIcon icon="play" />
+                  </button>
+                ),
+              ]}
+              isOpen={lightboxIsOpen}
+              onClickPrev={this.gotoPrevious}
+              onClickNext={() => { this.gotoNext(images.length); }}
+              onClose={this.closeLightbox}
+            />
           </div>
-        </Modal>
-      </div>
+        </div>
+      </Modal>
     );
   }
 }
 
 const mapStateToProps = state => ({
   files: state.downloader.files,
+  galleryOnly: state.downloader.galleryOnly,
 });
 
 const mapDispatchToProps = dispatch => ({
   selectFile: (id, selected) => dispatch(selectFile(id, selected)),
 });
 
+Preview.defaultProps = {
+  onZipDownload: () => { },
+};
+
 Preview.propTypes = {
   files: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onFileDownload: PropTypes.func.isRequired,
+  galleryOnly: PropTypes.bool.isRequired,
+  onZipDownload: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Preview);

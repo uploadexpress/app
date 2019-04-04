@@ -6,56 +6,9 @@ import { connect } from 'react-redux';
 import ReactFlagsSelect from '../FlagsSelect';
 import socialNetworks from '../../helpers/socialNetworks';
 import './style/index.css';
-
-const backgroundStyle = (image) => {
-  const backgroundImage = image === null ? 'linear-gradient(#2193b0, #6dd5ed)' : `url(${image})`;
-  return {
-    backgroundImage,
-    minHeight: '100vh',
-    width: '100%',
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundColor: 'black',
-    position: 'relative',
-    transition: '2s',
-  };
-};
+import BackgroundSlider from '../Slideshow/components';
 
 class Background extends React.Component {
-  state = {
-    backgroundUrl: null,
-    currentIndex: 0,
-  }
-
-  componentDidMount = () => {
-    const { settings, downloadBackgrounds } = this.props;
-    const backgrounds = downloadBackgrounds.length > 0 ? downloadBackgrounds : settings.backgrounds;
-    if (backgrounds.length > 0) {
-      const backgroundUrls = backgrounds.map(background => (background.url));
-      this.setState({
-        backgrounds: backgroundUrls,
-        backgroundUrl: backgroundUrls[0],
-        currentIndex: 0,
-      });
-    }
-    setInterval(this.changeBackgroundImage, 5000);
-  }
-
-  componentWillUnmount = () => {
-    clearInterval(this.changeBackgroundImage);
-  }
-
-  changeBackgroundImage = () => {
-    const { currentIndex, backgrounds } = this.state;
-    if (backgrounds.length > 0) {
-      const index = currentIndex >= backgrounds.length - 1 ? 0 : currentIndex + 1;
-      this.setState({
-        backgroundUrl: backgrounds[index],
-        currentIndex: index,
-      });
-    }
-  }
-
   withHttp = (url) => {
     if (!/^https?:\/\//i.test(url)) {
       return `http://${url}`;
@@ -95,16 +48,25 @@ class Background extends React.Component {
       i18n,
       settings,
       children,
+      downloadBackgrounds,
     } = this.props;
 
-    const { backgroundUrl } = this.state;
+    const backgrounds = downloadBackgrounds.length > 0 ? downloadBackgrounds : settings.backgrounds;
+    const backgroundsUrls = backgrounds.map(background => (background.url));
+
     const onSelectFlag = (countryCode) => {
       i18n.changeLanguage(countryCode);
     };
-    const currLang = i18n.language.split('-')[0].toUpperCase();
-    return (
-      <div style={backgroundStyle(backgroundUrl)} className="background">
 
+    const currLang = i18n.language.split('-')[0].toUpperCase();
+
+    return (
+      <div className="background-container">
+        <BackgroundSlider
+          images={backgroundsUrls}
+          duration={5}
+          transition={1}
+        />
         <div className="menu" style={{ color: settings.color, justifyContent: settings.menu_position }}>
           {this.renderLinks()}
           {this.renderSocials()}
@@ -126,9 +88,7 @@ class Background extends React.Component {
               </div>
             )
           }
-
           {children}
-
         </div>
       </div>
     );

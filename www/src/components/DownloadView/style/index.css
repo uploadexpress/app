@@ -121,9 +121,31 @@
   border: none;
 }
 
+.btn-slideshow:active {
+  outline: none;
+  border: none;
+}
+  
+.btn-slideshow:focus {
+  outline:0;
+}
+
 @media (max-width: 1046px) {
   .gallery{
     flex-direction: column-reverse;
     align-items: center;
   }
+}
+
+.blue-btn-sm{
+  color: #6288A9;
+  border: 1px solid #6288A9;
+  background-color: white;
+  border-radius: 6px;
+}
+
+.blue-btn-sm:hover{
+  background-color: #6288A9;
+  color: white;
+  outline: none;
 }

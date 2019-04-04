@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="24px" viewBox="0 0 32 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>img-background</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-501.000000, -404.000000)">
+            <g id="img-background" transform="translate(500.000000, 404.000000)">
+                <path d="M3,-1.0658141e-14 L30.3076923,-1.0658141e-14 C31.4122618,-1.08610472e-14 32.3076923,0.8954305 32.3076923,2 L32.3076923,22 C32.3076923,23.1045695 31.4122618,24 30.3076923,24 L3,24 C1.8954305,24 1,23.1045695 1,22 L1,2 C1,0.8954305 1.8954305,-1.04552349e-14 3,-1.0658141e-14 Z" id="Rectangle" fill="#BCEAFF"></path>
+                <circle id="Oval" fill="#FCFFD8" fill-rule="nonzero" cx="14" cy="11" r="7"></circle>
+                <path d="M23.5683169,7.03779953 L32.2912882,18.4369323 L32.2912882,22 C32.2912882,23.1045695 31.3958577,24 30.2912882,24 L9,24 L21.9800039,7.03779953 C22.3156347,6.599199 22.9432732,6.51572553 23.3818737,6.85135631 C23.4519782,6.90500246 23.5146708,6.96769502 23.5683169,7.03779953 Z" id="Triangle" fill="#A3D868" fill-rule="nonzero"></path>
+                <path d="M11.2219882,12.753379 L22,24 L2.97320827,24 C1.86863877,24 0.973208273,23.1045695 0.973208273,22 L0.973208273,21.9410001 L9.77801179,12.753379 C10.1601406,12.3546359 10.7931623,12.3411674 11.1919054,12.7232962 C11.2021452,12.7331093 11.2121751,12.7431392 11.2219882,12.753379 Z" id="Triangle" fill="#B7EBB9" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -127,7 +127,19 @@ class UploadList extends Component {
                       <td className="table-body-title">{row.files.length}</td>
                       <td className="table-body-title">{row.download_count}</td>
                       <td className="table-body-title">
-                        <button type="button" style={{ color: '#cc0000', fontSize: '14px' }} className="btn p-0" onClick={() => { this.deleteUpload(row.id); }}>{t('panel.settings.delete')}</button>
+                        <button
+                          type="button"
+                          style={{ color: '#cc0000', fontSize: '14px' }}
+                          className="btn p-0"
+                          onClick={() => {
+                            /* eslint-disable-next-line no-alert */
+                            if (window.confirm('Are you sure you wish to delete this upload?')) {
+                              this.deleteUpload(row.id);
+                            }
+                          }}
+                        >
+                          {t('panel.settings.delete')}
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -157,7 +169,7 @@ class UploadList extends Component {
             <div>
               <div className="portal-upload-background" role="presentation" onKeyDown={this.handleClick} onClick={this.handleClick} />
               <div className="portal-upload">
-                <UploadModal publicUpload={false} shouldDisplayName />
+                <UploadModal publicUpload={false} shouldDisplayOptions />
               </div>
             </div>
           )
