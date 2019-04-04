@@ -254,7 +254,7 @@ const mapStateToProps = state => ({
 });
 
 Listfiles.defaultProps = {
-  publicUpload: false,
+  publicUpload: true,
 };
 
 Listfiles.propTypes = {

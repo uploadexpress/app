@@ -77,7 +77,7 @@ func (downloaderController DownloaderController) DownloadZip(c *gin.Context) {
 	}
 
 	fileName := "download.zip"
-	if !upload.Public {
+	if !upload.Public && upload.Name != "" {
 		fileName = upload.Name + ".zip"
 	}
 
@@ -111,7 +111,7 @@ func (downloaderController DownloaderController) CreateZipWithSelection(c *gin.C
 
 	// Set file name
 	fileName := "download.zip"
-	if !upload.Public {
+	if !upload.Public && upload.Name != "" {
 		fileName = upload.Name + ".zip"
 	}
 

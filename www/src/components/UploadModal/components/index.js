@@ -78,7 +78,7 @@ function mapStateToProps(state) {
 
 Upload.defaultProps = {
   shouldDisplayOptions: false,
-  publicUpload: false,
+  publicUpload: true,
 };
 
 Upload.propTypes = {
