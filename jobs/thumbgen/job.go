@@ -73,12 +73,12 @@ func (tg ThumbnailGenerator) Execute(store store.Store, configuration *viper.Vip
 			return
 		}
 
-		var dstImage256 *image.NRGBA
+		var dstImage384 *image.NRGBA
 		var dstImage1024 *image.NRGBA
-		dstImage256 = resizeImage(img, 256)
+		dstImage384 = resizeImage(img, 384)
 		dstImage1024 = resizeImage(img, 1024)
 
-		url256, err := encodeImage(awsConfig, uploadId, file, dstImage256, 100)
+		url256, err := encodeImage(awsConfig, uploadId, file, dstImage384, 100)
 		if err != nil {
 			fmt.Println("failed to upload buffer", err)
 			return
@@ -90,7 +90,7 @@ func (tg ThumbnailGenerator) Execute(store store.Store, configuration *viper.Vip
 			return
 		}
 
-		err = store.AttachPreview(uploadId, file.Id, url1024, url256, dstImage256.Rect.Max.X, dstImage256.Rect.Max.Y)
+		err = store.AttachPreview(uploadId, file.Id, url1024, url256, dstImage384.Rect.Max.X, dstImage384.Rect.Max.Y)
 		if err != nil {
 			logrus.Error(err.Error())
 			return
