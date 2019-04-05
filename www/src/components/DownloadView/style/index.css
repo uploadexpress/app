@@ -149,3 +149,10 @@
   color: white;
   outline: none;
 }
+
+.preview-upload-name{
+  color: #4A4A4A;
+  font-size: 16px;
+  margin-left: 6px;
+  font-weight: bold;
+}

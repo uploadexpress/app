@@ -160,7 +160,7 @@ class Listfiles extends Component {
               <div className="form-check mt-3">
                 <label className="form-check-label list-file-name mt-0" htmlFor="gallery_only">
                   <input type="checkbox" checked={galleryOnly} className="form-check-input" id="gallery_only" onChange={(e) => { this.setState({ galleryOnly: e.target.checked }); }} />
-                  Show only gallery
+                  {t('upload.listFile.onlyGallery')}
                 </label>
               </div>
               <div className="mt-4 d-flex">
