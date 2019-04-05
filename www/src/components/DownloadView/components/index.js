@@ -47,9 +47,10 @@ class DownloadView extends Component {
 
   render() {
     const {
-      t, error, onZipDownload, settings, preview, onFileDownload, galleryOnly,
+      t, error, onZipDownload, settings, preview, onFileDownload, galleryOnly, uploadName,
     } = this.props;
     const { showPreview } = this.state;
+    console.log(uploadName)
 
     return (
       <Background>
@@ -104,7 +105,7 @@ class DownloadView extends Component {
             )}
 
           {(showPreview || galleryOnly)
-            && <Preview onZipDownload={onZipDownload} onFileDownload={onFileDownload} />
+            && <Preview onZipDownload={onZipDownload} uploadName={uploadName} onFileDownload={onFileDownload} />
           }
         </div>
       </Background>
@@ -120,6 +121,7 @@ DownloadView.defaultProps = {
   galleryOnly: false,
   onZipDownload: () => {},
   error: false,
+  uploadName: '',
 };
 
 DownloadView.propTypes = {
@@ -131,6 +133,7 @@ DownloadView.propTypes = {
   onFileDownload: PropTypes.func.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   galleryOnly: PropTypes.bool,
+  uploadName: PropTypes.string,
 };
 
 export default connect(mapStateToProps)(withTranslation()(DownloadView));

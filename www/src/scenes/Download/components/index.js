@@ -26,6 +26,7 @@ class Download extends Component {
         result.data.id,
         result.data.backgrounds,
         result.data.gallery_only,
+        result.data.name,
       );
       this.setState({
         loading: false,
@@ -53,7 +54,7 @@ class Download extends Component {
   render() {
     const { error, loading } = this.state;
     const {
-      files, history, downloadId, galleryOnly,
+      files, history, downloadId, galleryOnly, uploadName,
     } = this.props;
     return loading
       ? (<div className=" spinner d-flex justify-content-center align-items-center"><Spinner /></div>)
@@ -67,6 +68,7 @@ class Download extends Component {
           onFileDownload={this.onFileDownload}
           preview
           galleryOnly={galleryOnly}
+          uploadName={uploadName}
         />
       );
   }
@@ -76,17 +78,19 @@ const mapStateToProps = state => ({
   files: state.downloader.files,
   downloadId: state.downloader.downloadId,
   galleryOnly: state.downloader.galleryOnly,
+  uploadName: state.downloader.uploadName,
 });
 
 const mapDispatchToProps = dispatch => ({
   setFiles: (
-    files, downloadId, backgrounds, galleryOnly,
-  ) => dispatch(setFiles(files, downloadId, backgrounds, galleryOnly)),
+    files, downloadId, backgrounds, uploadName, galleryOnly,
+  ) => dispatch(setFiles(files, downloadId, backgrounds, uploadName, galleryOnly)),
 });
 
 Download.defaultProps = {
   galleryOnly: false,
   downloadId: '',
+  uploadName: '',
 };
 
 Download.propTypes = {
@@ -100,6 +104,7 @@ Download.propTypes = {
   downloadId: PropTypes.string,
   setFiles: PropTypes.func.isRequired,
   galleryOnly: PropTypes.bool,
+  uploadName: PropTypes.string,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Download);
