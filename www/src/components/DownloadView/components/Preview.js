@@ -74,8 +74,10 @@ class Preview extends Component {
 
   render() {
     const {
-      files, onFileDownload, galleryOnly, onZipDownload,
+      files, onFileDownload, galleryOnly, onZipDownload, uploadName,
     } = this.props;
+
+
     const { currentImage, lightboxIsOpen, slideshow } = this.state;
     const images = files.filter(file => file.preview_url);
     const modalWidth = galleryOnly ? 900 : 700;
@@ -87,7 +89,8 @@ class Preview extends Component {
           <div className="list-container-gallery m-2">
             {galleryOnly
               && (
-                <div className="text-right">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="preview-upload-name">{uploadName}</div>
                   <button type="button" onClick={onZipDownload} className="btn btn-sm blue-btn-sm m-2"> Download all</button>
                 </div>
               )
@@ -138,6 +141,7 @@ class Preview extends Component {
 const mapStateToProps = state => ({
   files: state.downloader.files,
   galleryOnly: state.downloader.galleryOnly,
+  uploadName: state.downloader.uploadName,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -153,6 +157,7 @@ Preview.propTypes = {
   onFileDownload: PropTypes.func.isRequired,
   galleryOnly: PropTypes.bool.isRequired,
   onZipDownload: PropTypes.func,
+  uploadName: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Preview);
