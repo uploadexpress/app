@@ -50,7 +50,6 @@ class DownloadView extends Component {
       t, error, onZipDownload, settings, preview, onFileDownload, galleryOnly, uploadName,
     } = this.props;
     const { showPreview } = this.state;
-    console.log(uploadName)
 
     return (
       <Background>
@@ -105,7 +104,13 @@ class DownloadView extends Component {
             )}
 
           {(showPreview || galleryOnly)
-            && <Preview onZipDownload={onZipDownload} uploadName={uploadName} onFileDownload={onFileDownload} />
+            && (
+            <Preview
+              onZipDownload={onZipDownload}
+              uploadName={uploadName}
+              onFileDownload={onFileDownload}
+            />
+            )
           }
         </div>
       </Background>
