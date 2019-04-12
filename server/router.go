@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-contrib/gzip"
+
 	"github.com/gin-gonic/gin"
 	"github.com/uploadexpress/app/controllers"
 	"github.com/uploadexpress/app/middlewares"
@@ -16,6 +18,7 @@ func Index(c *gin.Context) {
 func (a *API) SetupRouter() {
 	router := a.Router
 
+	router.Use(gzip.Gzip(gzip.DefaultCompression))
 	router.Use(middlewares.ErrorMiddleware())
 	router.Use(middlewares.ConfigMiddleware(a.Config))
 	router.Use(middlewares.StoreMiddleware(a.Database))

@@ -33,6 +33,11 @@
         }
     },
 
+    "preview": {
+        "download": "Download",
+        "download_all": "Download all"
+    },
+
     "panel":{
         "uploadList":{
             "title": "Your uploads",

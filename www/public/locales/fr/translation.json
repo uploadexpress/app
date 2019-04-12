@@ -33,6 +33,11 @@
         }
     },
 
+    "preview": {
+        "download": "Télécharger",
+        "download_all": "Télécharger tout"
+    },
+
     "panel":{
         "uploadList":{
             "title" : "Vos envois",
