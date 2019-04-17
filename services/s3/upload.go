@@ -1,12 +1,12 @@
 package s3
 
 import (
-	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/url"
 	"time"
+
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 
 	"github.com/sirupsen/logrus"
 
@@ -36,22 +36,18 @@ func CreatePutObjectPreSignedUrl(configuration config.AwsConfiguration, uploadId
 	return str, nil
 }
 
-func PutPublicObject(configuration config.AwsConfiguration, key string, reader io.ReadCloser) (string, error) {
+func PutPublicObject(configuration config.AwsConfiguration, key string, reader io.Reader) (string, error) {
 	sess, err := CreateAwsSession(configuration)
 	if err != nil {
 		return "", err
 	}
 
-	data, err := ioutil.ReadAll(reader)
-	if err != nil {
-		return "", err
-	}
-
 	svc := s3.New(sess)
-	_, err = svc.PutObject(&s3.PutObjectInput{
+	uploader := s3manager.NewUploaderWithClient(svc)
+	_, err = uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(configuration.Bucket),
 		Key:    aws.String(key),
-		Body:   bytes.NewReader(data),
+		Body:   reader,
 		ACL:    aws.String("public-read"),
 	})
 	if err != nil {

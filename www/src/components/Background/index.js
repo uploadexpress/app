@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
+import { availableLanguages } from '../../i18n';
 import ReactFlagsSelect from '../FlagsSelect';
 import socialNetworks from '../../helpers/socialNetworks';
 import './style/index.css';
@@ -72,7 +73,7 @@ class Background extends React.Component {
           {this.renderSocials()}
 
           <ReactFlagsSelect
-            countries={i18n.languages}
+            countries={availableLanguages}
             selectedSize={14}
             optionsSize={12}
             defaultCountry={currLang.toLowerCase()}

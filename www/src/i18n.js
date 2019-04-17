@@ -3,7 +3,8 @@ import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-const availableLanguages = ['en', 'ru', 'fr'];
+const fallbackLng = ['en'];
+export const availableLanguages = ['en', 'ru', 'fr'];
 
 i18n
   // load translation using xhr -> see /public/locales
@@ -17,7 +18,7 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
-    fallbackLng: availableLanguages,
+    fallbackLng,
     debug: true,
     whitelist: availableLanguages,
 
