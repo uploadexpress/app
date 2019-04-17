@@ -108,7 +108,7 @@ func encodeImage(awsConfig config.AwsConfiguration, uploadId string, file models
 	}
 	reader := bytes.NewReader(buff.Bytes())
 
-	url, err := s3.PutPublicObject(awsConfig, fmt.Sprintf("previews/%s/%s_%d.png", uploadId, file.Id, nrgba.Rect.Max.X), ioutil.NopCloser(reader))
+	url, err := s3.PutObject(awsConfig, fmt.Sprintf("previews/%s/%s_%d.png", uploadId, file.Id, nrgba.Rect.Max.X), ioutil.NopCloser(reader), true)
 	if err != nil {
 		logrus.Error(err.Error())
 	}

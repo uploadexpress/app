@@ -35,6 +35,7 @@ func (a *API) SetupRouter() {
 	router.Use(middlewares.WorkerMiddleware(a.Worker))
 
 	authMiddleware := middlewares.AuthMiddleware()
+	uploaderController := controllers.NewUploadController()
 
 	v1 := router.Group("/v1")
 	{
@@ -55,7 +56,6 @@ func (a *API) SetupRouter() {
 
 		uploader := v1.Group("/uploader")
 		{
-			uploaderController := controllers.NewUploadController()
 			uploader.POST("/", uploaderController.Create)
 			uploader.PUT("/:upload_id/complete", uploaderController.CompleteUpload)
 			uploader.GET("/:upload_id/file/:file_id/upload_url", uploaderController.CreatePreSignedRequest)
@@ -87,6 +87,8 @@ func (a *API) SetupRouter() {
 
 		}
 	}
+
+	router.PUT("/upload/:upload_name", uploaderController.CreateDirectUpload)
 
 	staticController := controllers.NewStaticController()
 	router.LoadHTMLFiles("front/index.html")

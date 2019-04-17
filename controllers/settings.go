@@ -103,7 +103,7 @@ func (sc SettingsController) CreateLogo(c *gin.Context) {
 	}
 
 	multi := io.MultiReader(ioutil.NopCloser(&buf), tee)
-	url, err := s3.PutPublicObject(config.NewAwsConfigurationFromContext(c), fmt.Sprintf("logo/%s.%s", logoId, imageType.Extension), multi)
+	url, err := s3.PutObject(config.NewAwsConfigurationFromContext(c), fmt.Sprintf("logo/%s.%s", logoId, imageType.Extension), multi, true)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("aws_upload_error", err.Error(), err))
 		return
@@ -181,7 +181,7 @@ func (sc SettingsController) CreateBackground(c *gin.Context) {
 	}
 
 	multi := io.MultiReader(ioutil.NopCloser(&buf), tee)
-	url, err := s3.PutPublicObject(config.NewAwsConfigurationFromContext(c), fmt.Sprintf("backgrounds/%s.%s", backgroundId, imageType.Extension), multi)
+	url, err := s3.PutObject(config.NewAwsConfigurationFromContext(c), fmt.Sprintf("backgrounds/%s.%s", backgroundId, imageType.Extension), multi, true)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("aws_upload_error", err.Error(), err))
 		return

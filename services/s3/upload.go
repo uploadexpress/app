@@ -36,10 +36,15 @@ func CreatePutObjectPreSignedUrl(configuration config.AwsConfiguration, uploadId
 	return str, nil
 }
 
-func PutPublicObject(configuration config.AwsConfiguration, key string, reader io.Reader) (string, error) {
+func PutObject(configuration config.AwsConfiguration, key string, reader io.Reader, public bool) (string, error) {
 	sess, err := CreateAwsSession(configuration)
 	if err != nil {
 		return "", err
+	}
+
+	var ACL *string
+	if public {
+		ACL = aws.String("public-read")
 	}
 
 	svc := s3.New(sess)
@@ -48,7 +53,7 @@ func PutPublicObject(configuration config.AwsConfiguration, key string, reader i
 		Bucket: aws.String(configuration.Bucket),
 		Key:    aws.String(key),
 		Body:   reader,
-		ACL:    aws.String("public-read"),
+		ACL:    ACL,
 	})
 	if err != nil {
 		return "", err

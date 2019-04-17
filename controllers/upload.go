@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 
 	"github.com/h2non/filetype"
 
@@ -47,6 +48,44 @@ func (uploadController *UploadController) Create(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, upload)
+}
+
+func (uploadController *UploadController) CreateDirectUpload(c *gin.Context) {
+	uploadName := c.Param("upload_name")
+
+	file := &models.File{
+		Name: uploadName,
+		Size: 0,
+	}
+
+	upload := &models.Upload{
+		Files: []*models.File{
+			file,
+		},
+	}
+
+	if err := store.CreateUpload(c, upload); err != nil {
+		_ = c.Error(err)
+		c.Abort()
+		return
+	}
+
+	readerCounter := helpers.NewReaderCounter(c.Request.Body)
+	_, err := s3.PutObject(config.NewAwsConfigurationFromContext(c), "uploads/"+upload.Id+"/"+file.Id+"/"+url.PathEscape(file.Name), readerCounter, false)
+	if err != nil {
+		_ = c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("upload_failed", "could not upload the file", err))
+		return
+	}
+
+	// update size uploaded
+	upload.Files[0].Size = int64(readerCounter.Count())
+	if err := store.EditUpload(c, upload.Id, params.M{"files": upload.Files, "ready": true}); err != nil {
+		_ = c.Error(err)
+		c.Abort()
+		return
+	}
+
+	c.String(http.StatusOK, "%s/download/%s", config.FromContext(c).Get("site_url"), upload.Id)
 }
 
 func (uploadController *UploadController) CompleteUpload(c *gin.Context) {
@@ -161,7 +200,7 @@ func (uploadController *UploadController) AttachBackground(c *gin.Context) {
 	}
 
 	multi := io.MultiReader(ioutil.NopCloser(&buf), body)
-	url, err := s3.PutPublicObject(config.NewAwsConfigurationFromContext(c), fmt.Sprintf("backgrounds/%s/%s.%s", upload.Id, backgroundId, imageType.Extension), multi)
+	url, err := s3.PutObject(config.NewAwsConfigurationFromContext(c), fmt.Sprintf("backgrounds/%s/%s.%s", upload.Id, backgroundId, imageType.Extension), multi, true)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("aws_upload_error", err.Error(), err))
 		return
