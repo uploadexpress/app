@@ -77,8 +77,10 @@ func (uploadController *UploadController) CreateDirectUpload(c *gin.Context) {
 		return
 	}
 
+	worker.TryEnqueue(c, thumbgen.NewThumbnailGenerator(params.M{"uploadId": upload.Id, "file": *file}))
+
 	// update size uploaded
-	upload.Files[0].Size = int64(readerCounter.Count())
+	file.Size = int64(readerCounter.Count())
 	if err := store.EditUpload(c, upload.Id, params.M{"files": upload.Files, "ready": true}); err != nil {
 		_ = c.Error(err)
 		c.Abort()
