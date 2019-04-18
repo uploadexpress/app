@@ -47,7 +47,13 @@ class Download extends Component {
   }
 
   onZipDownload = () => {
-    const { downloadId } = this.props;
+    const { downloadId, files } = this.props;
+
+    if (files.length === 1) { // special case: only one file, no need to create a zip
+      this.onFileDownload(files[0].id);
+      return;
+    }
+
     window.location = `/v1/downloader/${downloadId}/zip`;
   }
 
