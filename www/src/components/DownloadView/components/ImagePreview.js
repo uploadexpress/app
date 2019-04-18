@@ -52,14 +52,13 @@ class Photo extends Component {
           && (
             <div className="card-body-preview">
               <div className="d-flex justify-content-between m-2">
-                <div className="preview-img-name">
+                <div className="preview-img-name flex-text-truncate">
                   {photo.name}
                 </div>
                 <img width={24} className="preview-download-img" onClick={photo.onFileDownload} onMouseOver={e => e.currentTarget.src = ImgDownloadPreviewHover} onMouseOut={e => e.currentTarget.src = ImgDownloadPreview} src={ImgDownloadPreview} alt="" />
               </div>
             </div>
           )
-
         }
       </div>
     );

@@ -156,3 +156,10 @@
   margin-left: 6px;
   font-weight: bold;
 }
+
+.flex-text-truncate {
+  flex: 1;   
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
