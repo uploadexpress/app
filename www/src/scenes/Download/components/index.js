@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Spinner from 'react-spinkit';
 import DownloadView from '../../../components/DownloadView/components';
 import DownloadService from '../../../services/Api/DownloadService';
-import { setFiles } from '../actions';
+import { setFiles } from '../../../actions/downloader';
 
 class Download extends Component {
   state = {
@@ -25,7 +25,7 @@ class Download extends Component {
         result.data.files,
         result.data.id,
         result.data.backgrounds,
-        result.data.gallery_only,
+        result.data.gallery,
         result.data.name,
       );
       this.setState({
@@ -63,7 +63,7 @@ class Download extends Component {
       files, history, downloadId, galleryOnly, uploadName,
     } = this.props;
     return loading
-      ? (<div className=" spinner d-flex justify-content-center align-items-center"><Spinner /></div>)
+      ? (<div className="spinner d-flex justify-content-center align-items-center"><Spinner /></div>)
       : (
         <DownloadView
           error={error}

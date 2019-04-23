@@ -6,8 +6,9 @@ import { connect } from 'react-redux';
 import { availableLanguages } from '../../i18n';
 import ReactFlagsSelect from '../FlagsSelect';
 import socialNetworks from '../../helpers/socialNetworks';
-import './style/index.css';
 import BackgroundSlider from '../Slideshow/components';
+
+import './index.css';
 
 class Background extends React.Component {
   withHttp = (url) => {
@@ -68,6 +69,7 @@ class Background extends React.Component {
           duration={5}
           transition={1}
         />
+
         <div className="menu" style={{ color: settings.color, justifyContent: settings.menu_position }}>
           {this.renderLinks()}
           {this.renderSocials()}
@@ -81,6 +83,7 @@ class Background extends React.Component {
             onSelect={onSelectFlag}
           />
         </div>
+
         <div className="content-wrapper d-flex flex-column" style={{ alignItems: settings.upload_position }}>
           {settings.logo
             && (

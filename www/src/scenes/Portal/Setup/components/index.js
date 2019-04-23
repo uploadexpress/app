@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Background from '../../../../components/Background/index';
 import Modal from '../../../../components/Modal/index';
 import SetupService from '../../../../services/Api/SetupService';
-import { setSetting } from '../../Settings/actions';
+import { setSetting } from '../../../../actions/settings';
 import '../style/index.css';
 
 class Setup extends Component {

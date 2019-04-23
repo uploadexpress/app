@@ -56,7 +56,7 @@
 }
 
 .settings-container {
-    max-height: 100vh;
+    max-height: calc(100vh - 56px);
     overflow-y: auto;
 }
 
@@ -135,4 +135,9 @@
 .settings-add-link-text {
     font-size:14px;
     font-weight: bold;
+}
+
+.settings-background-max-height {
+    max-height: calc(100vh - 56px);
+    overflow: hidden;
 }

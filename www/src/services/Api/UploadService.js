@@ -6,7 +6,7 @@ class UploadService extends Service {
     return this.http.post(resourceUrl, {
       files,
       name,
-      gallery_only: gallery,
+      gallery,
       public: pub,
     });
   }

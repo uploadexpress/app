@@ -118,6 +118,15 @@
         "uploads": "Your uploads",
         "settings": "Settings",
         "logout": "Logout"
+    },
+
+    "emails": {
+        "newUpload": {
+            "subject": "{{.sender}} sent you {{.count}} files via upload.express",
+            "header": "{{.sender}} sent you some files",
+            "subtitle": "You received {{.count}} files with upload.express.",
+            "downloadButton": "Download Now"
+        }
     }
 
 }

@@ -8,7 +8,7 @@ import File from './File';
 import UploadService from '../../../services/Api/UploadService';
 import uploadFile from '../../../services/FileUploader';
 import promiseSerial from '../../../helpers/promiseSerial';
-import { updateProgress, startUploading, endUploading } from '../actions';
+import { updateProgress, startUploading, endUploading } from '../../../actions/uploader';
 import buttonize from '../../../helpers/buttonize';
 import { UploaderStatus, FileStatus } from '../constants';
 

@@ -111,14 +111,20 @@
             "passwordErr" : "Les mots de passe ne correspondent pas.",
             "setupBtn" : "Installer"
         }
-
-
     },
 
     "navbar":{
         "uploads" : "Vos envois",
         "settings" : "Réglages",
         "logout" : "Déconnexion"
-    }
+    },
 
+    "emails": {
+        "newUpload": {
+            "subject": "{{.sender}} vous a envoyé {{.count}} fichiers via upload.express",
+            "header": "{{.sender}} vous a envoyé des fichiers",
+            "subtitle": "Vous avez reçu {{.count}} fichiers avec upload.express.",
+            "downloadButton": "Télécharger maintenant"
+        }
+    }
 }

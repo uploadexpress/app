@@ -13,7 +13,7 @@ code {
 
 .background-container{
   position: relative;
-  min-height: 100vh;
+  min-height: calc(100vh);
   padding:26px 32px 16px 32px;
 }
 

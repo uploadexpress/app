@@ -6,7 +6,7 @@ import Lightbox from 'react-images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '../../Modal';
 import ImagePreview from './ImagePreview';
-import { selectFile } from '../../../scenes/Download/actions';
+import { selectFile } from '../../../actions/downloader';
 import '../style/index.css';
 
 

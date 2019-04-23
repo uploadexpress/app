@@ -5,7 +5,7 @@ import ObjectID from 'bson-objectid';
 import Modal from '../../Modal/index';
 import Dropfile from './Dropfile';
 import Listfiles from './Listfiles';
-import { addFiles } from '../actions';
+import { addFiles } from '../../../actions/uploader';
 import { FileStatus, UploaderStatus } from '../constants';
 import '../style/index.css';
 import LinkPreview from './LinkPreview';

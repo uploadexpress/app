@@ -4,8 +4,7 @@ import generateStyleSheet from './generateStyleSheet';
 import '../style/default.css';
 
 class BackgroundSlider extends Component {
-  state = {
-  };
+  state = {};
 
   componentWillMount = () => {
     this.updateImages();

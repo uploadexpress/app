@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Upload from './scenes/Upload/components';
 import Download from './scenes/Download/components';
-import Settings from './scenes/Portal/Settings/components/index';
+import Settings from './scenes/Portal/Settings';
 import UploadList from './scenes/Portal/UploadList/components/index';
 import SignIn from './scenes/Portal/SignIn/components/index';
 import Setup from './scenes/Portal/Setup/components/index';
 import SettingsService from './services/Api/SettingsService';
-import { setSettings } from './scenes/Portal/Settings/actions';
+import { setSettings } from './actions/settings';
 import importFontAwesome from './helpers/fontAwesome/importer';
 
 importFontAwesome();

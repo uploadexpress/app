@@ -7,8 +7,8 @@ import Modal from '../../Modal';
 import File from './File';
 import Preview from './Preview';
 import ImgOops from '../../../img/img-oops.svg';
-import '../style/index.css';
 
+import '../style/index.css';
 
 class DownloadView extends Component {
   state = {

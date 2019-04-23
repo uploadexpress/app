@@ -58,7 +58,7 @@ class Photo extends Component {
                 <img width={24} className="preview-download-img" onClick={photo.onFileDownload} onMouseOver={e => e.currentTarget.src = ImgDownloadPreviewHover} onMouseOut={e => e.currentTarget.src = ImgDownloadPreview} src={ImgDownloadPreview} alt="" />
               </div>
             </div>
-          )
+          ) 
         }
       </div>
     );

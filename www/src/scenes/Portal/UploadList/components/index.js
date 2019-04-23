@@ -5,10 +5,10 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import ReactPaginate from 'react-paginate';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Portal from '../../index';
+import Portal from '../../../../components/Portal/index';
 import UploadService from '../../../../services/Api/UploadService';
 import UploadModal from '../../../../components/UploadModal/components';
-import { resetUpload } from '../../../../components/UploadModal/actions';
+import { resetUpload } from '../../../../actions/uploader';
 import '../style/index.css';
 
 class UploadList extends Component {
@@ -20,7 +20,7 @@ class UploadList extends Component {
   state = {
     result: [],
     paging: null,
-    uploadModal: false,
+    uploadModalShown: false,
     loading: true,
   }
 
@@ -35,16 +35,16 @@ class UploadList extends Component {
 
   onKeyDown = (event) => {
     if (event.keyCode === 27) { // escape key
-      this.handleClick();
+      this.handleCreateUploadClick();
     }
   }
 
-  handleClick = () => {
-    const { uploadModal } = this.state;
+  handleCreateUploadClick = () => {
+    const { uploadModalShown } = this.state;
     const { resetUpload } = this.props;
 
     this.setState({
-      uploadModal: !uploadModal,
+      uploadModalShown: !uploadModalShown,
     });
     resetUpload();
   }
@@ -82,7 +82,7 @@ class UploadList extends Component {
   render() {
     const { t, history } = this.props;
     const {
-      result, paging, uploadModal, loading,
+      result, paging, uploadModalShown, loading,
     } = this.state;
     return (
       <Portal history={history}>
@@ -90,7 +90,9 @@ class UploadList extends Component {
           <div className="row">
             <div className="col-12 d-flex justify-content-between align-items-center">
               <div className="settings-section">{t('panel.uploadList.title')}</div>
-              <button type="button" className="btn green-btn mb-3" onClick={this.handleClick}>{t('panel.uploadList.uploadFile')}</button>
+              <div className="upload-list-buttons-container">
+                <button type="button" className="btn green-btn mb-3" onClick={this.handleCreateUploadClick}>{t('panel.uploadList.uploadFile')}</button>
+              </div>
             </div>
             <hr className="ordinary-hr" />
           </div>
@@ -164,10 +166,10 @@ class UploadList extends Component {
             </div>
           </div>
         </div>
-        {uploadModal
+        {uploadModalShown
           && (
             <div>
-              <div className="portal-upload-background" role="presentation" onKeyDown={this.handleClick} onClick={this.handleClick} />
+              <div className="portal-upload-background" role="presentation" onKeyDown={this.handleCreateUploadClick} onClick={this.handleCreateUploadClick} />
               <div className="portal-upload">
                 <UploadModal publicUpload={false} shouldDisplayOptions />
               </div>

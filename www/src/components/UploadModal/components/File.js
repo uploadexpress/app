@@ -5,7 +5,7 @@ import ImgStatusYes from '../../../img/img-status-yes.svg';
 import ImgCancel from '../../../img/img-cancel.svg';
 import FileBackground from '../../../img/file-background.svg';
 import { FileStatus } from '../constants';
-import { deleteFile } from '../actions';
+import { deleteFile } from '../../../actions/uploader';
 import buttonize from '../../../helpers/buttonize';
 import stringTruncate from '../../../helpers/stringTruncate';
 import extensionToImageIcon from '../../../helpers/extensionToImageIcon';
