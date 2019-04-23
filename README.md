@@ -10,7 +10,8 @@
 <p align="center">
     <a href="https://upload.express">upload.express</a> |
     <a href="https://pro.upload.express#features">Features</a> |
-    <a href="https://twitter.com/uploadexpress">Twitter</a>
+    <a href="https://twitter.com/uploadexpress">Twitter</a> |
+    <a href="https://poeditor.com/join/project/1H1nHGQVam">Help us translate!</a>
     <br /><br />
     <a href="https://github.com/uploadexpress/app/releases/">
         <img src="https://img.shields.io/github/release/uploadexpress/app.svg" alt="Latest release" />
