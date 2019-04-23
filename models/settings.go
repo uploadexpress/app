@@ -19,4 +19,5 @@ type SocialNetwork struct {
 }
 
 var ForbiddenSettingsKeys = []string{"backgrounds", "logo"} // Keys that are managed by their own endpoint.
+
 const SettingsCollection = "settings"

@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/uploadexpress/app/config"
 	"github.com/uploadexpress/app/helpers"
+	"github.com/uploadexpress/app/services/config"
 	"github.com/uploadexpress/app/store"
 )
 

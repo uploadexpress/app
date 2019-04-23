@@ -8,14 +8,17 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/uploadexpress/app/services/email"
+	"github.com/uploadexpress/app/services/i18n"
+
 	"github.com/h2non/filetype"
 
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/uploadexpress/app/config"
+	"github.com/uploadexpress/app/services/config"
 
-	"github.com/uploadexpress/app/jobs/thumbgen"
-	"github.com/uploadexpress/app/worker"
+	"github.com/uploadexpress/app/services/worker"
+	"github.com/uploadexpress/app/services/worker/jobs/thumbgen"
 
 	"github.com/uploadexpress/app/helpers/params"
 
@@ -100,14 +103,68 @@ func (uploadController *UploadController) CompleteUpload(c *gin.Context) {
 		return
 	}
 
+	// schedule preview generation
 	for _, file := range upload.Files {
 		worker.TryEnqueue(c, thumbgen.NewThumbnailGenerator(params.M{"uploadId": upload.Id, "file": *file}))
 	}
 
+	// update upload status
 	err = store.EditUpload(c, uploadId, params.M{"ready": true})
 	if err != nil {
 		c.Error(err)
 		c.Abort()
+		return
+	}
+
+	c.JSON(http.StatusOK, nil)
+}
+
+func (uploadController *UploadController) SendMail(c *gin.Context) {
+	uploadId := c.Param("upload_id")
+
+	upload, err := store.FetchUpload(c, uploadId)
+	if err != nil {
+		c.Error(err)
+		c.Abort()
+		return
+	}
+
+	mailConfig := &models.MailConfig{}
+	if err := c.BindJSON(mailConfig); err != nil {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_input", "Failed to bind the body data", err))
+		return
+	}
+
+	// sends a fully localized email
+	err = email.SendEmail(
+		c,
+		config.GetString(c, "mail_from"),
+		config.GetString(c, "mail_name"),
+		mailConfig.RecipientEmails,
+		i18n.Translate(c, mailConfig.Language, "emails.newUpload.subject", params.M{
+			"sender": mailConfig.SenderEmail,
+			"count":  len(upload.Files),
+		}),
+		"new-upload",
+		params.M{
+			"header": i18n.Translate(
+				c,
+				mailConfig.Language,
+				"emails.newUpload.header",
+				params.M{
+					"sender": mailConfig.SenderEmail,
+				},
+			),
+			"subtitle": i18n.Translate(c, mailConfig.Language, "emails.newUpload.subtitle", params.M{
+				"count": len(upload.Files),
+			}),
+			"message":         mailConfig.Message,
+			"link":            fmt.Sprintf("%s/download/%s", config.FromContext(c).Get("site_url"), upload.Id),
+			"download_button": i18n.Translate(c, mailConfig.Language, "emails.newUpload.downloadButton", params.M{}),
+		},
+	)
+	if err != nil {
+		_ = c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("mail_send_failed", "could not send the email to the user", nil))
 		return
 	}
 

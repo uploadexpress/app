@@ -7,8 +7,8 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/uploadexpress/app/config"
 	"github.com/uploadexpress/app/models"
+	"github.com/uploadexpress/app/services/config"
 )
 
 func GetObjectLink(configuration config.AwsConfiguration, uploadId string, file models.File) (string, error) {

@@ -1,8 +1,8 @@
 package server
 
 import (
+	"github.com/uploadexpress/app/services/worker"
 	"github.com/uploadexpress/app/store/mongodb"
-	"github.com/uploadexpress/app/worker"
 )
 
 func (a *API) SetupWorker() error {

@@ -4,7 +4,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/uploadexpress/app/config"
+	"github.com/uploadexpress/app/services/config"
 )
 
 func CreateAwsSession(configuration config.AwsConfiguration) (*session.Session, error) {

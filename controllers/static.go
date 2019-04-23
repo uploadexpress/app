@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/uploadexpress/app/config"
+	"github.com/uploadexpress/app/services/config"
 
 	"github.com/gin-gonic/gin"
 	"github.com/uploadexpress/app/store"

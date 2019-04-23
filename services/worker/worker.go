@@ -7,7 +7,7 @@ import (
 	"github.com/uploadexpress/app/store"
 
 	"github.com/sirupsen/logrus"
-	"github.com/uploadexpress/app/jobs"
+	"github.com/uploadexpress/app/services/worker/jobs"
 )
 
 type Worker struct {
