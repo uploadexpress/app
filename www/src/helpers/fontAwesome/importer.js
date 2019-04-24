@@ -14,7 +14,7 @@ import {
   faPatreon,
 } from '@fortawesome/free-brands-svg-icons';
 import {
-  faFolderPlus, faKey, faEnvelope, faPlay, faPause,
+  faFolderPlus, faKey, faEnvelope, faPlay, faPause, faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
@@ -24,6 +24,7 @@ export default function () {
     faFolderPlus,
     faKey,
     faEnvelope,
+    faPaperPlane,
     faPause,
     faPlay,
     faFacebookF,

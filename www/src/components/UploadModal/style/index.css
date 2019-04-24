@@ -140,3 +140,120 @@
     margin-bottom: 8px;
     margin-right: 4px;
 }
+
+
+.react-tabs {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.react-tabs__tab-list {
+    border-bottom: 1px solid #f5f5f5;
+    background-color: rgb(243, 243, 243);
+    border-radius: 10px 10px 0 0;
+    padding: 0;
+    color: rgb(59, 62, 66);
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+  
+.react-tabs__tab {
+    display: inline-block;
+    border: 1px solid transparent;
+    border-bottom: none;
+    border-top: none;
+    bottom: -1px;
+    position: relative;
+    list-style: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    width:157px;
+}
+  
+.react-tabs__tab--selected {
+    background: #fff;
+    border-color: #f5f5f5;
+    color: black;
+    border-radius: 10px 0 0 0;
+}
+
+.react-tabs__tab--selected:last-child {
+      border-radius: 0 10px 0 0;
+}
+  
+  
+.react-tabs__tab:focus {
+    box-shadow: 0 0 5px hsl(208, 99%, 50%);
+    border-color: hsl(208, 99%, 50%);
+    outline: none;
+}
+  
+.react-tabs__tab:focus:after {
+    content: "";
+    position: absolute;
+    height: 5px;
+    left: -4px;
+    right: -4px;
+    bottom: -5px;
+    background: #fff;
+}
+  
+.react-tabs__tab-panel {
+    display: none;
+}
+  
+.react-tabs__tab-panel--selected {
+    display: block;
+}
+
+.email-title{
+    color: #363A3E;
+    font-size: 14px;
+}
+
+.react-multi-email{
+    padding: 0 0.4rem!important;
+    left: 0;
+    right: 0;
+    height: 33.5px;
+    overflow-x: auto;
+    white-space: nowrap; 
+    width:1%;
+    border: 1px solid #ced4da!important;
+    border-radius: 0 0.25rem 0.25rem 0!important; 
+    max-height: 100%;
+    
+}
+
+.react-multi-email::-webkit-scrollbar { 
+    display: none; 
+}
+
+.react-multi-email.empty > span[data-placeholder] {
+    padding: 4px 0!important;
+    color: #636c72!important;
+}
+
+.custom-form{
+    font-size:13px;
+    padding-left:5px;
+}
+
+.custom-form::placeholder{
+    color: #636c72;
+}
+.email-textarea{
+    font-size:13px;
+    max-height: 71px;
+}
+
+.email-sent {
+    color: #87D483;
+    font-size: 14px;
+    margin-top:22px;
+    font-weight: bold;
+}
+
+.email-sent:hover {
+    cursor: default;
+}
