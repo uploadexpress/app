@@ -9,7 +9,7 @@ import (
 
 	"github.com/h2non/filetype"
 
-	"github.com/uploadexpress/app/config"
+	"github.com/uploadexpress/app/services/config"
 
 	"github.com/mitchellh/mapstructure"
 

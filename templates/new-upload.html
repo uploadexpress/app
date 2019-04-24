@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>upload.express</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style type="text/css">
+        * {
+            -ms-text-size-adjust:100%;
+            -webkit-text-size-adjust:none;
+            -webkit-text-resize:100%;
+        }
+        a{
+            outline:none;
+            color:#40aceb;
+            text-decoration:underline;
+        }
+        a:hover{text-decoration:none !important;}
+        .title a:hover{text-decoration:underline !important;}
+        .title-2 a:hover{text-decoration:underline !important;}
+        .btn:hover{opacity:0.8;}
+        .btn a:hover{text-decoration:none !important;}
+        .btn{
+            -webkit-transition:all 0.3s ease;
+            -moz-transition:all 0.3s ease;
+            -ms-transition:all 0.3s ease;
+            transition:all 0.3s ease;
+        }
+        table td {border-collapse: collapse !important;}
+        .ExternalClass, .ExternalClass a, .ExternalClass span, .ExternalClass b, .ExternalClass br, .ExternalClass p, .ExternalClass div{line-height:inherit;}
+        @media only screen and (max-width:500px) {
+            table[class="flexible"]{width:100% !important;}
+            table[class="center"]{
+                float:none !important;
+                margin:0 auto !important;
+            }
+
+            td[class="img-flex"] img{
+                width:100% !important;
+                height:auto !important;
+            }
+            th[class="flex"]{
+                display:block !important;
+                width:100% !important;
+            }
+            td[class="wrapper"]{padding:0 !important;}
+            td[class="holder"]{padding:30px 15px 40px !important;}
+
+        }
+    </style>
+</head>
+<body style="margin:0; padding:0;" bgcolor="#eaeced">
+<!-- module 2 -->
+<table width="100%" style="padding-top:28px;">
+    <tr>
+        <td  bgcolor="#eaeced">
+            <table class="flexible" width="504" align="center" style="margin:0 auto; border-spacing: 0px;">
+                <tr>
+
+                    <td class="img-flex" style="padding:0px;">
+                        <img src="https://uploadexpress-assets.s3.nl-ams.scw.cloud/uploadexpress-app-mail-logo.png" style="vertical-align:top;" width="504" height="200" alt="" />
+                    </td>
+
+                </tr>
+                <tr>
+
+                    <td class="holder" style="padding:58px 60px 40px; border: 1px solid #CCCDCE; border-top: none;" bgcolor="#f9f9f9">
+
+                        <table width="100%">
+                            <tr>
+                                <td class="title" align="center" style="font:20px OpenSans, sans-serif; color:#292c34; padding:0 0 24px; word-break:break-word;">
+                                    {{ .header }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="font:16px OpenSans, sans-serif; color:#888; padding:0 0 12px;">
+                                    {{ .subtitle }}
+                                </td>
+                            </tr>
+                            <tr>
+                            </tr>
+                            {{if .message }}
+                            <tr>
+                                <td align="center" style="font:16px OpenSans, sans-serif; color:#292c34;" >
+                                    <hr style="margin-bottom: 30px;">
+                                    {{ .message }}
+                                </td>
+                            </tr>
+                            {{end}}
+                            <tr>
+                                <td>
+                                    <table width="134" align="center" style="margin:0 auto;">
+                                        <tr>
+                                            <hr style="margin-top: 30px; margin-bottom: 20px;">
+                                            <td class="btn" align="center" style="font: 14px OpenSans, sans-serif; color:#f8f9fb; mso-padding-alt:12px 10px 10px; border-radius:20px;" bgcolor="#5B87E5">
+                                                <a target="_blank" style="text-decoration:none; color:#f8f9fb; display:block; padding:12px 10px 10px;" href="{{ .link }}">{{ .download_button }}</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <table width="100%">
+            <tr>
+                <td align="center" style="padding-top:12px; padding-bottom:20px; font: 14px OpenSans, sans-serif;">
+                    <a href="https://upload.express/" style="color: #888">upload.express</a>
+                </td>
+            </tr>
+        </table>
+    </tr>
+</table>
+</body>
+</html>

@@ -13,7 +13,7 @@ type Upload struct {
 	DownloadCount int      `json:"download_count" bson:"download_count"`
 	Public        bool     `json:"public" bson:"public"`
 	Ready         bool     `json:"-" bson:"ready"`
-	GalleryOnly   bool     `json:"gallery_only" bson:"gallery_only"`
+	Gallery       bool     `json:"gallery" bson:"gallery"`
 }
 
 func (upload *Upload) BeforeCreate() {

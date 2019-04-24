@@ -3,7 +3,7 @@ package worker
 import (
 	"context"
 
-	"github.com/uploadexpress/app/jobs"
+	"github.com/uploadexpress/app/services/worker/jobs"
 )
 
 const (

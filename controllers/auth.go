@@ -4,10 +4,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/uploadexpress/app/config"
 	"github.com/uploadexpress/app/helpers"
 	"github.com/uploadexpress/app/helpers/params"
 	"github.com/uploadexpress/app/models"
+	"github.com/uploadexpress/app/services/config"
 	"github.com/uploadexpress/app/store"
 	"golang.org/x/crypto/bcrypt"
 )

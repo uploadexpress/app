@@ -24,6 +24,19 @@ func main() {
 	}
 	defer session.Close()
 
+	// Mailer setup
+	err = api.SetupMailer()
+	if err != nil {
+		panic(err)
+	}
+
+	// I18n setup
+	err = api.SetupI18n()
+	if err != nil {
+		panic(err)
+	}
+
+	// Worker setup
 	err = api.SetupWorker()
 	if err != nil {
 		panic(err)

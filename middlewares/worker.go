@@ -2,7 +2,7 @@ package middlewares
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/uploadexpress/app/worker"
+	"github.com/uploadexpress/app/services/worker"
 )
 
 func WorkerMiddleware(w *worker.Worker) gin.HandlerFunc {

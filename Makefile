@@ -12,6 +12,7 @@ BINARY_NAME=uploadexpress
 BINARY_UNIX=$(BINARY_NAME)_unix
 FRONT_PATH=www
 SERVER_MAIN_PATH=cmd/server/main.go
+TEMPLATES_PATH=templates
 FRONT_BUILD_FOLDER=$(FRONT_PATH)/build
 FRONT_DESTINATION=$(BUILD_FOLDER)/front
 
@@ -22,6 +23,7 @@ build:
 	$(YARNINSTALL); \
 	$(YARNBUILD);
 	cp -R $(FRONT_BUILD_FOLDER) $(FRONT_DESTINATION)
+	cp -R $(TEMPLATES_PATH) $(BUILD_FOLDER)
 	if [ -e .env ]; \
 		then cp .env build; \
 	fi

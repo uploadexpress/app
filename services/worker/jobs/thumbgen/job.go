@@ -15,9 +15,9 @@ import (
 	"github.com/h2non/filetype/matchers"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"github.com/uploadexpress/app/config"
 	"github.com/uploadexpress/app/helpers/params"
 	"github.com/uploadexpress/app/models"
+	"github.com/uploadexpress/app/services/config"
 	"github.com/uploadexpress/app/services/s3"
 	"github.com/uploadexpress/app/store"
 )

@@ -3,7 +3,7 @@ package middlewares
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"github.com/uploadexpress/app/config"
+	"github.com/uploadexpress/app/services/config"
 )
 
 func ConfigMiddleware(viper *viper.Viper) gin.HandlerFunc {

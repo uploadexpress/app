@@ -32,6 +32,8 @@ func (a *API) SetupRouter() {
 		ValidateHeaders: false,
 	}))
 	router.Use(middlewares.StaticMiddleware("/", middlewares.StaticLocalFile("front", false)))
+	router.Use(middlewares.EmailMiddleware(a.Mailer))
+	router.Use(middlewares.I18nMiddleware(a.I18n))
 	router.Use(middlewares.WorkerMiddleware(a.Worker))
 
 	authMiddleware := middlewares.AuthMiddleware()
@@ -63,6 +65,7 @@ func (a *API) SetupRouter() {
 			uploader.GET("/", uploaderController.Index)
 			uploader.DELETE("/:upload_id/", uploaderController.DeleteUpload)
 			uploader.POST("/:upload_id/background", uploaderController.AttachBackground)
+			uploader.POST("/:upload_id/mail", uploaderController.SendMail)
 		}
 
 		downloader := v1.Group("/downloader")

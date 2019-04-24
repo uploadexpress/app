@@ -124,7 +124,7 @@
             "subject": "{{.sender}} vous a envoyé {{.count}} fichiers via upload.express",
             "header": "{{.sender}} vous a envoyé des fichiers",
             "subtitle": "Vous avez reçu {{.count}} fichiers avec upload.express.",
-            "downloadButton": "Télécharger maintenant"
+            "downloadButton": "Télécharger"
         }
     }
 }
