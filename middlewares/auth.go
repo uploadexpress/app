@@ -21,16 +21,57 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
+		token := authHeaderParts[1]
 		secret := config.GetString(c, "jwt_secret")
-		claims, err := helpers.ValidateJwtToken(authHeaderParts[1], secret, "access")
+		tokenAudience, err := helpers.GetTokenAudience(token, secret)
 		if err != nil {
 			c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_token", "the given token is invalid", err))
 			return
 		}
 
-		user, _ := store.FindUserById(c, claims["sub"].(string))
-		c.Set(store.CurrentKey, user)
+		if tokenAudience == "api" {
+			if validateApiToken(token, secret, c) {
+				c.Next()
+			}
+			return
+		}
 
-		c.Next()
+		if validateAccessToken(token, secret, c) {
+			c.Next()
+		}
 	}
+}
+
+func validateAccessToken(token, secret string, c *gin.Context) bool {
+	claims, err := helpers.ValidateJwtToken(token, secret, "access")
+	if err != nil {
+		c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_token", "the given token is invalid", err))
+		return false
+	}
+
+	user, err := store.FindUserById(c, claims["sub"].(string))
+	if err != nil {
+		c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("unknown_user", "the given user is invalid", err))
+		return false
+	}
+
+	c.Set(store.CurrentKey, user)
+
+	return true
+}
+
+func validateApiToken(token, secret string, c *gin.Context) bool {
+	claims, err := helpers.ValidateJwtToken(token, secret, "api")
+	if err != nil {
+		c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_token", "the given token is invalid", err))
+		return false
+	}
+
+	_, err = store.FindTokenById(c, claims["iss"].(string))
+	if err != nil {
+		c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("unknown_token", "the token is invalid or expired", err))
+		return false
+	}
+
+	return true
 }

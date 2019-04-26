@@ -61,11 +61,11 @@ func (a *API) SetupRouter() {
 			uploader.POST("/", uploaderController.Create)
 			uploader.PUT("/:upload_id/complete", uploaderController.CompleteUpload)
 			uploader.GET("/:upload_id/file/:file_id/upload_url", uploaderController.CreatePreSignedRequest)
+			uploader.POST("/:upload_id/mail", uploaderController.SendMail)
 			uploader.Use(authMiddleware)
 			uploader.GET("/", uploaderController.Index)
 			uploader.DELETE("/:upload_id/", uploaderController.DeleteUpload)
 			uploader.POST("/:upload_id/background", uploaderController.AttachBackground)
-			uploader.POST("/:upload_id/mail", uploaderController.SendMail)
 		}
 
 		downloader := v1.Group("/downloader")
@@ -81,13 +81,23 @@ func (a *API) SetupRouter() {
 		{
 			settingsController := controllers.NewSettingsController()
 			settings.GET("/", settingsController.Index)
-			uploader.Use(authMiddleware)
+			settings.Use(authMiddleware)
 			settings.PUT("/", settingsController.Edit)
 			settings.POST("/logo/", settingsController.CreateLogo)
 			settings.POST("/background/", settingsController.CreateBackground)
 			settings.DELETE("/background/:id/", settingsController.DeleteBackground)
 			settings.DELETE("/logo/", settingsController.DeleteLogo)
 
+		}
+
+		tokens := v1.Group("/tokens")
+		{
+			tokensController := controllers.NewTokenController()
+			tokens.Use(authMiddleware)
+			tokens.POST("/", tokensController.CreateToken)
+			tokens.GET("/", tokensController.GetAllTokens)
+			tokens.PUT("/:id", tokensController.UpdateToken)
+			tokens.DELETE("/:id", tokensController.DeleteToken)
 		}
 	}
 

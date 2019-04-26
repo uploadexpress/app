@@ -30,4 +30,10 @@ type Store interface {
 	EditSetting(models.Setting) ([]models.Setting, error)
 	PutBackground(models.Image) error
 	RemoveBackground(string) error
+
+	CreateToken(*models.Token) error
+	FindTokenById(string) (*models.Token, error)
+	GetAllTokens() ([]*models.Token, error)
+	UpdateToken(string, params.M) error
+	DeleteToken(string) error
 }
