@@ -37,6 +37,16 @@ class UploadService extends Service {
     const resourceUrl = `uploader/${uploadId}/background`;
     return this.http.post(resourceUrl, image);
   }
+
+  sendEmail = (uploadId, recipientEmails, senderEmail, message, language) => {
+    const resourceUrl = `uploader/${uploadId}/mail`;
+    return this.http.post(resourceUrl, {
+      recipient_emails: recipientEmails,
+      sender_email: senderEmail,
+      message,
+      language,
+    });
+  }
 }
 
 

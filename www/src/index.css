@@ -111,7 +111,10 @@ hr {
   flex: 1;
   overflow-y:auto;
   max-height: 226px;
-  
+}
+
+.list-container::-webkit-scrollbar { 
+  display: none; 
 }
 
 .list-footer {
@@ -175,5 +178,10 @@ hr {
   background-color: #87D483;
   color: white;
   outline: none;
+}
+
+.green-btn:disabled:hover{
+  background-color: white;
+  color: #87D483;
 }
 
