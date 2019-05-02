@@ -47,6 +47,21 @@ class UploadService extends Service {
       language,
     });
   }
+
+  createMultipartUpload = (uploadId, fileId) => {
+    const resourceUrl = `/uploader/${uploadId}/file/${fileId}/create_multipart`;
+    return this.http.get(resourceUrl);
+  }
+
+  createUploadPartRequest = (uploadId, fileId, s3UploadId, partNumber) => {
+    const resourceUrl = `/uploader/${uploadId}/file/${fileId}/part_url/${s3UploadId}/part/${partNumber}`;
+    return this.http.get(resourceUrl);
+  }
+
+  completeMultipartRequest = (uploadId, fileId, s3UploadId, uploadedParts) => {
+    const resourceUrl = `/uploader/${uploadId}/file/${fileId}/complete_multipart/${s3UploadId}`;
+    return this.http.post(resourceUrl, { parts: uploadedParts });
+  }
 }
 
 

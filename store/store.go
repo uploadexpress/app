@@ -36,4 +36,11 @@ type Store interface {
 	GetAllTokens() ([]*models.Token, error)
 	UpdateToken(string, params.M) error
 	DeleteToken(string) error
+
+	CreateRequest(*models.FileRequest) error
+	FindRequestById(string) (*models.FileRequest, error)
+	GetAllRequests(paging.Page) ([]*models.FileRequest, error)
+	UpdateRequest(string, params.M) error
+	DeleteRequest(string) error
+	RequestCount() (int, error)
 }

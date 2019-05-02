@@ -100,7 +100,7 @@ func (tc TokenController) UpdateToken(c *gin.Context) {
 }
 
 // DeleteToken to delete an existing Token
-func (Tc TokenController) DeleteToken(c *gin.Context) {
+func (tc TokenController) DeleteToken(c *gin.Context) {
 	err := store.DeleteToken(c, c.Param("id"))
 
 	if err != nil {

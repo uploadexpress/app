@@ -14,7 +14,13 @@ func New(database *mgo.Database) *mongo {
 	return &mongo{database}
 }
 
-func FindWithPaging(page paging.Page, query bson.M, collection *mgo.Collection) *mgo.Query {
+func FindWithPaging(page paging.Page, query bson.M, collection *mgo.Collection) *mgo.Pipe {
 	entriesToSkip := page.Size * (page.CurrentPage - 1)
-	return collection.Find(query).Sort("-_id").Skip(entriesToSkip).Limit(page.Size)
+
+	return collection.Pipe([]bson.M{
+		query,
+		{"$sort": bson.M{"_id": -1}},
+		{"$skip": entriesToSkip},
+		{"$limit": page.Size},
+	})
 }

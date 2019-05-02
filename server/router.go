@@ -61,6 +61,9 @@ func (a *API) SetupRouter() {
 			uploader.POST("/", uploaderController.Create)
 			uploader.PUT("/:upload_id/complete", uploaderController.CompleteUpload)
 			uploader.GET("/:upload_id/file/:file_id/upload_url", uploaderController.CreatePreSignedRequest)
+			uploader.GET("/:upload_id/file/:file_id/create_multipart", uploaderController.CreateMultiPartUpload)
+			uploader.GET("/:upload_id/file/:file_id/part_url/:s3_upload_id/part/:part_number", uploaderController.CreateUploadPartPreSignedRequest)
+			uploader.POST("/:upload_id/file/:file_id/complete_multipart/:s3_upload_id", uploaderController.CompleteMultiPartUpload)
 			uploader.POST("/:upload_id/mail", uploaderController.SendMail)
 			uploader.Use(authMiddleware)
 			uploader.GET("/", uploaderController.Index)
@@ -98,6 +101,17 @@ func (a *API) SetupRouter() {
 			tokens.GET("/", tokensController.GetAllTokens)
 			tokens.PUT("/:id", tokensController.UpdateToken)
 			tokens.DELETE("/:id", tokensController.DeleteToken)
+		}
+
+		requests := v1.Group("/requests")
+		{
+			requestsController := controllers.NewRequestController()
+			requests.GET("/:id/", requestsController.GetRequest)
+			requests.Use(authMiddleware)
+			requests.GET("/", requestsController.GetAllRequests)
+			requests.POST("/", requestsController.CreateRequest)
+			requests.PUT("/:id/", requestsController.UpdateRequest)
+			requests.DELETE("/:id/", requestsController.DeleteRequest)
 		}
 	}
 

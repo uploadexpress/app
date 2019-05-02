@@ -36,6 +36,76 @@ func CreatePutObjectPreSignedUrl(configuration config.AwsConfiguration, uploadId
 	return str, nil
 }
 
+func CreateUploadPartPreSignedUrl(configuration config.AwsConfiguration, uploadId string, file models.File, partNumber int64, s3UploadId string) (string, error) {
+	sess, err := CreateAwsSession(configuration)
+	if err != nil {
+		return "", err
+
+	}
+
+	svc := s3.New(sess)
+	req, _ := svc.UploadPartRequest(&s3.UploadPartInput{
+		Bucket:     aws.String(configuration.Bucket),
+		Key:        aws.String("uploads/" + uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
+		PartNumber: aws.Int64(partNumber),
+		UploadId:   aws.String(s3UploadId),
+	})
+	str, err := req.Presign(time.Hour)
+	if err != nil {
+		return "", err
+	}
+
+	return str, nil
+}
+
+func CreateMultipartUpload(configuration config.AwsConfiguration, uploadId string, file models.File) (string, error) {
+	sess, err := CreateAwsSession(configuration)
+	if err != nil {
+		return "", err
+	}
+
+	svc := s3.New(sess)
+	output, _ := svc.CreateMultipartUpload(&s3.CreateMultipartUploadInput{
+		Bucket: aws.String(configuration.Bucket),
+		Key:    aws.String("uploads/" + uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
+	})
+	if err != nil {
+		return "", err
+	}
+
+	return *output.UploadId, nil
+}
+
+func CompleteMultipartUpload(configuration config.AwsConfiguration, uploadId string, file models.File, s3UploadId string, parts []FilePart) error {
+	sess, err := CreateAwsSession(configuration)
+	if err != nil {
+		return err
+	}
+
+	var s3Parts []*s3.CompletedPart
+	for _, part := range parts {
+		s3Parts = append(s3Parts, &s3.CompletedPart{
+			ETag:       aws.String(part.ETag),
+			PartNumber: aws.Int64(part.PartNumber),
+		})
+	}
+
+	svc := s3.New(sess)
+	_, err = svc.CompleteMultipartUpload(&s3.CompleteMultipartUploadInput{
+		Bucket:   aws.String(configuration.Bucket),
+		Key:      aws.String("uploads/" + uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
+		UploadId: aws.String(s3UploadId),
+		MultipartUpload: &s3.CompletedMultipartUpload{
+			Parts: s3Parts,
+		},
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func PutObject(configuration config.AwsConfiguration, key string, reader io.Reader, public bool) (string, error) {
 	sess, err := CreateAwsSession(configuration)
 	if err != nil {

@@ -1,8 +1,6 @@
 package main
 
 import (
-	"os"
-
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"github.com/uploadexpress/app/server"
@@ -50,12 +48,7 @@ func main() {
 		panic(err)
 	}
 
-	port := ":" + os.Getenv("PORT")
-	if port == ":" {
-		port = ":4000"
-	}
-
-	err = api.Router.Run(port)
+	err = api.Router.Run(api.Config.GetString("host_address"))
 	if err != nil {
 		panic(err)
 	}

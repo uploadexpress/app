@@ -46,7 +46,7 @@ func (db *mongo) FetchAllUploads(page paging.Page) ([]*models.Upload, error) {
 	uploadsCollection := db.C(models.UploadsCollection).With(session)
 
 	uploads := []*models.Upload{}
-	err := FindWithPaging(page, bson.M{}, uploadsCollection).All(&uploads)
+	err := FindWithPaging(page, bson.M{"$match": bson.M{}}, uploadsCollection).All(&uploads)
 	if err != nil {
 		return nil, helpers.NewError(http.StatusInternalServerError, "uploads_fetch_error", "the uploads could not be fetched", err)
 	}

@@ -7,6 +7,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strconv"
+	"time"
 
 	"github.com/uploadexpress/app/services/email"
 	"github.com/uploadexpress/app/services/i18n"
@@ -42,6 +44,21 @@ func (uploadController *UploadController) Create(c *gin.Context) {
 	if err := c.BindJSON(upload); err != nil {
 		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_input", "Failed to bind the body data", err))
 		return
+	}
+
+	if upload.RequestId != "" {
+		_, err := store.FindRequestById(c, upload.RequestId)
+		if err != nil {
+			_ = c.Error(err)
+			c.Abort()
+			return
+		}
+	}
+
+	expiration := config.GetInt(c, "file_expiration")
+	if expiration > 0 {
+		expirationDate := time.Now().Add(time.Duration(expiration) * time.Hour * 24).Unix()
+		upload.ExpirationDate = &expirationDate
 	}
 
 	if err := store.CreateUpload(c, upload); err != nil {
@@ -212,6 +229,108 @@ func (uploadController *UploadController) CreatePreSignedRequest(c *gin.Context)
 	}
 
 	str, err := s3.CreatePutObjectPreSignedUrl(config.NewAwsConfigurationFromContext(c), uploadId, *file)
+	if err != nil {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("request_sign_failed", err.Error(), nil))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"url": str})
+}
+
+func (uploadController *UploadController) CreateMultiPartUpload(c *gin.Context) {
+	uploadId := c.Param("upload_id")
+	upload, err := store.FetchUpload(c, uploadId)
+	if err != nil {
+		_ = c.Error(err)
+		c.Abort()
+		return
+	}
+
+	var file *models.File
+	for _, cFile := range upload.Files {
+		if cFile.Id == c.Param("file_id") {
+			file = cFile
+		}
+	}
+	if file == nil {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_file_id", "The file was not found", nil))
+		return
+	}
+
+	s3UploadId, err := s3.CreateMultipartUpload(config.NewAwsConfigurationFromContext(c), uploadId, *file)
+	if err != nil {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("multipart_create_failed", err.Error(), err))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"upload_id": s3UploadId})
+}
+
+func (uploadController *UploadController) CompleteMultiPartUpload(c *gin.Context) {
+	uploadId := c.Param("upload_id")
+	s3UploadId := c.Param("s3_upload_id")
+	upload, err := store.FetchUpload(c, uploadId)
+	if err != nil {
+		_ = c.Error(err)
+		c.Abort()
+		return
+	}
+
+	var file *models.File
+	for _, cFile := range upload.Files {
+		if cFile.Id == c.Param("file_id") {
+			file = cFile
+		}
+	}
+	if file == nil {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_file_id", "The file was not found", nil))
+		return
+	}
+
+	var parts s3.PartList
+	if err := c.BindJSON(&parts); err != nil {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_input", "Failed to bind the body data", err))
+		return
+	}
+
+	err = s3.CompleteMultipartUpload(config.NewAwsConfigurationFromContext(c), uploadId, *file, s3UploadId, parts.Parts)
+	if err != nil {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("request_complete_error", err.Error(), err))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"upload_id": s3UploadId})
+}
+
+func (uploadController *UploadController) CreateUploadPartPreSignedRequest(c *gin.Context) {
+	uploadId := c.Param("upload_id")
+	partNumberString := c.Param("part_number")
+	s3UploadId := c.Param("s3_upload_id")
+	upload, err := store.FetchUpload(c, uploadId)
+	if err != nil {
+		_ = c.Error(err)
+		c.Abort()
+		return
+	}
+
+	partNumber, err := strconv.ParseInt(partNumberString, 10, 64)
+	if err != nil {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("wrong_part_number", err.Error(), nil))
+		return
+	}
+
+	var file *models.File
+	for _, cFile := range upload.Files {
+		if cFile.Id == c.Param("file_id") {
+			file = cFile
+		}
+	}
+	if file == nil {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_file_id", "The file was not found", nil))
+		return
+	}
+
+	str, err := s3.CreateUploadPartPreSignedUrl(config.NewAwsConfigurationFromContext(c), uploadId, *file, partNumber, s3UploadId)
 	if err != nil {
 		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("request_sign_failed", err.Error(), nil))
 		return
