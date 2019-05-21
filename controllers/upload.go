@@ -181,7 +181,7 @@ func (uploadController *UploadController) SendMail(c *gin.Context) {
 		},
 	)
 	if err != nil {
-		_ = c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("mail_send_failed", "could not send the email to the user", nil))
+		_ = c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("mail_send_failed", "could not send the email to the user", err))
 		return
 	}
 

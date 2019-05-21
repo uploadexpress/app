@@ -19,6 +19,8 @@ func (a *API) SetupRouter() {
 	router := a.Router
 
 	router.Use(gzip.Gzip(gzip.DefaultCompression))
+	router.Use(gin.Recovery())
+	router.Use(middlewares.Logger())
 	router.Use(middlewares.ErrorMiddleware())
 	router.Use(middlewares.ConfigMiddleware(a.Config))
 	router.Use(middlewares.StoreMiddleware(a.Database))
