@@ -6,9 +6,12 @@ import PropTypes from 'prop-types';
 import Upload from './scenes/Upload/components';
 import Download from './scenes/Download/components';
 import Settings from './scenes/Portal/Settings';
+import Requests from './scenes/Portal/Requests/components';
+import NewRequest from './scenes/Portal/Requests/components/NewRequest';
 import UploadList from './scenes/Portal/UploadList/components/index';
 import SignIn from './scenes/Portal/SignIn/components/index';
 import Setup from './scenes/Portal/Setup/components/index';
+import Request from './scenes/Request/components/index';
 import SettingsService from './services/Api/SettingsService';
 import { setSettings } from './actions/settings';
 import importFontAwesome from './helpers/fontAwesome/importer';
@@ -40,8 +43,11 @@ class App extends Component {
             <div className="App">
               <Route exact path="/" component={settings.public_uploader ? Upload : SignIn} />
               <Route exact path="/download/:id" component={Download} />
+              <Route exact path="/request/:id" component={Request} />
               <Route exact path="/panel" component={settings.setup ? UploadList : Setup} />
               <Route exact path="/panel/settings" component={Settings} />
+              <Route exact path="/panel/requests" component={Requests} />
+              <Route exact path="/panel/requests/new" component={NewRequest} />
               <Route path="/panel/signin" component={SignIn} />
               <Route path="/panel/setup" component={Setup} />
             </div>

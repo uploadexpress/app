@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import '../Background/index.css';
 
 const Modal = (props) => {
-  const { height, width, children } = props;
+  const {
+    height, width, children,
+  } = props;
   return (
     <div className="upload-modal" style={{ height, width }}>
       {children}

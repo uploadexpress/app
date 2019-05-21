@@ -14,7 +14,7 @@ import {
   faPatreon,
 } from '@fortawesome/free-brands-svg-icons';
 import {
-  faFolderPlus, faKey, faEnvelope, faPlay, faPause, faPaperPlane,
+  faFolderPlus, faKey, faEnvelope, faPlay, faPause, faPaperPlane, faCopy, faPlus, faMinus,
 } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
@@ -39,5 +39,8 @@ export default function () {
     faGithub,
     faSoundcloud,
     faPatreon,
+    faCopy,
+    faPlus,
+    faMinus,
   );
 }

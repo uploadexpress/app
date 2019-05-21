@@ -163,3 +163,23 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.download-expiration{
+  font-size: 12px;
+  font-weight: bold;
+  color: #4A4A4A;
+  margin: 8px 0;
+}
+
+.img-download:hover{
+  cursor: pointer;
+}
+
+.upload-modal-animated{
+  box-shadow: 0 0 1px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.03);
+  position: relative;
+  top: 24px;
+  background: white;
+  border-radius: 10px;
+}
+

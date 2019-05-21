@@ -5,6 +5,7 @@ import Spinner from 'react-spinkit';
 import DownloadView from '../../../components/DownloadView/components';
 import DownloadService from '../../../services/Api/DownloadService';
 import { setFiles } from '../../../actions/downloader';
+import Background from '../../../components/Background';
 
 class Download extends Component {
   state = {
@@ -28,8 +29,12 @@ class Download extends Component {
         result.data.gallery,
         result.data.name,
       );
+      const currentDate = Date.now();
+      const error = currentDate > result.data.expiration_date;
       this.setState({
         loading: false,
+        expiration: result.data.expiration_date,
+        error,
       });
     }).catch(() => {
       this.setState({
@@ -58,24 +63,27 @@ class Download extends Component {
   }
 
   render() {
-    const { error, loading } = this.state;
+    const { error, loading, expiration } = this.state;
     const {
       files, history, downloadId, galleryOnly, uploadName,
     } = this.props;
     return loading
       ? (<div className="spinner d-flex justify-content-center align-items-center"><Spinner /></div>)
       : (
-        <DownloadView
-          error={error}
-          files={files}
-          onZipDownload={this.onZipDownload}
-          history={history}
-          downloadId={downloadId}
-          onFileDownload={this.onFileDownload}
-          preview
-          galleryOnly={galleryOnly}
-          uploadName={uploadName}
-        />
+        <Background>
+          <DownloadView
+            error={error}
+            files={files}
+            onZipDownload={this.onZipDownload}
+            history={history}
+            downloadId={downloadId}
+            onFileDownload={this.onFileDownload}
+            preview
+            galleryOnly={galleryOnly}
+            uploadName={uploadName}
+            expiration={expiration}
+          />
+        </Background>
       );
   }
 }

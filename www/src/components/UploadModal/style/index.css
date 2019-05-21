@@ -12,8 +12,17 @@
     margin-top:22px;
 }
 
+.upload-description{
+    margin: 9px 12px;
+    font-size: 14px;
+}
+
+.upload-header {
+    margin-top: 22px;
+    min-height: 80px;
+}
+
 .upload-img{
-    margin-top:50px;
     outline: none;
     margin-bottom: 42px;
 }

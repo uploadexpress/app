@@ -8,7 +8,7 @@ import Downloadbtnactive from '../../../img/download-btn-active.svg';
 
 const Dropfile = (props) => {
   const { t } = useTranslation();
-  const { onFilesSelected } = props;
+  const { onFilesSelected, description } = props;
 
   const onDrop = (acceptedFiles) => {
     onFilesSelected(acceptedFiles);
@@ -16,7 +16,10 @@ const Dropfile = (props) => {
 
   return (
     <div className="upload-window">
-      <b className="upload-title">{t('upload.dropfile')}</b>
+      <div className="upload-header">
+        <b className="upload-title">{t('upload.dropfile')}</b>
+        <div className="upload-description">{description}</div>
+      </div>
       <Dropzone onDrop={onDrop}>
         {({
           getRootProps, getInputProps, isDragActive,
@@ -35,8 +38,13 @@ const Dropfile = (props) => {
   );
 };
 
+Dropfile.defaultProps = {
+  description: null,
+};
+
 Dropfile.propTypes = {
   onFilesSelected: PropTypes.func.isRequired,
+  description: PropTypes.string,
 };
 
 export default Dropfile;

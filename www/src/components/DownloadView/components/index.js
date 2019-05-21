@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
-import Background from '../../Background';
 import Modal from '../../Modal';
 import File from './File';
 import Preview from './Preview';
-import ImgOops from '../../../img/img-oops.svg';
-
 import '../style/index.css';
+import Oops from '../../OopsPage';
 
 class DownloadView extends Component {
   state = {
@@ -47,46 +45,48 @@ class DownloadView extends Component {
 
   render() {
     const {
-      t, error, onZipDownload, settings, preview, onFileDownload, galleryOnly, uploadName,
+      t,
+      error,
+      onZipDownload,
+      settings,
+      preview,
+      onFileDownload,
+      galleryOnly,
+      uploadName,
+      expiration,
     } = this.props;
     const { showPreview } = this.state;
 
+    if (error) {
+      return (
+        <Modal>
+          <Oops />
+        </Modal>
+      );
+    }
+
     return (
-      <Background>
-        <div className={settings.upload_position === 'flex-end' ? ('d-flex flex-row-reverse gallery') : ('d-flex gallery')}>
-          {!galleryOnly
+      <div className={settings.upload_position === 'flex-end' ? ('d-flex flex-row-reverse gallery') : ('d-flex gallery')}>
+        {!galleryOnly
             && (
               <div className="ml-3 mr-3">
                 <Modal>
                   <div className="listfiles">
-                    {(error) ? (
-                      <div className="list-title">{t('download.oops.header')}</div>
-                    ) : (
-                      <div className="list-title">{t('download.header')}</div>
-                    )}
+                    <div className="list-title">{t('download.header')}</div>
                     <hr />
                     <div className="list-container">
                       {this.renderFiles()}
-                      {error
-                      && (
-                        <div className="list-body">
-                          <div className="list-container text-center">
-                            <img width={100} src={ImgOops} alt="" />
-                            <div className="oops-title">{t('download.oops.title')}</div>
-                            <div className="oops-subtitle">{t('download.oops.subtitle')}</div>
-
-                          </div>
-                        </div>
-                      )
-                    }
                     </div>
 
-                    {!error
-                    && (
-                      <div className="list-footer">
-                        <button type="button" onClick={onZipDownload} className="green-btn">{t('download.button')}</button>
+                    <div className="list-footer">
+                      <button type="button" onClick={onZipDownload} className={expiration ? ('green-btn mb-0') : ('green-btn')}>{t('download.button')}</button>
+                      {expiration
+                        && (
+                          <div className="download-expiration">{t('download.expiration_date', { date: expiration })}</div>
+                        
+                        )}
 
-                        {preview && this.hasPreview()
+                      {preview && this.hasPreview()
                           && (
                             /* eslint-disable */
                             <a onClick={this.showPreview} className={settings.upload_position == 'flex-end' ? ('preview-btn-left') : ('preview-btn-right')}>
@@ -95,15 +95,15 @@ class DownloadView extends Component {
                             /* eslint-enable */
                           )
                         }
-                      </div>
-                    )}
+                    </div>
+
                   </div>
                 </Modal>
               </div>
 
             )}
 
-          {(showPreview || galleryOnly)
+        {(showPreview || galleryOnly)
             && (
             <Preview
               onZipDownload={onZipDownload}
@@ -112,8 +112,7 @@ class DownloadView extends Component {
             />
             )
           }
-        </div>
-      </Background>
+      </div>
     );
   }
 }
@@ -139,6 +138,7 @@ DownloadView.propTypes = {
   files: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   galleryOnly: PropTypes.bool,
   uploadName: PropTypes.string,
+  expiration: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(withTranslation()(DownloadView));

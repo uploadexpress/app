@@ -13,7 +13,7 @@ const File = (props) => {
       <img src={extensionToImageIcon(name)} alt="" />
       <div className="list-file-name list-info">{stringTruncate(name, 23)}</div>
       {/* eslint-disable */}
-      <img onClick={() => { props.onFileDownload(props.id); }} onMouseOver={e => e.currentTarget.src = DownloadIconHover} onMouseOut={e => e.currentTarget.src = DownloadIcon} className="ml-auto" style={{ width: '8%' }} src={DownloadIcon} alt="" />
+      <img onClick={() => { props.onFileDownload(props.id); }} onMouseOver={e => e.currentTarget.src = DownloadIconHover} onMouseOut={e => e.currentTarget.src = DownloadIcon} className="ml-auto img-download" style={{ width: '8%' }} src={DownloadIcon} alt="" />
     </div>
   );
 };

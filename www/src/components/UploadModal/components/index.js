@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ObjectID from 'bson-objectid';
+import { withTranslation } from 'react-i18next';
 import Modal from '../../Modal/index';
 import Dropfile from './Dropfile';
 import Listfiles from './Listfiles';
@@ -9,6 +10,8 @@ import { addFiles } from '../../../actions/uploader';
 import { FileStatus, UploaderStatus } from '../constants';
 import '../style/index.css';
 import LinkPreview from './LinkPreview';
+import Oops from '../../OopsPage';
+
 
 class Upload extends Component {
   state = {
@@ -33,15 +36,28 @@ class Upload extends Component {
 
   render() {
     const {
-      status, publicUpload, shouldDisplayOptions, files,
+      status,
+      publicUpload,
+      shouldDisplayOptions,
+      files,
+      description,
+      requestId,
+      error,
     } = this.props;
     const { id } = this.state;
 
+    if (error) {
+      return (
+        <Modal>
+          <Oops />
+        </Modal>
+      );
+    }
 
     return (
       <Modal>
         {status === UploaderStatus.NO_FILES
-          && <Dropfile onFilesSelected={this.onFilesSelected} />
+          && <Dropfile onFilesSelected={this.onFilesSelected} description={description} />
         }
         {(status === UploaderStatus.FILE_LIST
           || status === UploaderStatus.UPLOADING)
@@ -52,11 +68,12 @@ class Upload extends Component {
               onFilesSelected={this.onFilesSelected}
               onUploadCreated={this.onUploadCreated}
               files={files}
+              requestId={requestId}
             />
           )
         }
         {status === UploaderStatus.DONE
-          && <LinkPreview id={id} />
+          && <LinkPreview id={id} requestId={requestId} />
         }
       </Modal>
     );
@@ -79,6 +96,9 @@ function mapStateToProps(state) {
 Upload.defaultProps = {
   shouldDisplayOptions: false,
   publicUpload: true,
+  description: '',
+  requestId: '',
+  error: false,
 };
 
 Upload.propTypes = {
@@ -87,6 +107,10 @@ Upload.propTypes = {
   publicUpload: PropTypes.bool,
   shouldDisplayOptions: PropTypes.bool,
   files: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  description: PropTypes.string,
+  requestId: PropTypes.string,
+  error: PropTypes.bool,
+
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Upload);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Upload));
