@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from 'react-spinkit';
+import moment from 'moment';
 import DownloadView from '../../../components/DownloadView/components';
 import DownloadService from '../../../services/Api/DownloadService';
 import { setFiles } from '../../../actions/downloader';
@@ -29,7 +30,8 @@ class Download extends Component {
         result.data.gallery,
         result.data.name,
       );
-      const currentDate = Date.now();
+      const currentDate = moment().unix();
+      console.log(currentDate > result.data.expiration_date);
       const error = currentDate > result.data.expiration_date;
       this.setState({
         loading: false,
