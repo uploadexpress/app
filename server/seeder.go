@@ -80,6 +80,10 @@ func (a *API) SetupSeeds() error {
 				},
 			},
 		},
+		{
+			Name:  "promotional_info",
+			Value: false,
+		},
 	}
 
 	var settingsToCreate []models.Setting
