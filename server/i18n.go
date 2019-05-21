@@ -10,9 +10,7 @@ import (
 var AvailableLanguages = []string{"en", "fr", "ru"}
 
 func (a *API) SetupI18n() error {
-	a.I18n = &i18n.Bundle{
-		DefaultLanguage: language.English,
-	}
+	a.I18n = i18n.NewBundle(language.English)
 
 	for _, currLanguage := range AvailableLanguages {
 		file, err := a.I18n.LoadMessageFile(fmt.Sprintf("front/locales/%s/translation.json", currLanguage))
