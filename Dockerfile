@@ -1,4 +1,4 @@
-FROM golang:latest as build-backend
+FROM golang:1.12 as build-backend
 ENV GO111MODULE=on
 ADD . /go/src/github.com/uploadexpress/app/
 WORKDIR /go/src/github.com/uploadexpress/app/
