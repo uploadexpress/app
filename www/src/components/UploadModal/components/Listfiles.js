@@ -67,7 +67,9 @@ class Listfiles extends Component {
   }
 
   createFiles = () => {
-    const { files, startUploading, publicUpload } = this.props;
+    const {
+      files, startUploading, publicUpload, requestId,
+    } = this.props;
     const { uploadName, galleryOnly } = this.state;
 
     startUploading();
@@ -78,7 +80,7 @@ class Listfiles extends Component {
       size: file.fileInput.size,
     }));
 
-    this.uploadService.createUpload(filesData, uploadName, galleryOnly, publicUpload)
+    this.uploadService.createUpload(filesData, uploadName, galleryOnly, publicUpload, requestId)
       .then((res) => {
         this.beginUpload(res.data);
       });
@@ -268,6 +270,7 @@ Listfiles.propTypes = {
   publicUpload: PropTypes.bool,
   shouldDisplayOptions: PropTypes.bool.isRequired,
   status: PropTypes.symbol.isRequired,
+  requestId: PropTypes.string.isRequired,
 };
 
 export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Listfiles));

@@ -1,13 +1,14 @@
 import Service from './service';
 
 class UploadService extends Service {
-  createUpload = (files, name, gallery, pub) => {
+  createUpload = (files, name, gallery, pub, requestId) => {
     const resourceUrl = '/uploader/';
     return this.http.post(resourceUrl, {
       files,
       name,
       gallery,
       public: pub,
+      request_id: requestId,
     });
   }
 

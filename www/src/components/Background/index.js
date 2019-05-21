@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
+import { withTranslation, Trans } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { availableLanguages } from '../../i18n';
 import ReactFlagsSelect from '../FlagsSelect';
 import socialNetworks from '../../helpers/socialNetworks';
 import BackgroundSlider from '../Slideshow/components';
-
 import './index.css';
 
-class Background extends React.Component {
+class Background extends Component {
   withHttp = (url) => {
     if (!/^https?:\/\//i.test(url)) {
       return `http://${url}`;
@@ -93,7 +92,23 @@ class Background extends React.Component {
             )
           }
           {children}
+
+          {settings.promotional_info
+            && (
+              <div className="info">
+                <div className="info-text">
+                  <Trans i18nKey="background.promotional_info">
+                    Welcome to upload.express, free file sharing services. You can share up to
+                    <b> 4 Gb </b>
+                    per upload. Your files will be kept for
+                    <b> 7 </b>
+                    days. If you don't want to have size or time restrictions, look at our version Pro.
+                  </Trans>
+                </div>
+              </div>
+            )}
         </div>
+
       </div>
     );
   }
@@ -105,6 +120,7 @@ const mapStateToProps = state => ({
 });
 
 Background.propTypes = {
+  t: PropTypes.func.isRequired,
   i18n: PropTypes.shape({}).isRequired,
   settings: PropTypes.shape({}).isRequired,
   children: PropTypes.element.isRequired,

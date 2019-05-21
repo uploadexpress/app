@@ -141,3 +141,64 @@
     max-height: calc(100vh - 56px);
     overflow: hidden;
 }
+
+.request-textarea{
+    max-height: 134px;
+}
+
+.request-background{
+    position: fixed; 
+    background-color: black;
+    opacity:0.6;
+    top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.request-modal{
+    position: absolute;
+    top: 50%;  
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 8px;
+}
+
+.request-modal-header{
+    min-height: 100px;
+}
+
+.request-copy:hover{
+    color: black;
+    cursor: pointer;
+}
+
+.request-copied{
+    font-size: 14px;
+    margin-top: 8px;
+    color: #5BA3D4;
+}
+
+.request-files-watch{
+    font-size: 12px;
+    background-color: #5BA3D4;
+    color: white;
+    padding: 2px 10px;
+}
+
+.request-files-watch:hover{
+    color: white;
+    background-color: #1A6599;
+}
+
+.request-expand{
+    font-size:10px;
+}
+
+.request-expanded-row {
+    width: 50%;
+    margin: 12px 0px;
+    display: flex;
+    justify-content: space-between;
+}

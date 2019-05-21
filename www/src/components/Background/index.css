@@ -6,4 +6,46 @@
       width: 100vw !important;
       height: 100%!important;
     }
+}
+
+.info{
+  position: fixed;
+  bottom: 2%;
+  right: 2%;
+  background-color: rgba(255, 255, 255, 0.767);
+  border-radius: 6px;
+  border: 1px solid white;
+  width: 400px;
+  animation: slideInRight 2s, slideOutRight 2s 14s ease forwards;
+
+}
+
+.info-text{
+  font-size: 13px;
+  margin: 8px 20px;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translate3d(100%, 0, 0);
+    opacity: 0;
   }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity:1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  to {
+    visibility: hidden;
+    transform: translate3d(100%, 0, 0);
+    opacity: 0;
+  }
+}

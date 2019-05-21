@@ -14,6 +14,7 @@ import ImgCancel from '../../../img/img-cancel.svg';
 import socialNetworks from '../../../helpers/socialNetworks';
 
 import '../style/index.css';
+import Background from '../../../components/Background';
 
 class Settings extends Component {
   state = {
@@ -263,6 +264,19 @@ class Settings extends Component {
                     )}
                   </div>
                 </div>
+                
+                <div className="row mt-4">
+                  <div className="col-12">
+                    <div className="form-check">
+                      <label className="form-check-label settings-section mt-0" htmlFor="public_upload">
+                        <input type="checkbox" checked={settings.public_uploader} className="form-check-input" id="public_upload" onChange={(e) => { this.onInputChange('public_uploader', e.target.checked); }} />
+                        {t('panel.settings.publicUploader')}
+                      </label>
+                      <div className="settings-subtitle">{t('panel.settings.publicUploaderDescription')}</div>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="row">
                   <div className="col-12">
                     <div className="settings-section">{t('panel.settings.pageStyling')}</div>
@@ -379,17 +393,6 @@ class Settings extends Component {
                   </div>
                 </div>
 
-                <div className="row mt-4">
-                  <div className="col-12">
-                    <div className="form-check">
-                      <label className="form-check-label settings-section mt-0" htmlFor="public_upload">
-                        <input type="checkbox" checked={settings.public_uploader} className="form-check-input" id="public_upload" onChange={(e) => { this.onInputChange('public_uploader', e.target.checked); }} />
-                        {t('panel.settings.publicUploader')}
-                      </label>
-                      <div className="settings-subtitle">{t('panel.settings.publicUploaderDescription')}</div>
-                    </div>
-                  </div>
-                </div>
                 <div className="row">
                   <div className="col-12">
                     <div className="settings-section">{t('panel.settings.identity')}</div>
@@ -421,15 +424,17 @@ class Settings extends Component {
 
 
             <div className="col-md-8 settings-background-max-height">
-              <DownloadView
-                files={[
-                  {
-                    name: 'image.png', id: '0000', size: 223,
-                  },
-                ]}
-                onFileDownload={() => { }}
-                preview={false}
-              />
+              <Background>
+                <DownloadView
+                  files={[
+                    {
+                      name: 'image.png', id: '0000', size: 223,
+                    },
+                  ]}
+                  onFileDownload={() => { }}
+                  preview={false}
+                />
+              </Background>
             </div>
           </div>
         </div>

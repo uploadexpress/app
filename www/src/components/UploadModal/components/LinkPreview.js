@@ -48,17 +48,33 @@ class LinkPreview extends Component {
   }
 
   render() {
-    const { t, id } = this.props;
+    const { t, id, requestId } = this.props;
     const {
       copied, recipientEmails, emailSent, error,
     } = this.state;
     const downloadUrl = `${window.hostname}/download/${id}`;
+
+    if (requestId) {
+      return (
+        <div className="listfiles">
+          <div className="list-title">{t('upload.linkPreview.congratulations')}</div>
+          <hr />
+          <div className="d-flex ml-4 mr-4 align-items-center justify-content-center mt-5">
+            <div>
+              <img className="share-img" src={EmojiParty} style={{ width: '77%' }} alt="" />
+              <div className="share-title">{t('upload.linkPreview.done')}</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="listfiles">
         <Tabs>
           <TabList>
-            <Tab>Share link</Tab>
-            <Tab>Share via Email</Tab>
+            <Tab>{t('upload.linkPreview.link')}</Tab>
+            <Tab>{t('upload.linkPreview.email')}</Tab>
           </TabList>
           <TabPanel>
             <div className="list-container text-center">
@@ -84,12 +100,12 @@ class LinkPreview extends Component {
               <div className="list-container pt-0 pb-2 pr-2 pl-2 ml-2 mr-2" style={{ maxHeight: '244px' }}>
                 {error
                   && (
-                  <div className="error-message text-center pb-2">
-                    {error}
-                  </div>
+                    <div className="error-message text-center pb-2">
+                      {error}
+                    </div>
                   )
                 }
-                <div className="email-title mb-1">From:</div>
+                <div className="email-title mb-1">{t('upload.linkPreview.from')}</div>
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <span className="input-group-text input-img">
@@ -98,7 +114,7 @@ class LinkPreview extends Component {
                   </div>
                   <input type="email" className="form-control custom-form" placeholder="Email" name="email" aria-label="Email" required onChange={(e) => { this.setState({ senderEmail: e.target.value }); }} />
                 </div>
-                <div className="email-title mt-2 mb-1">To:</div>
+                <div className="email-title mt-2 mb-1">{t('upload.linkPreview.to')}</div>
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <span className="input-group-text input-img">
@@ -118,21 +134,21 @@ class LinkPreview extends Component {
                     ) => (
                       <div data-tag key={index}>
                         {email}
-                        <span data-tag-handle onClick={() => removeEmail(index)}>
+                        <span tabIndex="0" role="button" data-tag-handle onClick={() => removeEmail(index)}>
                             ×
                         </span>
                       </div>
                     )}
                   />
                 </div>
-                <div className="email-title mt-2 mb-1">Message:</div>
-                <textarea className="form-control email-textarea" placeholder="Write your message here" rows="3" onChange={(e) => { this.setState({ message: e.target.value }); }} />
+                <div className="email-title mt-2 mb-1">{t('upload.linkPreview.message')}</div>
+                <textarea className="form-control email-textarea" placeholder={t('upload.linkPreview.messagePlaceholder')} rows="3" onChange={(e) => { this.setState({ message: e.target.value }); }} />
               </div>
               <div className="list-footer">
-                { emailSent
-                  ? (<p className="text-center email-sent">Sent!</p>)
-                  : (<input type="submit" className="btn green-btn" value="Send" />)
-                 }
+                {emailSent
+                  ? (<p className="text-center email-sent">{t('upload.linkPreview.sent')}</p>)
+                  : (<input type="submit" className="btn green-btn" value={t('upload.linkPreview.send')} />)
+                }
 
               </div>
 
@@ -148,6 +164,7 @@ LinkPreview.propTypes = {
   t: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   i18n: PropTypes.shape({}).isRequired,
+  requestId: PropTypes.string.isRequired,
 
 };
 

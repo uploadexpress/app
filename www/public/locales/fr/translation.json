@@ -1,86 +1,96 @@
 {
-    "upload":{
-        "dropfile" : "Déposez vos fichiers ici",
-        "linkPreview" : {
-            "title" : "Partagez votre lien",
-            "done" : "C'est fini !",
-            "copyLink" : "Copiez votre lien de téléchargement : ",
-            "copy" : "Copier",
-            "copied" : "Copié !"
+    "background":{
+        "promotional_info": "Bienvenue sur upload.express, services de partage de fichiers gratuits. Vous pouvez partager jusqu'à <1> 4 Go </1> par téléchargement. Vos fichiers seront conservés pendant <1>7 </1>jours. Si vous ne voulez pas avoir de restrictions de taille ou de temps, regardez notre version Pro"
+
+    },
+    "upload": {
+        "dropfile": "Déposez vos fichiers ici",
+        "linkPreview": {
+            "title": "Partagez votre lien",
+            "done": "C'est fini !",
+            "copyLink": "Copiez votre lien de téléchargement : ",
+            "copy": "Copier",
+            "copied": "Copié !",
+            "congratulations": "Félicitations!",
+            "link": "Lien",
+            "email": "Par email",
+            "from": "De:",
+            "to": "À:",
+            "message": "Message:",
+            "messagePlaceholder": "Ecrivez votre message ici",
+            "sent": "Envoyé!",
+            "send": "Envoyer"
         },
-        "listFile" : {
-            "title" : "Vos fichiers",
-            "addFile" : "Ajouter un fichier",
-            "upload" : "Transférer",
+        "listFile": {
+            "title": "Vos fichiers",
+            "addFile": "Ajouter un fichier",
+            "upload": "Transférer",
             "save": "Sauvegarder",
             "options": "Options",
             "uploadName": "Choisissez le nom de votre envoi:",
             "uploadBackground": "Choisissez les images d'arrière-plan pour cet envoi:",
             "uploadImage": "Envoyer des images",
             "onlyGallery": "Afficher seulement la galerie"
-
         }
     },
-
-    "download":{
-        "header" : "Télécharger",
-        "button" : "Télécharger tout",
-        "gallery" : "Galerie",
-        "oops":{
-            "header" : "Oups !",
-            "title" : "Quelque chose a mal tourné !",
-            "subtitle" : "Ce lien n'existe pas." 
-        }
+    "download": {
+        "header": "Télécharger",
+        "button": "Télécharger tout",
+        "gallery": "Galerie",
+        "oops": {
+            "header": "Oups !",
+            "title": "Quelque chose a mal tourné !",
+            "subtitle": "Ce lien n'existe pas."
+        },
+        "expiration_date": "Expiration: {{date, expiration}}"
     },
-
     "preview": {
         "download": "Télécharger",
         "download_all": "Télécharger tout"
     },
-
-    "panel":{
-        "uploadList":{
-            "title" : "Vos envois",
-            "uploadFile" : "Envoyer des fichiers",
-            "name" : "Nom",
-            "link" : "Lien",
-            "files" : "Fichiers",
-            "downloads" : "Téléchargements",
-            "previous" : "précédent",
-            "next" : "suivant",
+    "panel": {
+        "uploadList": {
+            "title": "Vos envois",
+            "uploadFile": "Envoyer des fichiers",
+            "name": "Nom",
+            "link": "Lien",
+            "files": "Fichiers",
+            "downloads": "Téléchargements",
+            "previous": "précédent",
+            "next": "suivant",
             "actions": "Actions"
         },
-        "settings":{
-            "administration" : "Administration",
-            "save" : "Sauvegarder",
-            "saved" : "Sauvegardé!",
-            "pageStyling" : "Design de la page de téléchargement",
-            "title" : "Titre de la page",
-            "titleDescription" : "Nom de la page de téléchargement. Affiché dans l'onglet du navigateur.",
-            "identity" : "Identité",
-            "backgroundImage" : "Images de fond",
-            "backgroundDescription" : "Les images d'arrière-plan montrées à vos clients lors du téléchargement d'un fichier. Ces images doivent représenter votre entreprise.",
-            "socialAccounts" : "Réseaux sociaux",
-            "links" : "Liens vers vos comptes de réseaux sociaux",
-            "urlFacebook" : "URL de votre page Facebook",
-            "urlTweeter" : "URL de votre profil Twitter",
-            "urlInstagram" : "URL de votre profil Instagram",
-            "urlWebsite" : "URL de votre site web personnel",
-            "uploadImg" : "Sélectionner une image",
-            "delete" : "Supprimer",
-            "logo" : "Logo",
-            "logoDescription" : "Le logo sera affiché au dessus de la fenêtre de téléchargement.",
-            "uploadPosition" : "Position de la fenêtre de téléchargement",
-            "uploadPositionDescription" : "Vous pouvez choisir ici la position de la fenêtre de téléchargement",
-            "center" : "centre",
-            "left" : "gauche",
-            "right" : "droite",
-            "menuPosition" : "Position du menu",
-            "menuPositionDescription" : "Vous pouvez choisir ici la position du menu",
-            "menuColor" : "Couleur du menu",
-            "menuColorDescription" : "Vous pouvez choisir ici la couleur du menu",
-            "publicUploader" : "Fenêtre de téléchargement publique",
-            "publicUploaderDescription" : "Si vous cochez cette case, vous autorisez des tiers à vous envoyer des fichiers. Sinon, l'uploader ne sera disponible que sur votre panel",
+        "settings": {
+            "administration": "Administration",
+            "save": "Sauvegarder",
+            "saved": "Sauvegardé!",
+            "pageStyling": "Design de la page de téléchargement",
+            "title": "Titre de la page",
+            "titleDescription": "Nom de la page de téléchargement. Affiché dans l'onglet du navigateur.",
+            "identity": "Identité",
+            "backgroundImage": "Images de fond",
+            "backgroundDescription": "Les images d'arrière-plan montrées à vos clients lors du téléchargement d'un fichier. Ces images doivent représenter votre entreprise.",
+            "socialAccounts": "Réseaux sociaux",
+            "links": "Liens vers vos comptes de réseaux sociaux",
+            "urlFacebook": "URL de votre page Facebook",
+            "urlTweeter": "URL de votre profil Twitter",
+            "urlInstagram": "URL de votre profil Instagram",
+            "urlWebsite": "URL de votre site web personnel",
+            "uploadImg": "Sélectionner une image",
+            "delete": "Supprimer",
+            "logo": "Logo",
+            "logoDescription": "Le logo sera affiché au dessus de la fenêtre de téléchargement.",
+            "uploadPosition": "Position de la fenêtre de téléchargement",
+            "uploadPositionDescription": "Vous pouvez choisir ici la position de la fenêtre de téléchargement",
+            "center": "centre",
+            "left": "gauche",
+            "right": "droite",
+            "menuPosition": "Position du menu",
+            "menuPositionDescription": "Vous pouvez choisir ici la position du menu",
+            "menuColor": "Couleur du menu",
+            "menuColorDescription": "Vous pouvez choisir ici la couleur du menu",
+            "publicUploader": "Fenêtre de téléchargement publique",
+            "publicUploaderDescription": "Si vous cochez cette case, vous autorisez des tiers à vous envoyer des fichiers. Sinon, l'uploader ne sera disponible que sur votre panel",
             "linkName": "Nom du lien",
             "linkUrl": "URL du lien",
             "navigationLinksTitle": "Liens du menu",
@@ -89,36 +99,57 @@
             "chooseNetwork": "--Choisissez un réseau social--",
             "addNetwork": "Ajouter",
             "yourNetworkUrl": "URL de votre {{name}}"
-
         },
-
-        "signin":{
-            "signin" : "Se connecter",
-            "forgot" : "Oublié ?",
-            "login" : "Connectez-vous",
-            "error" : "Mot de passe ou email incorrect !"
+        "signin": {
+            "signin": "Se connecter",
+            "forgot": "Oublié ?",
+            "login": "Connectez-vous",
+            "error": "Mot de passe ou email incorrect !"
         },
-
-        "setup" : {
-            "setup" : "Installation",
+        "setup": {
+            "setup": "Installation",
             "explanation": "Il est temps de configurer votre uploader. Vous utiliserez le compte que vous allez créer ci-dessous pour accéder à un panel qui vous permettra de personnaliser le design de votre page de téléchargement et de voir vos statistiques.",
-            "firstName" : "Prénom",
-            "lastName" : "Nom de famille",
-            "email" : "Adresse e-mail",
-            "password" : "Mot de passe",
-            "min" : "8 caractères min",
-            "passwordConfirm" : "Confirmer le mot de passe",
-            "passwordErr" : "Les mots de passe ne correspondent pas.",
-            "setupBtn" : "Installer"
+            "firstName": "Prénom",
+            "lastName": "Nom de famille",
+            "email": "Adresse e-mail",
+            "password": "Mot de passe",
+            "min": "8 caractères min",
+            "passwordConfirm": "Confirmer le mot de passe",
+            "passwordErr": "Les mots de passe ne correspondent pas.",
+            "setupBtn": "Installer"
+        },
+        "request": {
+            "new": "Nouvelle demande de fichier",
+            "save": "Sauvegarder",
+            "accessibility": "Accessibilité",
+            "accessibiltyDescription": "Choisissez public si vous souhaitez que plusieurs personnes téléchargent des fichiers avec le lien généré. Choisissez privé si vous voulez qu'une seule personne soumette un fichier.",
+            "public": "Publique",
+            "private": "Privé",
+            "name": "Prénom",
+            "nameDescription": "Le nom ne sera affiché que sur votre panel.",
+            "description": "Description",
+            "descriptionDescription": "Une brève description des fichiers que vous souhaitez demander à vos clients.",
+            "success": "Vous avez créé avec succès votre demande de fichier. Voici le lien à partager:",
+            "copied": "Copié!",
+            "back": "Retourner au panneau",
+            "requests": "Vos demandes de dossier",
+            "createNew": "Créer une nouvelle demande de fichier",
+            "info": "Info",
+            "uploads": "Uploads",
+            "link": "Lien",
+            "actions": "Actions",
+            "files": "{{number}} fichier(s) envoyé(s)",
+            "showFiles": "Afficher les fichiers",
+            "delete": "Effacer",
+            "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer cette demande?"
         }
     },
-
-    "navbar":{
-        "uploads" : "Vos envois",
-        "settings" : "Réglages",
-        "logout" : "Déconnexion"
+    "navbar": {
+        "uploads": "Vos envois",
+        "settings": "Réglages",
+        "logout": "Déconnexion",
+        "requests": "Vos demandes"
     },
-
     "emails": {
         "newUpload": {
             "subject": "{{.sender}} vous a envoyé {{.count}} fichiers via upload.express",

@@ -1,4 +1,7 @@
 {
+    "background": {
+        "promotional_info": "Welcome to upload.express, free file sharing services. You can share up to <1> 4 Gb </1> per upload. Your files will be kept for <1> 7 </1>days. If you don't want to have size or time restrictions, look at our version Pro."
+    },
     "upload":{
         "dropfile": "Drop your files here",
         "linkPreview": {
@@ -6,7 +9,16 @@
             "done": "You're done!",
             "copyLink": "Copy your download link: ",
             "copy": "Copy",
-            "copied": "Copied!"
+            "copied": "Copied!",
+            "congratulations": "Congratulations!",
+            "link": "Share a link",
+            "email": "Share via email",
+            "from": "From:",
+            "to": "To:",
+            "message": "Message:",
+            "messagePlaceholder": "Write your message here",
+            "sent": "Sent!",
+            "send": "Send"
         },
         "listFile": {
             "title": "Your files",
@@ -30,7 +42,8 @@
             "header": "Oops!",
             "title": "Something went wrong!",
             "subtitle": "This link does not exist." 
-        }
+        }, 
+        "expiration_date": "expires {{date, expiration}}"
     },
 
     "preview": {
@@ -50,6 +63,32 @@
             "next": "next",
             "actions": "Actions"
         },
+        "request":{
+            "new": "New File Request",
+            "save": "Save",
+            "accessibility": "Accessibility",
+            "accessibiltyDescription": "Choose public if you want multiple persons to upload files with the link generated. Choose private if you only want one person to submit a file.",
+            "public": "Public",
+            "private": "Private",
+            "name": "Name",
+            "nameDescription": "The name will only be displayed on your panel.",
+            "description": "Description",
+            "descriptionDescription": "A brief description of the files you want to request from your client(s).",
+            "success": "You successfully created your file request. Here is your link:",
+            "copied": "Copied!",
+            "back": "Go back to panel",
+            "requests": "Your file requests",
+            "createNew": "Create a new fle request",
+            "info": "Info",
+            "uploads": "Uploads",
+            "link": "Link",
+            "actions": "Actions",
+            "files": "{{number}} file(s) sent",
+            "showFiles": "Show files",
+            "delete": "Delete",
+            "deleteConfirmation": "Are you sure you wish to delete this request?"
+        },
+
         "settings":{
             "administration": "Administration",
             "save": "Save changes",
@@ -117,7 +156,8 @@
     "navbar":{
         "uploads": "Your uploads",
         "settings": "Settings",
-        "logout": "Logout"
+        "logout": "Logout",
+        "requests": "Your requests"
     },
 
     "emails": {

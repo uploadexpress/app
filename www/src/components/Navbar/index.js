@@ -22,6 +22,9 @@ const Navbar = (props) => {
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
+            <Link className="nav-link text-white" to="/panel/requests">{t('navbar.requests')}</Link>
+          </li>
+          <li className="nav-item">
             <Link to="/panel" className="nav-link text-white">{t('navbar.uploads')}</Link>
           </li>
           <li className="nav-item">
