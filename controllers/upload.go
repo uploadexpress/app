@@ -237,6 +237,49 @@ func (uploadController *UploadController) CreatePreSignedRequest(c *gin.Context)
 	c.JSON(http.StatusOK, gin.H{"url": str})
 }
 
+func (uploadController *UploadController) UploadFile(c *gin.Context) {
+	uploadId := c.Param("upload_id")
+	upload, err := store.FetchUpload(c, uploadId)
+	if err != nil {
+		_ = c.Error(err)
+		c.Abort()
+		return
+	}
+
+	if upload.Ready {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("upload_finished", "The upload has already finished", nil))
+		return
+	}
+
+	var file *models.File
+	for _, cFile := range upload.Files {
+		if cFile.Id == c.Param("file_id") {
+			file = cFile
+		}
+	}
+	if file == nil {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_file_id", "The file was not found", nil))
+		return
+	}
+
+	readerCounter := helpers.NewReaderCounter(c.Request.Body)
+	_, err = s3.PutObject(config.NewAwsConfigurationFromContext(c), "uploads/"+upload.Id+"/"+file.Id+"/"+url.PathEscape(file.Name), readerCounter, false)
+	if err != nil {
+		_ = c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("upload_failed", "could not upload the file", err))
+		return
+	}
+
+	// update size uploaded
+	file.Size = int64(readerCounter.Count())
+	if err := store.EditUpload(c, upload.Id, params.M{"files": upload.Files, "ready": true}); err != nil {
+		_ = c.Error(err)
+		c.Abort()
+		return
+	}
+
+	c.JSON(http.StatusOK, nil)
+}
+
 func (uploadController *UploadController) CreateMultiPartUpload(c *gin.Context) {
 	uploadId := c.Param("upload_id")
 	upload, err := store.FetchUpload(c, uploadId)
