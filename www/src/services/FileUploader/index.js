@@ -75,7 +75,6 @@ const proxyUpload = async (uploadId, file, onUploadProgress) => {
       if (filePart.size > 0) {
         const res = await uploadService.uploadPart(uploadId, file.id, s3UploadId, partNum, filePart,
           (event) => {
-            console.log(event.loaded);
             onUploadProgress({ loaded: progress + event.loaded, total: fileData.size });
           });
         uploadedParts.push({ e_tag: res.headers.etag, part_number: partNum });
