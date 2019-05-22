@@ -10,6 +10,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/uploadexpress/app/constants"
+
 	"github.com/uploadexpress/app/services/email"
 	"github.com/uploadexpress/app/services/i18n"
 
@@ -271,12 +273,71 @@ func (uploadController *UploadController) UploadFile(c *gin.Context) {
 
 	// update size uploaded
 	file.Size = int64(readerCounter.Count())
-	if err := store.EditUpload(c, upload.Id, params.M{"files": upload.Files, "ready": true}); err != nil {
+	if err := store.EditUpload(c, upload.Id, params.M{"files": upload.Files}); err != nil {
 		_ = c.Error(err)
 		c.Abort()
 		return
 	}
 
+	c.JSON(http.StatusOK, nil)
+}
+
+func (uploadController *UploadController) UploadPart(c *gin.Context) {
+	uploadId := c.Param("upload_id")
+	partNumberString := c.Param("part_number")
+	s3UploadId := c.Param("s3_upload_id")
+
+	upload, err := store.FetchUpload(c, uploadId)
+	if err != nil {
+		_ = c.Error(err)
+		c.Abort()
+		return
+	}
+
+	partNumber, err := strconv.ParseInt(partNumberString, 10, 64)
+	if err != nil {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("wrong_part_number", err.Error(), nil))
+		return
+	}
+
+	if upload.Ready {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("upload_finished", "The upload has already finished", nil))
+		return
+	}
+
+	var file *models.File
+	for _, cFile := range upload.Files {
+		if cFile.Id == c.Param("file_id") {
+			file = cFile
+		}
+	}
+	if file == nil {
+		_ = c.AbortWithError(http.StatusBadRequest, helpers.ErrorWithCode("invalid_file_id", "The file was not found", nil))
+		return
+	}
+
+	body, err := ioutil.ReadAll(io.LimitReader(c.Request.Body, int64(50*constants.MB)))
+	if err != nil {
+		_ = c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("upload_failed", "could not upload the file", err))
+		return
+	}
+
+	reader := bytes.NewReader(body)
+	etag, err := s3.UploadPart(config.NewAwsConfigurationFromContext(c), uploadId, *file, partNumber, s3UploadId, reader)
+	if err != nil {
+		_ = c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("upload_failed", "could not upload the file", err))
+		return
+	}
+
+	// update size uploaded
+	file.Size = int64(len(body)) + file.Size
+	if err := store.EditUpload(c, upload.Id, params.M{"files": upload.Files}); err != nil {
+		_ = c.Error(err)
+		c.Abort()
+		return
+	}
+
+	c.Header("ETag", etag)
 	c.JSON(http.StatusOK, nil)
 }
 

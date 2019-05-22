@@ -28,7 +28,7 @@ func (a *API) SetupRouter() {
 		Origins:         "*",
 		Methods:         "GET, PUT, POST, DELETE",
 		RequestHeaders:  "Origin, Authorization, Content-Type",
-		ExposedHeaders:  "",
+		ExposedHeaders:  "ETag",
 		MaxAge:          50 * time.Second,
 		Credentials:     true,
 		ValidateHeaders: false,
@@ -65,6 +65,7 @@ func (a *API) SetupRouter() {
 			uploader.GET("/:upload_id/file/:file_id/upload_url", uploaderController.CreatePreSignedRequest)
 			uploader.GET("/:upload_id/file/:file_id/create_multipart", uploaderController.CreateMultiPartUpload)
 			uploader.GET("/:upload_id/file/:file_id/part_url/:s3_upload_id/part/:part_number", uploaderController.CreateUploadPartPreSignedRequest)
+			uploader.PUT("/:upload_id/file/:file_id/upload/:s3_upload_id/part/:part_number", uploaderController.UploadPart)
 			uploader.POST("/:upload_id/file/:file_id/complete_multipart/:s3_upload_id", uploaderController.CompleteMultiPartUpload)
 			uploader.PUT("/:upload_id/file/:file_id/upload", uploaderController.UploadFile)
 			uploader.POST("/:upload_id/mail", uploaderController.SendMail)

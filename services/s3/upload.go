@@ -58,6 +58,29 @@ func CreateUploadPartPreSignedUrl(configuration config.AwsConfiguration, uploadI
 	return str, nil
 }
 
+func UploadPart(configuration config.AwsConfiguration, uploadId string, file models.File, partNumber int64, s3UploadId string, reader io.ReadSeeker) (string, error) {
+	sess, err := CreateAwsSession(configuration)
+	if err != nil {
+		return "", err
+
+	}
+
+	key := "uploads/" + uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)
+	svc := s3.New(sess)
+	output, err := svc.UploadPart(&s3.UploadPartInput{
+		Body:       reader,
+		Bucket:     aws.String(configuration.Bucket),
+		Key:        aws.String(key),
+		PartNumber: aws.Int64(partNumber),
+		UploadId:   aws.String(s3UploadId),
+	})
+	if err != nil {
+		return "", err
+	}
+
+	return *output.ETag, nil
+}
+
 func CreateMultipartUpload(configuration config.AwsConfiguration, uploadId string, file models.File) (string, error) {
 	sess, err := CreateAwsSession(configuration)
 	if err != nil {

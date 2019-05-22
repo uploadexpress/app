@@ -54,15 +54,51 @@ const directUpload = async (uploadId, file, onUploadProgress) => {
   return file.id;
 };
 
+const proxyUpload = async (uploadId, file, onUploadProgress) => {
+  if (file.fileInput.size > PART_SIZE) {
+    // multipart upload
+    const res = await uploadService.createMultipartUpload(uploadId, file.id);
+    const s3UploadId = res.data.upload_id;
+    const uploadedParts = [];
+
+    let start = 0;
+    let end = 0;
+    let partNum = 1;
+    const fileData = file.fileInput;
+
+    while (start < fileData.size) {
+      const progress = start;
+      end = Math.min(start + PART_SIZE, fileData.size);
+      const filePart = fileData.slice(start, end);
+
+      // this is to prevent push blob with 0Kb
+      if (filePart.size > 0) {
+        const res = await uploadService.uploadPart(uploadId, file.id, s3UploadId, partNum, filePart,
+          (event) => {
+            console.log(event.loaded);
+            onUploadProgress({ loaded: progress + event.loaded, total: fileData.size });
+          });
+        uploadedParts.push({ e_tag: res.headers.etag, part_number: partNum });
+      }
+      start = PART_SIZE * (partNum);
+      partNum += 1;
+    }
+
+    await uploadService.completeMultipartRequest(uploadId, file.id, s3UploadId, uploadedParts);
+    return file.id;
+  }
+
+  await uploadService.uploadFile(uploadId, file.id, file.fileInput, onUploadProgress);
+  return file.id;
+};
+
 async function startUploading(uploadId, file, onUploadProgress) {
   if (process.env.DIRECT_UPLOAD) {
     await directUpload(uploadId, file, onUploadProgress);
     return file.id;
   }
 
-  await uploadService.uploadFile(uploadId, file.id, file.fileInput, onUploadProgress);
-
-  return file.id;
+  return proxyUpload(uploadId, file, onUploadProgress);
 }
 
 export default startUploading;

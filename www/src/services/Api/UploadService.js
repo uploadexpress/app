@@ -17,6 +17,11 @@ class UploadService extends Service {
     return this.http.put(resourceUrl, fileData, { onUploadProgress });
   }
 
+  uploadPart = (uploadId, fileId, s3UploadId, partNumber, fileData, onUploadProgress) => {
+    const resourceUrl = `/uploader/${uploadId}/file/${fileId}/upload/${s3UploadId}/part/${partNumber}`;
+    return this.http.put(resourceUrl, fileData, { onUploadProgress });
+  }
+
   getFileUploadUrl = (uploadId, fileId) => {
     const resourceUrl = `/uploader/${uploadId}/file/${fileId}/upload_url`;
     return this.http.get(resourceUrl);
