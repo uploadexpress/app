@@ -15,8 +15,8 @@ FROM alpine:latest
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 WORKDIR /app
 COPY --from=build-backend /go/src/github.com/uploadexpress/app/main .
+COPY --from=build-backend /usr/src/app/templates .
 COPY --from=build-frontend /usr/src/app/build ./front
-COPY --from=build-frontend /usr/src/app/templates .
 EXPOSE 4000
 RUN chmod +x ./main
 CMD ["./main"]
