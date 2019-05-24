@@ -1,7 +1,6 @@
 {
     "background":{
-        "promotional_info": "Bienvenue sur upload.express, services de partage de fichiers gratuits. Vous pouvez partager jusqu'à <1> 4 Go </1> par téléchargement. Vos fichiers seront conservés pendant <1>7 </1>jours. Si vous ne voulez pas avoir de restrictions de taille ou de temps, regardez notre version Pro"
-
+        "promotional_info": "Bienvenue sur upload.express, service de partage de fichiers gratuit. Vous pouvez partager jusqu'à <1> 4 Go </1> par téléchargement. Vos fichiers seront conservés pendant <1>7</1> jours. Si vous ne voulez pas avoir de restrictions de taille ou de temps, regardez notre version Pro"
     },
     "upload": {
         "dropfile": "Déposez vos fichiers ici",
