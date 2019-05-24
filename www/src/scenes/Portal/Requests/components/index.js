@@ -143,9 +143,6 @@ class Requests extends Component {
               {row.uploads.indexOf(upload) + 1}
             </td>
             <td className="table-body-title">
-              {upload.files.length}
-              {' '}
-file(s) sent
               {t('panel.request.files', { number: upload.files.length })}
             </td>
             <td className="table-body-title">
