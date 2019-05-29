@@ -2,7 +2,6 @@
     position: relative;
     display: inline-block;
     vertical-align: inherit;
-    padding-bottom: 5px;
     font-weight: bold;
     text-align: left; }
     .flag-select img {
@@ -12,7 +11,9 @@
       top: 0.3em; }
     .flag-select .selected--flag--option {
       cursor: pointer;
-      padding: 0 8px; }
+      padding: 0 8px; 
+      vertical-align: middle;
+      display: inline-block; }
       .flag-select .selected--flag--option:before {
         content: ' ';
         display: block;
