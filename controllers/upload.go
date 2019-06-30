@@ -6,7 +6,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 	"strconv"
 	"time"
 
@@ -93,7 +92,7 @@ func (uploadController *UploadController) CreateDirectUpload(c *gin.Context) {
 	}
 
 	readerCounter := helpers.NewReaderCounter(c.Request.Body)
-	_, err := s3.PutObject(config.NewAwsConfigurationFromContext(c), "uploads/"+upload.Id+"/"+file.Id+"/"+url.PathEscape(file.Name), readerCounter, false)
+	_, err := s3.PutObject(config.NewAwsConfigurationFromContext(c), "uploads/"+upload.Id+"/"+file.Id, readerCounter, false)
 	if err != nil {
 		_ = c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("upload_failed", "could not upload the file", err))
 		return
@@ -265,7 +264,7 @@ func (uploadController *UploadController) UploadFile(c *gin.Context) {
 	}
 
 	readerCounter := helpers.NewReaderCounter(c.Request.Body)
-	_, err = s3.PutObject(config.NewAwsConfigurationFromContext(c), "uploads/"+upload.Id+"/"+file.Id+"/"+url.PathEscape(file.Name), readerCounter, false)
+	_, err = s3.PutObject(config.NewAwsConfigurationFromContext(c), "uploads/"+upload.Id+"/"+file.Id, readerCounter, false)
 	if err != nil {
 		_ = c.AbortWithError(http.StatusInternalServerError, helpers.ErrorWithCode("upload_failed", "could not upload the file", err))
 		return

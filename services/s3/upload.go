@@ -3,7 +3,6 @@ package s3
 import (
 	"fmt"
 	"io"
-	"net/url"
 	"time"
 
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
@@ -26,7 +25,7 @@ func CreatePutObjectPreSignedUrl(configuration config.AwsConfiguration, uploadId
 	svc := s3.New(sess)
 	req, _ := svc.PutObjectRequest(&s3.PutObjectInput{
 		Bucket: aws.String(configuration.Bucket),
-		Key:    aws.String("uploads/" + uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
+		Key:    aws.String("uploads/" + uploadId + "/" + file.Id),
 	})
 	str, err := req.Presign(time.Hour)
 	if err != nil {
@@ -46,7 +45,7 @@ func CreateUploadPartPreSignedUrl(configuration config.AwsConfiguration, uploadI
 	svc := s3.New(sess)
 	req, _ := svc.UploadPartRequest(&s3.UploadPartInput{
 		Bucket:     aws.String(configuration.Bucket),
-		Key:        aws.String("uploads/" + uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
+		Key:        aws.String("uploads/" + uploadId + "/" + file.Id),
 		PartNumber: aws.Int64(partNumber),
 		UploadId:   aws.String(s3UploadId),
 	})
@@ -65,7 +64,7 @@ func UploadPart(configuration config.AwsConfiguration, uploadId string, file mod
 
 	}
 
-	key := "uploads/" + uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)
+	key := "uploads/" + uploadId + "/" + file.Id
 	svc := s3.New(sess)
 	output, err := svc.UploadPart(&s3.UploadPartInput{
 		Body:       reader,
@@ -90,7 +89,7 @@ func CreateMultipartUpload(configuration config.AwsConfiguration, uploadId strin
 	svc := s3.New(sess)
 	output, _ := svc.CreateMultipartUpload(&s3.CreateMultipartUploadInput{
 		Bucket: aws.String(configuration.Bucket),
-		Key:    aws.String("uploads/" + uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
+		Key:    aws.String("uploads/" + uploadId + "/" + file.Id),
 	})
 	if err != nil {
 		return "", err
@@ -116,7 +115,7 @@ func CompleteMultipartUpload(configuration config.AwsConfiguration, uploadId str
 	svc := s3.New(sess)
 	_, err = svc.CompleteMultipartUpload(&s3.CompleteMultipartUploadInput{
 		Bucket:   aws.String(configuration.Bucket),
-		Key:      aws.String("uploads/" + uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
+		Key:      aws.String("uploads/" + uploadId + "/" + file.Id),
 		UploadId: aws.String(s3UploadId),
 		MultipartUpload: &s3.CompletedMultipartUpload{
 			Parts: s3Parts,

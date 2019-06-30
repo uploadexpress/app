@@ -92,7 +92,7 @@ const proxyUpload = async (uploadId, file, onUploadProgress) => {
 };
 
 async function startUploading(uploadId, file, onUploadProgress) {
-  if (process.env.DIRECT_UPLOAD) {
+  if (process.env.REACT_APP_DIRECT_UPLOAD === 'true') {
     await directUpload(uploadId, file, onUploadProgress);
     return file.id;
   }

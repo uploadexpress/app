@@ -31,7 +31,6 @@ class Download extends Component {
         result.data.name,
       );
       const currentDate = moment().unix();
-      console.log(currentDate > result.data.expiration_date);
       const error = currentDate > result.data.expiration_date;
       this.setState({
         loading: false,

@@ -2,7 +2,6 @@ package s3
 
 import (
 	"io"
-	"net/url"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -21,7 +20,7 @@ func GetObjectLink(configuration config.AwsConfiguration, uploadId string, file 
 	svc := s3.New(sess)
 	req, _ := svc.GetObjectRequest(&s3.GetObjectInput{
 		Bucket:                     aws.String(configuration.Bucket),
-		Key:                        aws.String("uploads/" + uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
+		Key:                        aws.String("uploads/" + uploadId + "/" + file.Id),
 		ResponseContentDisposition: aws.String("attachment; filename =\"" + file.Name + "\""),
 	})
 	urlStr, err := req.Presign(time.Hour)
@@ -41,7 +40,7 @@ func GetObjectReader(configuration config.AwsConfiguration, uploadId string, fil
 	svc := s3.New(sess)
 	reader, err := svc.GetObject(&s3.GetObjectInput{
 		Bucket: aws.String(configuration.Bucket),
-		Key:    aws.String("uploads/" + uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
+		Key:    aws.String("uploads/" + uploadId + "/" + file.Id),
 	})
 	if err != nil {
 		return nil, err
@@ -59,7 +58,7 @@ func GetObjectHeader(configuration config.AwsConfiguration, uploadId string, fil
 	svc := s3.New(sess)
 	reader, err := svc.GetObject(&s3.GetObjectInput{
 		Bucket: aws.String(configuration.Bucket),
-		Key:    aws.String("uploads/" + uploadId + "/" + file.Id + "/" + url.PathEscape(file.Name)),
+		Key:    aws.String("uploads/" + uploadId + "/" + file.Id),
 		Range:  aws.String("bytes=0-261"),
 	})
 	if err != nil {
