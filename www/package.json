@@ -7,7 +7,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.7.2",
     "@fortawesome/free-solid-svg-icons": "^5.7.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "bootstrap": "^4.2.1",
     "bson-objectid": "^1.2.4",
     "css-vendor": "^2.0.1",
