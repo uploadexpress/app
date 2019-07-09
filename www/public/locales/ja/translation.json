@@ -1,0 +1,57 @@
+{
+    "background": {
+        "promotional_info": "Welcome to upload.express, free file sharing services. You can share up to <1> 4 Gb </1> per upload. Your files will be kept for <1> 7 </1>days. If you don't want to have size or time restrictions, look at our version Pro."
+    },
+    "upload": {
+        "dropfile": "ファイルをドラッグアンドドロップ",
+        "linkPreview": {
+            "title": "リンク共有",
+            "done": "完了！",
+            "copyLink": "ダウンロードリンクをコピー",
+            "copy": "コピー",
+            "copied": "コピーされました!",
+            "congratulations": "おめでとう！",
+            "link": "リンク共有",
+            "email": "メール共有",
+            "from": "差出人",
+            "to": "宛先",
+            "message": "メッセージ",
+            "messagePlaceholder": "メッセージをここに書いてください",
+            "sent": "発送されました！",
+            "send": "発送"
+        },
+        "listFile": {
+            "title": "自分のファイル",
+            "addFile": "ファイル追加",
+            "upload": "アップロード",
+            "save": "保存",
+            "options": "設定",
+            "uploadName": "アップロード名",
+            "uploadBackground": "現在アップロードの背景画像を選択",
+            "uploadImage": "画像をアップロード",
+            "onlyGallery": "ギャラリーのみ"
+        }
+    },
+    "download": {
+        "header": "ダウンロード",
+        "button": "すべてをダウンロード",
+        "gallery": "ギャラリー",
+        "oops": {
+            "header": "おっと！",
+            "title": "問題が発生しました！",
+            "subtitle": "リンク先は存在しません。"
+        }
+    },
+    "preview": {
+        "download": "ダウンロード",
+        "download_all": "すべてをダウンロード"
+    },
+    "emails": {
+        "newUpload": {
+            "subject": "upload.expressを通して、{{.sender}}から{{.count}}ファイルが届きました",
+            "header": "{{.sender}}からファイルを貰いました",
+            "subtitle": "upload.expressから{{.count}}ファイルが届きました。",
+            "downloadButton": "今すぐダウンロード"
+        }
+    }
+}

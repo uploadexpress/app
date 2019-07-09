@@ -5,7 +5,7 @@ import { initReactI18next } from 'react-i18next';
 import moment from 'moment';
 
 const fallbackLng = ['en'];
-export const availableLanguages = ['en', 'ru', 'fr'];
+export const availableLanguages = ['en', 'ru', 'fr', 'zh-TW', 'ja'];
 
 // Import necessary locales
 availableLanguages.forEach((element) => {
