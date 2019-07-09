@@ -1,0 +1,62 @@
+{
+    "background": {
+        "promotional_info": "歡迎來到免費的文件共享服務 - upload.express。您每次上傳可以共享高達 <1>4 Gb</1>。您的文件將被保留<1>7</1>天。如果您不想要有大小或時間限制，請查看我們的Pro版本。"
+    },
+    "upload":{
+        "dropfile": "拖放您的文件到這裡",
+        "linkPreview": {
+            "title": "分享您的鏈接",
+            "done": "大功告成!",
+            "copyLink": "複製您的下載鏈接：",
+            "copy": "複製",
+            "copied": "已復制",
+            "congratulations": "恭喜!",
+            "link": "分享鏈接",
+            "email": "通過電郵分享",
+            "from": "從:",
+            "to": "至:",
+            "message": "訊息:",
+            "messagePlaceholder": "在此處寫下您的訊息",
+            "sent": "已發送!",
+            "send": "發送"
+        },
+        "listFile": {
+            "title": "您的文件",
+            "addFile": "添加文件",
+            "upload": "上傳",
+            "save": "保存",
+            "options": "選項",
+            "uploadName": "選擇您的上傳名稱:",
+            "uploadBackground": "選擇這個上傳的背景:",
+            "uploadImage": "上傳圖片",
+            "onlyGallery": "僅顯示圖庫"
+
+        }
+    },
+
+    "download":{
+        "header": "下載",
+        "button": "下載全部",
+        "gallery": "圖庫",
+        "oops":{
+            "header": "糟糕!",
+            "title": "出了點問題!",
+            "subtitle": "此鏈接不存在。" 
+        }, 
+        "expiration_date": "到期 {{date, expiration}}"
+    },
+
+    "preview": {
+        "download": "下載",
+        "download_all": "下載全部"
+    },
+
+    "emails": {
+        "newUpload": {
+            "subject": "{{.sender}}通過upload.express向您發送了{{.count}}份文件",
+            "header": "{{.sender}}向您發送了一些文件",
+            "subtitle": "您通過upload.express收到了{{.count}}份文件。",
+            "downloadButton": "立即下載"
+        }
+    }
+}
