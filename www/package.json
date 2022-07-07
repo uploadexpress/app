@@ -17,7 +17,7 @@
     "i18next-xhr-backend": "^2.0.1",
     "jquery": "^3.3.1",
     "jwt-decode": "^2.2.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "npm": "^6.7.0",
     "popper.js": "^1.14.7",
     "prop-types": "^15.7.2",
